@@ -1,3 +1,22 @@
+# Rain Simulation
+## Usage
+Rebuild wasm in `src/rain`
+```
+wasm-pack build
+```
+
+Start dev server in `src/rain/www`
+```
+npm runs start
+```
+
+## Code Layout:
+* Main wasm code in `src/rain/src/lib.rs`
+* Main index.html in `src/rain/www/index.html`
+* Main index.js in `src/rain/www/index.js`
+
+## Original Template Below
+
 <div align="center">
 
   <h1><code>wasm-pack-template</code></h1>
