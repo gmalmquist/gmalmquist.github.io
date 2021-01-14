@@ -94,7 +94,7 @@ const renderChart = () => {
   padding.right = legend
     .map(e => e.name)
     .map(n => g.measureText(n).width)
-    .reduce((a, b) => a > b ? a : b) + legendSize + 20;
+    .reduce((a, b) => a > b ? a : b) + legendSize + 50;
 
   g.font = `${labelSize}px sans-serif`;
   g.fillStyle = '#444444';
@@ -242,6 +242,12 @@ const renderChart = () => {
   g.textBaseline = 'bottom';
   g.font = 'italic 16px sans-serif';
   g.fillText(`(HRT start date ${getDateStamp(new Date(startDate))})`, (padding.left + width - padding.right)/2, padding.top - 10);
+
+  const newHeight = height - padding.bottom + 50;
+  if (height != newHeight) {
+    canvas.height = newHeight;
+    setTimeout(renderChart, 10);
+  }
 };
 
 $(document).ready(() => {
@@ -249,5 +255,6 @@ $(document).ready(() => {
   if (hash.length > 1) {
     $('#start-date').val(hash.substring(1));
   }
+  renderChart();
   setInterval(renderChart, 100);
 });
