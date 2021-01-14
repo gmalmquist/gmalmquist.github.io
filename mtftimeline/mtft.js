@@ -64,6 +64,21 @@ const getStartDate = () => {
   }
 };
 
+const addMonths = (date, months) => {
+  let y = date.getFullYear();
+  let m = date.getMonth();
+  let d = date.getDay();
+
+  m += months;
+  y += Math.floor(m / 12);
+  m = m % 12;
+
+  m += 1;
+  d += 1;
+
+  return new Date(Date.parse(`${y.toString().padStart(4, '0')}-${m.toString().padStart(2, '0')}-${d.toString().padStart(2, '0')}`));
+};
+
 const renderChart = () => {
   const canvas = document.getElementById('canvas');
   const g = canvas.getContext('2d');
@@ -203,7 +218,7 @@ const renderChart = () => {
     g.font = `12px sans-serif`;
     g.fillText(`${i}`, x, height - padding.bottom + 5);
 
-    const date = new Date(startDate + i * 30 * 24 * 60 * 60 * 1000);
+    const date = addMonths(new Date(startDate), i);
     const year = date.getFullYear();
     const month = MONTHS[date.getMonth()].substring(0, 3);
 
