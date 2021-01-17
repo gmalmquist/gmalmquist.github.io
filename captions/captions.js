@@ -29,7 +29,8 @@ class Caption {
     this.bounds = bounds.copy();
     this.text = text;
     this.preferredSize = 96;
-    this.lineWidth = 10;
+    this.lineWidth = 7;
+    this.lineSpacing = 1.25;
     this.fillStyle = '#ffffff';
     this.strokeStyle = '#000000';
     this.textAlign = 'center';
@@ -59,9 +60,16 @@ class Caption {
 
     for (let item of this._layout) {
       g.font = `${item.textSize}px sans-serif`;
+
+      g.fillStyle = this.strokeStyle;
+      const angles = 360;
+      for (let i = 0; i < angles; i++) {
+        const dx = Math.cos(Math.PI * i / 180.) * this.lineWidth;
+        const dy = Math.sin(Math.PI * i / 180.) * this.lineWidth;
+        g.fillText(item.word, item.x + dx, item.y + dy);
+      }
+
       g.fillStyle = this.fillStyle;
-      g.strokeStyle = this.strokeStyle;
-      g.strokeText(item.word, item.x, item.y); 
       g.fillText(item.word, item.x, item.y);      
     } 
   }
@@ -114,7 +122,7 @@ class Caption {
     }
     alignRow(row);
 
-    const layoutHeight = rowCount * layout[0].textSize;
+    const layoutHeight = rowCount * layout[0].textSize * this.lineSpacing;
     const verticalOffset = (() => {
       let topTarget = null;
       if (this.vertAlign === 'top') {
@@ -142,12 +150,12 @@ class Caption {
       for (let line of lines) {
         let x = this.bounds.left;
 
-        y += textSize;
+        y += textSize * this.lineSpacing;
         for (let word of line.split(' ')) {
           let width = g.measureText(word).width;
           if (x > this.bounds.left && x + width > this.bounds.right) {
             x = this.bounds.left;
-            y += textSize;
+            y += textSize * this.lineSpacing;
           }
           layout.push({ x, y, word, width, textSize });
           x += width + g.measureText(' ').width;
@@ -165,11 +173,7 @@ class Caption {
 
 $(document).ready(() => {
   const textBox = $('#caption-text');
-  textBox.val(`Enter text here.
-The quick brown fox jumps over the lazy dog.
-Once upon a time, in a far away land, there was a duck. Now, this duck was very beautiful.
-
-So beautiful in fact, that people would travel from miles around to see it. They would line up on the streets to call its name....`);
+  textBox.val('Enter text above.\n\nRight+click below and\n"Save image as".');
 
   const canvas = document.getElementById('canvas');
   const g = canvas.getContext('2d');
