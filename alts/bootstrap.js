@@ -285,7 +285,7 @@
 /******/ 				promises.push(installedWasmModuleData);
 /******/ 			else {
 /******/ 				var importObject = wasmImportObjects[wasmModuleId]();
-/******/ 				var req = fetch(__webpack_require__.p + "" + {"../pkg/alts_bg.wasm":"884078ea45c9e6bdd697"}[wasmModuleId] + ".module.wasm");
+/******/ 				var req = fetch(__webpack_require__.p + "" + {"../pkg/alts_bg.wasm":"130905ea555455b53811"}[wasmModuleId] + ".module.wasm");
 /******/ 				var promise;
 /******/ 				if(importObject instanceof Promise && typeof WebAssembly.compileStreaming === 'function') {
 /******/ 					promise = Promise.all([WebAssembly.compileStreaming(req), importObject]).then(function(items) {
