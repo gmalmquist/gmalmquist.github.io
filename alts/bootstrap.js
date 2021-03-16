@@ -58,6 +58,9 @@
 /******/ 					"__wbindgen_object_drop_ref": function(p0i32) {
 /******/ 						return installedModules["../pkg/alts_bg.js"].exports["__wbindgen_object_drop_ref"](p0i32);
 /******/ 					},
+/******/ 					"__wbg_log_d9b11d72a00cc6ed": function(p0i32,p1i32) {
+/******/ 						return installedModules["../pkg/alts_bg.js"].exports["__wbg_log_d9b11d72a00cc6ed"](p0i32,p1i32);
+/******/ 					},
 /******/ 					"__wbindgen_string_new": function(p0i32,p1i32) {
 /******/ 						return installedModules["../pkg/alts_bg.js"].exports["__wbindgen_string_new"](p0i32,p1i32);
 /******/ 					},
@@ -93,6 +96,9 @@
 /******/ 					},
 /******/ 					"__wbg_instanceof_CanvasRenderingContext2d_302c6fce2ddc6344": function(p0i32) {
 /******/ 						return installedModules["../pkg/alts_bg.js"].exports["__wbg_instanceof_CanvasRenderingContext2d_302c6fce2ddc6344"](p0i32);
+/******/ 					},
+/******/ 					"__wbg_setglobalAlpha_b2a0c5651f81f89b": function(p0i32,p1f64) {
+/******/ 						return installedModules["../pkg/alts_bg.js"].exports["__wbg_setglobalAlpha_b2a0c5651f81f89b"](p0i32,p1f64);
 /******/ 					},
 /******/ 					"__wbg_setstrokeStyle_e5a3de3b93e2555e": function(p0i32,p1i32) {
 /******/ 						return installedModules["../pkg/alts_bg.js"].exports["__wbg_setstrokeStyle_e5a3de3b93e2555e"](p0i32,p1i32);
@@ -174,6 +180,9 @@
 /******/ 					},
 /******/ 					"__wbindgen_object_clone_ref": function(p0i32) {
 /******/ 						return installedModules["../pkg/alts_bg.js"].exports["__wbindgen_object_clone_ref"](p0i32);
+/******/ 					},
+/******/ 					"__wbg_sin_c226789c5813e9c2": function(p0f64) {
+/******/ 						return installedModules["../pkg/alts_bg.js"].exports["__wbg_sin_c226789c5813e9c2"](p0f64);
 /******/ 					},
 /******/ 					"__wbindgen_string_get": function(p0i32,p1i32) {
 /******/ 						return installedModules["../pkg/alts_bg.js"].exports["__wbindgen_string_get"](p0i32,p1i32);
@@ -285,7 +294,7 @@
 /******/ 				promises.push(installedWasmModuleData);
 /******/ 			else {
 /******/ 				var importObject = wasmImportObjects[wasmModuleId]();
-/******/ 				var req = fetch(__webpack_require__.p + "" + {"../pkg/alts_bg.wasm":"86ba744663bab0fbf1e0"}[wasmModuleId] + ".module.wasm");
+/******/ 				var req = fetch(__webpack_require__.p + "" + {"../pkg/alts_bg.wasm":"9ba519df6233627beb62"}[wasmModuleId] + ".module.wasm");
 /******/ 				var promise;
 /******/ 				if(importObject instanceof Promise && typeof WebAssembly.compileStreaming === 'function') {
 /******/ 					promise = Promise.all([WebAssembly.compileStreaming(req), importObject]).then(function(items) {
