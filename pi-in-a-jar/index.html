@@ -86,7 +86,7 @@ considering and abandoning various approaches to the problem.
   <li><a href="https://www.amazon.com/gp/product/B08N4K4HKX">White Aquarium Pebbles</a></li>
   <li><a href="https://www.amazon.com/gp/product/B08Y5M2JS9">Plastic Aquarium Plants</a> (there are a lot in this box, I just used the little pink one).</li>
   <li><a href="https://www.amazon.com/gp/product/B08P4BZXFB">F-F Ethernet Coupler (optional)</a></li>
-  <li>A 3D printed plastic enclosure to house the led ring. (<a href="models/lid.scad">SCAD</a>) (<a href="models/mason-jar-lid-enclosure-mk2.stl">Main STL</a>) (<a href="models/mason-lid-led-ring-nuts.stl">Led Ring Nuts STL</a>) (<a href="models/mason-lid-oil-cap.stl">Oil Cap STL</a>)</li>
+  <li>A 3D printed plastic enclosure to house the led ring. (<a href="models/lid.scad">SCAD</a>) (<a href="models/mason-jar-lid-enclosure-mk2.stl">Main STL</a>) (<a href="models/mason-lid-led-ring-nuts.stl">Led Ring Nuts STL</a>) (<a href="models/mason-lid-oil-cap.stl">Oil Cap STL</a>) (<a href="models/mason-lid-chip-clasps.stl">Shifter Chip Clasps STL</a>)</li>
   <li>A 3D printed plastic disk to hold the plant in place. (<a href="models/plantholder.scad">SCAD</a>) (<a href="models/mason-jar-bottom-mk4.stl">STL</a>)
   <li>A 3D printed plastic clip to secure the jumper cables attached to the raspberry pi. (<a href="models/plugclip.scad">SCAD</a>) (<a href="models/plugclip-mk3.stl">STL</a>)
 </ul>
@@ -168,7 +168,74 @@ enclosure, along with the level shifter chip off to the side. The enclosure
 itself is almost exactly the same radius as the mouth of the mason jar, so it
 fits snugly in. But it's important to wire it all up before installing it!
 
+<ol>
+  <li>Set the led ring down into the depression for it in the bottom.
+  <li>Screw on the three nuts that hold the led ring in place.
+  <li>Insert the shifter chip into the rectangular depression for it (make
+      sure you check which way it's facing first!).
+  <li>Use the bracket-shaped chip clasps to hold the clip down. I found
+      they were a bit loose, so I melted them in place using my soldering iron.
+  <li>Solder all the connections according to <a href="https://learn.adafruit.com/neopixels-on-raspberry-pi/raspberry-pi-wiring">this</a> wiring diagram. The lines that go to the raspberry pi
+      GPIO board and the power source should go to jumper cables inserted
+      into the square holes in the center of the enclosure.
+</ol>
 
-<a href="https://www.amazon.com/gp/product/B000BP7Z48">metal caulk</a>
+<div class="images">
+  <img src="img/enclosure-assembled.jpg">
+  <img src="img/wiring-diagram.jpg">
+</div>
+
+<h3>Ethernet</h3>
+<p> I drilled a hole in the center of the mason jar lid for the ethernet cable to
+go through. A 15/64" drill bit worked about right for me. I clipped one connecter
+off a 3' ethernet cable, threaded it through the lid and the enclosure, then
+crimped a new connector back on (which is a pain to do).
+
+<div class="images">
+  <img src="img/enclosure-bottom.png">
+</div>
+
+<p>(I powered the LED ring and pi without using the ethernet in the above
+picture to test the connections).
+
+<h3>Control</h3>
+<p> At this point, it's just a matter of connecting all the wires cables.
+Connect the jumper cables attached to the pi's GPIO pins to the
+corresponding pins sticking out the bottom of the GPIO enclosure. Plug
+the ethernet cable into the raspberry pi and the POE injecter.
+
+<p> The led ring doesn't turn on immediately, because it needs the pi to
+control it.
+To do that, I installed this <a href="https://github.com/gmalmquist/gmalmquist.github.io/blob/main/pi-in-a-jar/code/lights.py">python3 script</a> on the raspberry pi to run on
+startup. I had to run it as root to enable it to access the GPIO pins, but
+maybe that's because I decided to install ubuntu server edition instead
+of raspbian on the pi for some reason.
+
+<p> The script above runs a simple pulse between pink and blue by default,
+but it exposes an HTTP server on port :80 which can be used to control
+the lights over the network (TODO: document the api!).
+
+<h3>Final Assembly</h3>
+<p>Once satisfied that it all worked, I:
+
+<ol>
+  <li>Lower the pi down into the jar.
+  <li>Insert the led ring enclosure.
+  <li>Pour mineral oil into the jar through the hole in the
+      led enclosure. This would have been less messy if I'd
+      been able to find a funnel.
+  <li>Screw on the cap I printed to fit over the hole. It's
+      mostly superfluous since the rest of the enclosure
+      isn't watertight anyway, but that could probably be
+      fixed with some hot glue if I did this again (got glue
+      does not dissolve in mineral oil, unlike many other
+      sealants).
+  <li>Screw on the lid.
+  <li>Attempt to seal the ethernet around the lid with
+      <a href="https://www.amazon.com/gp/product/B000BP7Z48">this product</a>,
+      which doesn't really work because mineral oil interferes with it.
+</ol>
+
+<p>And that's it!
 </body>
 </html>
