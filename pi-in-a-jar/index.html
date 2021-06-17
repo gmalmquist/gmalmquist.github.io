@@ -17,6 +17,10 @@
       width: 25%;
       padding: 1em;
     }
+
+    code {
+      background-color: #eeeeee;
+    }
   </style>
 </head>
 <body class="markdown-body">
@@ -140,6 +144,8 @@ POE pins on the GPIO board:
   <li>Ground (Black) to Pin 14.
 </ul>
 
+<p> (See the GPIO pin diagram <a href="https://www.raspberrypi.org/documentation/usage/gpio/">here</a>)</p>
+
 <p> The power here is actually being drawn from the POE hat, because the POE hat
 uses this pin to actually power the PI directly. The POE hat provides plenty of
 amps, so we can draw off of it to power the led ring just fine. Props to a couple
@@ -150,8 +156,6 @@ other transfems in our discord server for helping me figure that out!
 <p> It is important that the ground on pin 6 must be connected to the ground on
 pin 14 <i>and</i> to the led ring's ground. If they're not all on the same ground
 the led ring will misinterpret commands and Weird Things will happen.
-
-<p> (See the GPIO pin diagram <a href="https://www.raspberrypi.org/documentation/usage/gpio/">here</a>)</p>
 
 <p> I found that on their own the jumper connectors kept coming loose, so I printed a little plastic
   clip to hold them in better. Pictured below is a 2-pin clip, but I ultimately ended up using the
@@ -198,7 +202,7 @@ crimped a new connector back on (which is a pain to do).
 <p>(I powered the LED ring and pi without using the ethernet in the above
 picture to test the connections).
 
-<h3>Control</h3>
+<h3>Software</h3>
 <p> At this point, it's just a matter of connecting all the wires cables.
 Connect the jumper cables attached to the pi's GPIO pins to the
 corresponding pins sticking out the bottom of the GPIO enclosure. Plug
@@ -206,17 +210,73 @@ the ethernet cable into the raspberry pi and the POE injecter.
 
 <p> The led ring doesn't turn on immediately, because it needs the pi to
 control it.
-To do that, I installed this <a href="https://github.com/gmalmquist/gmalmquist.github.io/blob/main/pi-in-a-jar/code/lights.py">python3 script</a> on the raspberry pi to run on
+
+<p> I followed these steps to install the drivers for the led ring:
+<pre><code>
+sudo apt update
+sudo apt install wiringpi
+sudo apt install python3-lgpio
+sudo apt install rpi.gpio-common
+sudo pip install adafruit-circuitpython-neopixel
+sudo useradd ubuntu dialout
+sudo reboot
+</code></pre>
+<p> To actually control the lights, I wrote this <a href="https://github.com/gmalmquist/gmalmquist.github.io/blob/main/pi-in-a-jar/code/lights.py">python3 script</a> to run on the pi at
 startup. I had to run it as root to enable it to access the GPIO pins, but
 maybe that's because I decided to install ubuntu server edition instead
 of raspbian on the pi for some reason.
 
+<p> To run on startup, I created the `/etc/rc.local` file as:
+<pre><code>
+#!/bin/sh -e
+python3 /home/ubuntu/lights.py &
+</code></pre>
+
+<p>and marked it as executable by root.</p>
+
 <p> The script above runs a simple pulse between pink and blue by default,
 but it exposes an HTTP server on port :80 which can be used to control
-the lights over the network (TODO: document the api!).
+the lights over the network. The API is very simple:
+
+<pre><code>
+GET /mode/solid?color=X&brightness=X
+
+Change to a solid, unchanging color. The color may be specified
+as a known color name (<i>white</i>, <i>black</i>, <i>blue</i>, <i>magenta</i>, etc), or as
+R,G,B values (e.g. <i>255,128,0</i>)
+
+Brightness is an optional value between 0 and 1, defaulting to 1.
+
+Note that this endpoint can be used to turn the lights off by setting the color
+to black.
+</code></pre>
+
+<pre><code>
+GET /mode/pulse?a=X&b=X&c=X&brightness=X&speed=X
+
+Pulse by cyclically interpolating between three colors, specified by a, b, and c.
+The interpolation uses a cubic bezier.
+
+Brightness is an optional value between 0 and 1, defaulting to 1.
+
+Speed is an optional value that defaults to 1.0.
+</code></pre>
+
+<pre><code>
+GET /mode/cycle?colors=W;X;Y;Z&brightness=X&speed=X
+
+Similar to pulse, but cycles through any number of colors provided
+in the <i>colors</i> parameter, separated by semicolons.
+</code></pre>
+
+<p> You can expose these endpoints (ideally behind a proxy which
+adds authentication) to the internet, and use
+<a href="ifttt.com/">if-this-then-that</a>'s webhooks integration
+to make these work with smart assistants. Or, you can just save
+settings you like as bookmarks in your phone's mobile browser.
 
 <h3>Final Assembly</h3>
-<p>Once satisfied that it all worked, I:
+<p>Once satisfied that it all works:
 
 <ol>
   <li>Lower the pi down into the jar.
