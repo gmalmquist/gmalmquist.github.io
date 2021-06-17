@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Raspberry Pi in a Jar</title>
+  <link rel="stylesheet" href="github-markdown.css"></link>
+  <style type="text/css">
+    body {
+      margin: 2em;
+    }
+
+    .images {
+    }
+
+    .images > img {
+      display: inline-block;
+      width: 25%;
+      padding: 1em;
+    }
+  </style>
+</head>
+<body class="markdown-body">
+<h1>Raspberry Pi in a Jar</h1>
+<p> This is an abridged description of how I made my oil-cooled
+raspberry pi in an led-lit mason jar. There was a lot of trial
+and error along the way to the finished product (which you can
+see in the video linked below).
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">this is the ridiculous project I&#39;ve been working on for the past week or so:<br><br>behold the oil-cooled raspberry pi in an led-lit mason jar aquarium 😆 <a href="https://t.co/9vad1dYyot">pic.twitter.com/9vad1dYyot</a></p>&mdash; Gwen Malmquist (@gwenwritescode) <a href="https://twitter.com/gwenwritescode/status/1405001369560436736?ref_src=twsrc%5Etfw">June 16, 2021</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+
+<h2>Background</h2>
+<p> Oil-cooling PCs is a thing. Generally people do it with fancy
+gaming rigs submerged in actual aquarium tanks filled with
+mineral oil, often resplendent with LED lights and aquarium
+pumps to fill the tank with air bubbles. The aesthetic is half
+the point of oil cooling; the thermal benefits aren't necessarily
+better than other cooling methods.
+
+<p> Oil cooling a raspberry pi is an incredibly silly thing to do.
+I am not using the raspberry pi for intensive operations; it does
+not need any special cooling aparatus. This is really an art project,
+not something to provide any kind of practical benefit.
+
+<h2>Overview</h2>
+<p> A single ethernet cable connects the pi to the network and provides
+power to both the pi and the led ring. A plastic enclosure sits snugly in
+the jar just below the lid, which houses the led ring light (so that it
+shines down in the jar) along with a level shifting chip and some wiring.
+
+<p> The ethernet cable extends through the enclosure and connects to the
+rasbperry pi's ethernet port. The raspberry pi has the official
+power-over-ethernet hat attached to it, which enables the pi to draw power
+from the ethernet.
+
+<p> Four jumper cables connect to the raspberry pi's GPIO pins back up into the
+enclosure housing the LED ring light. These include two ground cables, a
+power cable, and a control cable for the LED light. The two ground cables
+<i>could</i> be replaced with a single wire, but I prefered to do it with
+two so that the connection between them was soldered inside the hidden
+enclosure, rather than having to solder the connection in the visible part
+of the aquarium.
+
+<p> At the bottom of the jar there is a little aquarium plant, which is secured
+via a custom printed plastic disk with a cut-out sized for the plant. That
+in turn is covered with a layer of white aquarium pebbles (white better
+reflects all the different colors the LEDs can produce).
+
+<h2>Parts List</h2>
+<p> Below are listed the parts that went into this project. I'm not counting
+the (2x as many) parts I purchased but didn't end up using, due to
+considering and abandoning various approaches to the problem.
+
+<ul>
+  <li><a href="https://www.amazon.com/gp/product/B07TC2BK1X">Raspberry Pi 4</a></li>
+  <li><a href="https://www.amazon.com/gp/product/B0756CW6Y2">Raspberry Pi Spacer Kit</a></li>
+  <li><a href="https://www.amazon.com/gp/product/B07GR9XQJH">Raspberry Pi POE Hat</a></li>
+  <li><a href="https://www.amazon.com/gp/product/B08GC18NMK">Raspberry Pi GPIO Extenders</a></li>
+  <li><a href="https://www.amazon.com/gp/product/B001PS9E5I">POE Injector</a></li>
+  <li><a href="https://www.amazon.com/gp/product/B00KAE3R1U">Adafruit Neopixel Ring (12 LEDs)</a></li>
+  <li><a href="https://www.amazon.com/gp/product/B06XWN9Q99">32 GB microsd card</a></li>
+  <li><a href="https://www.amazon.com/gp/product/B07HNV6W41">ethernet cable</a></li>
+  <li><a href="https://www.amazon.com/gp/product/B01N4OI1ZF">32 oz wide-mouth mason jar</a></li>
+  <li><a href="https://www.amazon.com/gp/product/B00XW2L39K">Adafruit Quad Level-Shifter</a></li>
+  <li><a href="https://www.amazon.com/gp/product/B07TX6BX47">22 awg wire in various colors</a></li>
+  <li><a href="https://www.amazon.com/gp/product/B07KLM9KR1">Jumper Cables</a></li>
+  <li><a href="https://www.amazon.com/gp/product/B08N4K4HKX">White Aquarium Pebbles</a></li>
+  <li><a href="https://www.amazon.com/gp/product/B08Y5M2JS9">Plastic Aquarium Plants</a> (there are a lot in this box, I just used the little pink one).</li>
+  <li><a href="https://www.amazon.com/gp/product/B08P4BZXFB">F-F Ethernet Coupler (optional)</a></li>
+  <li>A 3D printed plastic enclosure to house the led ring. (<a href="models/lid.scad">SCAD</a>) (<a href="models/mason-jar-lid-enclosure-mk2.stl">Main STL</a>) (<a href="models/mason-lid-led-ring-nuts.stl">Led Ring Nuts STL</a>) (<a href="models/mason-lid-oil-cap.stl">Oil Cap STL</a>)</li>
+  <li>A 3D printed plastic disk to hold the plant in place. (<a href="models/plantholder.scad">SCAD</a>) (<a href="models/mason-jar-bottom-mk4.stl">STL</a>)
+  <li>A 3D printed plastic clip to secure the jumper cables attached to the raspberry pi. (<a href="models/plugclip.scad">SCAD</a>) (<a href="models/plugclip-mk3.stl">STL</a>)
+</ul>
+
+<h2>Tools List</h2>
+<p> Due to life events, I had lost access to most of my previous tool collection, and had to buy many
+of these new for this project.
+<ul>
+  <li><a href="https://www.amazon.com/gp/product/B08DHJBLXQ">RJ45 Ethernet Crimping Kit</a></li>
+  <li><a href="https://www.amazon.com/gp/product/B08DLQP1T6">Digital Calipers</a> (to get measurements to design plastic parts)</li>
+  <li><a href="https://www.amazon.com/gp/product/B08PV7J7JR">Needle Nose Pliers</a></li>
+  <li><a href="https://www.amazon.com/gp/product/B07GTGGLXN">Soldering Kit</a></li> 
+  <li><a href="https://www.amazon.com/gp/product/B000A0S4YO">Wire Cutters</a></li>
+  <li><a href="https://www.amazon.com/gp/product/B07PV5D3VV">Mini Screwdriver Set</a></li>
+  <li><a href="https://www.amazon.com/gp/product/B000JNNWQ2">Wire Stripper</a></li>
+  <li>A <a href="https://www.amazon.com/gp/product/B0735X82CY">power drill</a> and a <a href="https://www.amazon.com/gp/product/B004GIO0F8">15/64" drill bit</a>.</li>
+  <li>A 3D printer (I used a <a href="https://shop.prusa3d.com/en/3d-printers/180-original-prusa-i3-mk3s-kit.html">Prusa i3 MKS</a>).</li>
+</ul>
+
+<h2>Assembly Steps</h2>
+<h3>Plant and Pebbles</h3>
+<p> I designed and 3d printed a little plastic disk to stop the plant from tipping over.
+<p> That goes in the bottom of the jar, then aquarium pebbles on top of that.
+<div class="images">
+<img src="img/plant-top.jpg">
+<img src="img/plant-bottom.jpg">
+<img src="img/plant-and-pebbles.jpg">
+</div>
+
+<h3>Raspberry PI and POE Hat</h3>
+<p> We need access to the GPIO pins to control the led ring, but the POE
+hat covers them up. So, we need to use extenders on the GPIO pins and
+the POE pins (the POE pins are the little 2x2 block).
+
+<p> The kit that sells the 2x2 extender was out of stock, so I just used
+my wire cutters to clip off a 2x2 section of an extra GPIO extender, which
+felt a bit messy but worked fine.
+
+<p> I used spacers on the four corners of the pi to secure the two boards
+together. None of the spacers I got were quite the right length, so I ended
+up stacking two on each corner. (3D printing would have worked of course,
+but I like the look of the metal spacers).
+
+<p> That done, I needed to attach the four jumper cables to the appropriate
+POE pins on the GPIO board:
+
+<ul>
+  <li>5v Power (Red) to Pin 2.
+  <li>Ground (Brown) to Pin 6.
+  <li>Control (Blue) to Pin 12.
+  <li>Ground (Black) to Pin 14.
+</ul>
+
+<p> The power here is actually being drawn from the POE hat, because the POE hat
+uses this pin to actually power the PI directly. The POE hat provides plenty of
+amps, so we can draw off of it to power the led ring just fine. Props to a couple
+other transfems in our discord server for helping me figure that out!
+
+<p> The control wire is how the raspberry pi issues commands to the led ring.
+
+<p> It is important that the ground on pin 6 must be connected to the ground on
+pin 14 <i>and</i> to the led ring's ground. If they're not all on the same ground
+the led ring will misinterpret commands and Weird Things will happen.
+
+<p> (See the GPIO pin diagram <a href="https://www.raspberrypi.org/documentation/usage/gpio/">here</a>)</p>
+
+<p> I found that on their own the jumper connectors kept coming loose, so I printed a little plastic
+  clip to hold them in better. Pictured below is a 2-pin clip, but I ultimately ended up using the
+  4-pin clip I have rendered adjacent (I don't have a good picture of that one printed, unfortunately).
+
+<div class="images">
+<img src="img/pi-and-hat.jpg">
+<img src="img/jumperclip.png">
+</div>
+
+<h3>LED Ring Enclosure</h3>
+<p> This was a fun part to design. The led ring slots into the bottom of the
+enclosure, along with the level shifter chip off to the side. The enclosure
+itself is almost exactly the same radius as the mouth of the mason jar, so it
+fits snugly in. But it's important to wire it all up before installing it!
+
+
+<a href="https://www.amazon.com/gp/product/B000BP7Z48">metal caulk</a>
+</body>
+</html>
