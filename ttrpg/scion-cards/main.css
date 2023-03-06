@@ -1,0 +1,183 @@
+:root {
+  --rad: 0.05in;
+  --sep: 0.05in;
+  --border: 0.125in;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+.page-break {
+  page-break-after: always;
+}
+
+.page {
+  display: flex;
+  flex-wrap: wrap;
+  page-break-after: always;
+  max-width: 8.5in;
+}
+
+.card {
+  display: inline-flex;
+  padding: var(--border);
+  flex-direction: column;
+  align-items: stretch;
+  border: thin solid white;
+  background: lightgray;
+}
+
+.field {
+  background: white;
+  margin-top: var(--sep);
+  padding: var(--sep);
+  min-height: 0.25in;
+  
+  display: inline-flex;
+  flex-direction: column;
+  justify-items: stretch;
+  
+  color: black;
+  
+  text-align: center;
+  font-size: 10px;
+  font-family: Noto Sans, Lucida Sans, sans-serif;
+}
+
+.field.compact {
+  justify-content: center;	
+}
+
+.round-top {
+  border-top-left-radius: var(--rad);
+  border-top-right-radius: var(--rad);
+}
+
+.round-bottom {
+  border-bottom-left-radius: var(--rad);
+  border-bottom-right-radius: var(--rad);
+}
+
+.title, .subtitle {
+  font-weight: bold;
+  font-family: Bookman Old Style, Noto Serif, serif;
+  text-align: center;
+}
+
+.label {
+  font-family: Noto Sans, Lucida Sans, sans-serif;
+  font-weight: bold;
+  text-align: center;
+  font-size: 9px;
+}
+
+.title {
+  white-space: nowrap;
+  font-size: 16px;
+}
+
+.subtitle {
+  font-size: 12px;
+}
+.details, textarea {
+  font-family: Noto Serif, serif;
+  font-size: 9px;
+  text-align: justify;
+  white-space: normal;
+  margin: var(--sep);
+}
+
+.details.long, textarea.long, .flavor.long {
+  font-size: 8px;
+}
+
+.details.verylong, textarea.verylong, .flavor.verylong {
+  font-size: 7.5px;
+}
+
+.details > ul {
+  margin: 0;
+  padding-left: 2em;
+}
+
+.details > ul > li {
+  margin-top: var(--sep);
+}
+
+textarea {
+  border-width: 0;
+  color: black;
+  background: white;
+  resize: none;
+  flex-grow: 1;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-items: stretch;
+  align-items: stretch;
+}
+
+.row > * {
+  flex-grow: 1;
+}
+
+.row > .compact {
+  flex-grow: 0;
+}
+
+.check {
+  background: white;
+  width: 0.15in;
+  height: 0.15in;
+}
+
+.checkgrid {
+  display: grid;
+  grid-gap: 0.1in;
+  grid-template-rows: 0.1in 0.1in;
+  grid-template-columns: 0.1in 0.1in 0.1in;
+  margin-top: var(--sep);
+  margin-right: var(--sep);
+}
+
+.row > * + .checkgrid {
+  margin-left: var(--sep);
+}
+
+.row > .field + .field {
+  margin-left: var(--sep);
+}
+
+.big {
+  flex-grow: 4;
+}
+
+.small {
+  flex-grow: 1;
+}
+
+input {
+  border-width: 0;
+  font-family: Noto Serif, serif;
+  font-size: 9px;
+  text-align: center;
+  color: black;
+  background: white;
+  resize: none;
+  flex-grow: 1;
+  border-width: 0;
+  padding: 0;
+}
+
+.flavor {
+  font-family: Noto Serif, serif;
+  font-style: italic;
+  text-align: justify;
+  white-space: normal;
+  margin-top: var(--sep);
+  font-size: 10px;
+}

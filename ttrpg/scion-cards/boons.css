@@ -1,0 +1,40 @@
+.boon {
+  width: 2.5in;
+  height: 3.5in;
+}
+
+.boon .footer {
+  font-family: Bookman Old Style, Noto Serif, serif;
+  font-weight: bold;
+  font-size: 14px;
+  margin-top: var(--sep);
+  margin-bottom: calc(var(--sep) - var(--border));
+}
+
+.boon .kind {
+  opacity: 0.75;
+}
+
+.boon .category {
+  text-align: right;
+  font-style: italic;
+}
+
+.boon .field {
+  font-size: 10px;
+  font-family: Noto Sans, Lucida Sans, sans-serif;
+}
+
+.boon .title {
+  font-size: 14px;
+}
+.boon .subtitle {
+  font-family: Noto Sans, Lucida Sans, sans-serif;
+}
+
+.tbc {
+  display: block;
+  text-align: right;
+  font-style: italic;
+  font-weight: bold;
+}

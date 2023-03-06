@@ -1,0 +1,25 @@
+.spell {
+  width: 2.5in;
+  height: 3.5in;
+}
+
+.spell .subtitle {
+  font-style: italic;
+}
+
+.spell .footer {
+  font-family: Bookman Old Style, Noto Serif, serif;
+  font-weight: bold;
+  font-size: 14px;
+  margin-top: var(--sep);
+  margin-bottom: calc(var(--sep) - var(--border));
+}
+
+.spell .kind {
+  opacity: 0.75;
+}
+
+.spell .category {
+  text-align: right;
+  font-style: italic;
+}
