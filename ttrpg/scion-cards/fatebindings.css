@@ -1,0 +1,75 @@
+.fatebinding {
+  background: #a51d2d;
+  width: 2.5in;
+  height: 3.5in;
+}
+
+.fatebinding .title {
+  font-size: 14px;
+  color: white;
+}
+
+.fatebinding .subtitle {
+  font-size: 12px;
+  color: white;
+}
+
+.fatebinding .field .label {
+  color: #77767b;
+  font-size: 10px;
+  text-align: center;
+}
+
+.fate-role {
+  width: 3in;
+  height: 5in;
+  background: lightgray;
+}
+.fate-role .title {
+  font-size: 14px;
+}
+
+.fate-role.balm {
+  background: #99c1f1;
+  color: white;
+}
+
+.balm {
+  background: #99c1f1;
+  color: white;
+}
+.apprentice {
+  background: #e5a50a;
+  color: white;
+}
+.boon-companion {
+  background: #dc8add;
+}
+.canary-martyr {
+  background: #26a269;
+  color: white;
+}
+.jinx {
+  background: #813d9c;
+  color: white;
+}
+.nemesis {
+  background: #3d3846;
+  color: white;
+}
+.paramour {
+  background: #f66151;
+  color: white;
+}
+.rival {
+  background: #1a5fb4;
+  color: white;
+}
+.traitor {
+  background: #77767b;
+  color: white;
+}
+.worshipper-unrequitted {
+  background: #ff7800;
+  color: black;
+}

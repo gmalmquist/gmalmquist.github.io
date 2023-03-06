@@ -1,0 +1,239 @@
+ .purview {
+  width: 2.5in;
+  height: 3.5in;
+}
+
+.purview .title {
+}
+.purview .subtitle {
+}
+
+.artistry { 
+  background: #9141ac;
+  color: white;
+}
+.beauty {
+  background: #c061cb;
+  color: white;
+ }
+.beasts {
+  background: #b5835a;
+  color: white;
+}
+.chaos {
+  background: linear-gradient(to right, #3c007b, #be00bb);
+  color: white;
+}
+.darkness {
+  background: #241f31;
+  color: white;
+}
+.death {
+  background: linear-gradient(to top, #afc0ad, #cad2c9 31%, #e5e5e5);
+  color: black;
+}
+.deception {
+  background: linear-gradient(to bottom, #c0bfbc, #ffcccc);
+  color: black;
+}
+.earth {
+  background: #865e3c;
+  color: white;
+}
+.epic-dexterity {
+  background: #c64600;
+  color: white;
+}
+.epic-stamina {
+  background: #613583;
+  color: white;
+}
+.epic-strength {
+  background: #1a5fb4;
+  color: white;
+}
+.fertility {
+  background: #26a269;
+  color: white;
+}
+.fire {
+  background: linear-gradient(to bottom, #ff6d2e, #a51d2d);
+  color: white;
+}
+.forge {
+  background: linear-gradient(to bottom, #ff7300, #a00000 50%, #686765);
+  color: white;
+}
+.fortune {
+  background: #dc8add;
+  color: black;
+}
+.frost {
+  background: #99c1f1;
+  color: white;
+}
+.health {
+  background: #f5c9c4;
+  color: black;
+}
+.journeys {
+  background: linear-gradient(to right, #4d9cc4, #303030 50%, #c44ec4);
+  color: white;
+}
+.moon {
+  background: #dae5f2;
+  color: black;
+}
+.order {
+  background: #9a9996;
+  color: white;
+}
+.passion {
+  background: #f66151;
+  color: white;
+}
+.prosperity {
+  background: #ff9f00;
+  color: black;
+}
+.sky {
+  background: #99c1f1;
+  color: black;
+}
+.stars {
+  background: linear-gradient(
+    to right, #070033, #00ffff 12%, #ffffff 50%, #00faff 87%, #070033
+  );
+  color: black;
+}
+.sun {
+  background: linear-gradient(
+    to right, #ff6a00, #ffa400 12%, #ffffff 50%, #ffa400 87%, #ff6a00
+  );
+  color: black;
+}
+.war {
+  background: #7d0f14;
+  color: white;
+}
+.water {
+  background: linear-gradient(to bottom, #1e7cf2, #103568);
+  color: white;
+}
+.wild {
+  background: #8ff0a4;
+  color: black;
+}
+.metamorphosis {
+  background: linear-gradient(to right, #ff5bf4, #ff9a00);
+  color: white;
+}
+.wyrd {
+  background: linear-gradient(
+    to right, #00cccc, #5b6ec1 25%, #181818 50%, #d47200 75%, #ca5a5a
+  );
+  color: white;
+}
+.yoga {
+  background: linear-gradient(
+    to right, 
+	hsl(90, 100%, 40%),
+	hsl(0, 0%, 20%) 50%,
+	hsl(40, 70%, 40%)
+  );
+  color: white;
+}
+
+.yaoyorozu-no-kamigami {
+  background: linear-gradient(
+    to right, 
+	hsl(0, 100%, 60%),
+	hsl(0, 0%, 20%) 50%,
+	hsl(45, 100%, 60%)
+  );
+  color: white;
+}
+
+.cheval-gun {
+  background: linear-gradient(
+    to right, 
+	hsl(0, 100%, 60%),
+	hsl(0, 0%, 10%) 50%,
+	hsl(280, 100%, 60%)
+  );
+  color: white;
+}
+
+.dodaem {
+  background: linear-gradient(
+    to right, 
+	hsl(120, 100%, 40%),
+	hsl(120, 100%, 20%) 20%,
+	hsl(120, 100%, 20%) 80%,
+	hsl(0, 30%, 60%)
+  );
+  color: white;
+}
+
+.heku {
+  background: linear-gradient(
+    to right, 
+	hsl(40, 50%, 60%),
+	hsl(200, 100%, 40%) 20%,
+	hsl(200, 100%, 40%) 80%,
+	hsl(30, 100%, 60%)
+  );
+  color: white;
+}
+
+.tianming {
+  background: linear-gradient(
+    to right, 
+	hsl(35, 100%, 60%),
+	hsl(0, 0%, 10%) 20%,
+	hsl(0, 100%, 60%),
+	hsl(0, 0%, 10%) 80%,
+	hsl(260, 100%, 60%)
+  );
+  color: white;
+}
+
+.nextlahualli {
+  background: linear-gradient(
+    to right, 
+	hsl(200, 100%, 50%),
+	hsl(150, 100%, 25%) 20%,
+	hsl(0, 0%, 10%),
+	hsl(0, 100%, 40%) 80%,
+	hsl(25, 80%, 40%)
+  );
+  color: white;
+}
+
+.geasa {
+  background: linear-gradient(
+    to right, 
+	hsl(120, 100%, 40%),
+	hsl(0, 0%, 40%) 45%,
+	hsl(0, 0%, 80%),
+	hsl(0, 0%, 40%) 55%,
+	hsl(40, 100%, 60%)
+  );
+  color: white;
+}
+
+/* combined purviews */
+.death-moon {
+  background: linear-gradient(to right, #afc0ad, #cad2c9 31%, #e5e5e5 50%, #dae5f2);
+  color: black;
+}
+
+.journeys-moon {
+  background: linear-gradient(to right, #4d9cc4, #303030, #c44ec4 50%, #dae5f2);
+  color: white;
+}
+
+.death-journeys {
+  background: linear-gradient(to right, #afc0ad, #cad2c9 31%, #e5e5e5 50%, #4d9cc4, #303030, #c44ec4);
+  color: black;
+}
