@@ -136,10 +136,14 @@
 }
 .yoga {
   background: linear-gradient(
-    to right, 
-	hsl(90, 100%, 40%),
-	hsl(0, 0%, 20%) 50%,
-	hsl(40, 70%, 40%)
+    to bottom, 
+    hsl(90, 100%, 40%) 2%,
+    hsl(90, 100%, 30%) 7%,
+    hsl(0, 0%, 20%) 75%,
+    #ae8625 80%,
+    #f7ef8a,
+    #edc967
+
   );
   color: white;
 }
@@ -147,11 +151,20 @@
 .yaoyorozu-no-kamigami {
   background: linear-gradient(
     to right, 
-	hsl(0, 100%, 60%),
-	hsl(0, 0%, 20%) 50%,
-	hsl(45, 100%, 60%)
+    hsl(0, 100%, 30%) 1%,
+    hsl(0, 100%, 50%) 5%,
+    hsl(0, 100%, 30%),
+    hsl(0, 0%, 20%) 50%,
+    #ae8625 80%,
+    #f7ef8a 98%,
+    #d2ac47,
+    #edc967
   );
   color: white;
+}
+
+.yaoyorozu-no-kamigami .flavor {
+  text-shadow: 0 0 10px black, 0 0 1px black;
 }
 
 .cheval-gun {
@@ -166,11 +179,13 @@
 
 .dodaem {
   background: linear-gradient(
-    to right, 
-	hsl(120, 100%, 40%),
-	hsl(120, 100%, 20%) 20%,
-	hsl(120, 100%, 20%) 80%,
-	hsl(0, 30%, 60%)
+    to bottom, 
+    hsl(120, 100%, 40%),
+    hsl(120, 100%, 15%),
+    hsl(120, 100%, 20%) 20%,
+    hsl(120, 100%, 20%) 80%,
+    hsl(30, 100%, 20%),
+    hsl(30, 100%, 40%)
   );
   color: white;
 }
@@ -178,48 +193,73 @@
 .heku {
   background: linear-gradient(
     to right, 
-	hsl(40, 50%, 60%),
-	hsl(200, 100%, 40%) 20%,
-	hsl(200, 100%, 40%) 80%,
-	hsl(30, 100%, 60%)
+    #ae8625,
+    #f7ef8a,
+    #d2ac47,
+    #edc967,
+    hsl(180, 100%, 50%) 15%,
+    hsl(200, 100%, 40%) 40%,
+    hsl(200, 100%, 40%) 60%,
+    hsl(180, 100%, 50%) 85%,
+    #edc967,
+    #d2ac47,
+    #f7ef8a,
+    #ae8625
   );
-  color: white;
+  color: black
+}
+
+.heku .flavor {
+  text-shadow: 0 0 10px hsl(180, 100%, 100%);
+  color: black
 }
 
 .tianming {
   background: linear-gradient(
-    to right, 
-	hsl(35, 100%, 60%),
-	hsl(0, 0%, 10%) 20%,
-	hsl(0, 100%, 60%),
-	hsl(0, 0%, 10%) 80%,
-	hsl(260, 100%, 60%)
+    to top, 
+    hsl(35, 100%, 60%),
+    hsl(0, 0%, 10%) 20%,
+    hsl(0, 100%, 60%),
+    hsl(0, 0%, 10%) 80%,
+    hsl(260, 100%, 60%)
   );
   color: white;
 }
 
 .nextlahualli {
   background: linear-gradient(
-    to right, 
-	hsl(200, 100%, 50%),
-	hsl(150, 100%, 25%) 20%,
-	hsl(0, 0%, 10%),
-	hsl(0, 100%, 40%) 80%,
-	hsl(25, 80%, 40%)
+    to bottom, 
+    hsl(200, 100%, 50%),
+    hsl(180, 100%, 50%) 2%,
+    hsl(150, 100%, 30%) 5%,
+    hsl(150, 100%, 25%) 20%,
+    hsl(0, 0%, 10%),
+    hsl(0, 100%, 40%) 80%,
+    hsl(25, 80%, 40%),
+    #ae8625,
+    #f7ef8a 98%,
+    #d2ac47
   );
   color: white;
 }
 
 .geasa {
   background: linear-gradient(
-    to right, 
-	hsl(120, 100%, 40%),
-	hsl(0, 0%, 40%) 45%,
-	hsl(0, 0%, 80%),
-	hsl(0, 0%, 40%) 55%,
-	hsl(40, 100%, 60%)
+    to top,
+    hsl(120, 100%, 40%) 2%,
+    hsl(90, 100%, 20%) 10%,
+    hsl(0, 0%, 40%) 45%,
+    hsl(0, 0%, 80%),
+    hsl(0, 0%, 40%) 55%,
+    #ae8625 70%,
+    #f7ef8a 98%,
+    #d2ac47
   );
   color: white;
+}
+
+.geasa .title, .geasa .subtitle, .geasa .flavor {
+  text-shadow: 0 0 10px gray;
 }
 
 /* combined purviews */
