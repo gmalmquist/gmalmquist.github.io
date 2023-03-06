@@ -17,6 +17,7 @@ html, body {
   display: flex;
   flex-wrap: wrap;
   page-break-after: always;
+  page-break-inside: avoid;
   max-width: 8.5in;
 }
 
