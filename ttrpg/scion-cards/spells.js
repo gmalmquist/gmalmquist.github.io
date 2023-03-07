@@ -187,7 +187,7 @@ If you take this as a Boon, you may Imbue 1 Legend instead of Spending.`,
 	action: 'Simple',
 	range: 'Close',
 	duration: 'Indefinite',
-	mechanics: `Imbue 1 Legend to bring an end to the journey of a machine, vehicle, or structure.
+	mechanics: `<b>Imbue 1 Legend</b> to bring an end to the journey of a machine, vehicle, or structure.
 
 Machines inconsequential to the narrative—not owned or operated by important characters or Scions—are considered trivial targets and are instantly destroyed, reduced to rust, rot, and dust (whatever is appropriate given the material construction of the target).
 
