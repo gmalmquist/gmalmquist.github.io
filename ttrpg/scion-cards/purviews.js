@@ -27,7 +27,6 @@ This can also bypass Complications that would apply to rolls made through ordina
 	innate: `You walk untouched through chaotic situations, taking no harm from random or haphazard dangers such as debris in a tornado, a freak traffic accident, or being trampled by shoppers on Black Friday.
 
 This does not protect you from damage that results from an action performed with intent to cause harm, like gunfire in a shootout, or environmental situations. This immunity extends to any non-magical dangerous terrain, unless a character in the scene actively created that peril with intent to harm. You still face any Complications that such situations would normally impose — you’re simply guaranteed to come through unscathed.`,
-	long: true,
   },
   {
     title: 'DARKNESS',
@@ -252,7 +251,6 @@ Whenever you encounter narrative difficulties that advance your fate or echo its
 	subtitle: 'MANITOU SIGNATURE PURVIEW',
 	flavor: 'Scions may use this Purview to commune with the totemic dodaem manitou of all things: people, animals, places, and events. It allows personal communion with one’s own dodaem manitou, which brings meaningful dreams and can act as an intermediary with other manitou. It can also be used to enter into conversation with the World, asking the manitou for their favor in exchange for making offerings or abiding by a taboo. A Scion who has cultivated a strong relationship with a manitou can manifest or borrow its powers in exchange for performing a service.',
 	innate: 'Once each scene, you can ask a manitou for its favor as a simple action. It grants Enhancement 3 on relevant rolls for the scene, such as those to hunt a bear or pass through a forest safely. In exchange, it will either ask you for a favor (e.g. the bear’s manitou needs a new charge after the hunt) or impose a restriction (e.g. the forest manitou forbids you from harming living things). You lose the Enhancement if you don’t honor the bargain, and the offended manitou may favor your foes until you make amends with it.',
-	long: true,
   },
   {
     title: 'HEKU',
@@ -295,7 +293,7 @@ createPages(PURVIEWS, 6, purview => {
   e.innerHTML = `
 	<div class="title">${purview.title.toLocaleUpperCase()}</div>
 	<div class="subtitle">${purview.subtitle}</div>
-	<div class="flavor small ${purview.long ? 'long' : ''}">
+	<div class="flavor compact ${purview.long ? 'long' : ''}">
 	  ${purview.flavor}
 	</div>
 	<div class="field round-top round-bottom big">

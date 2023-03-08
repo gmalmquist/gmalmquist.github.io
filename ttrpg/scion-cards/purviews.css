@@ -1,11 +1,14 @@
- .purview {
-  width: 2.5in;
+.purview {
+  width: 3.5in;
   height: 3.5in;
 }
 
 .purview .title {
 }
 .purview .subtitle {
+}
+
+.purview .details {
 }
 
 .artistry { 

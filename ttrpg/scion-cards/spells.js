@@ -1,41 +1,42 @@
  const SPELLS = [
   {
     title: 'Teleportation Circle',
-	purview: 'Journeys',
-	action: 'Complex',
-	range: '',
-	duration: 'Indefinite',
-	subject: '',
-	mechanics: `You may <b>Spend 1 Legend</b> to inscribe a permanent teleportation circle. <i>(This takes ten minutes or so)</i>.
+    purview: 'Journeys',
+    action: 'Complex',
+    range: '',
+    duration: 'Indefinite',
+    subject: '',
+    mechanics: `You may <b>Spend 1 Legend</b> to inscribe a permanent teleportation circle. <i>(This takes ten minutes or so)</i>.
 
-Thereafter, you may <b>Imbue 1 Legend</b> to travel to it from anywhere in the same realm of existence. <i>(This is a simple action)</i>.
+  Thereafter, you may <b>Imbue 1 Legend</b> to travel to it from anywhere in the same realm of existence. <i>(This is a simple action)</i>.
 
-<b>Linked circles.</b> You may link a pair of teleportation circles  to form a passage which anyone can freely traverse.
+  <b>Linked circles.</b> You may link a pair of teleportation circles  to form a passage which anyone can freely traverse.
 
-<b>Short-range circles.</b> You may create and maintain a number of short-range circles equal to your Legend for free. These circles cannot be used to travel more than a few hundred feet.
+  <b>Short-range circles.</b> You may create and maintain a number of short-range circles equal to your Legend for free. These circles cannot be used to travel more than a few hundred feet.
 
-<i>You must already have a form of long-distance teleportation through a Boon or Knack to cast this.</i>`,
-	clash: '',
+  <i>You must already have a form of long-distance teleportation through a Boon or Knack to cast this.</i>`,
+    length: 'long',
   },
   {
     title: 'Spatial Paralysis',
-	purview: 'Journeys',
-	action: 'Simple',
-	range: 'Short',
-	duration: 'Condition',
-	subject: '',
-	mechanics: `<b>Imbue 1 Legend</b> to paralyze a foe, forcing any movement they take to cross an infinite distance.
+    purview: 'Journeys',
+    action: 'Simple',
+    range: 'Short',
+    duration: 'Condition',
+    subject: '',
+    mechanics: `<b>Imbue 1 Legend</b> to paralyze a foe, forcing any movement they take to cross an infinite distance.
 
-Roll <i>Occult + Legend or Intellect</i> versus your foe's <i>Occult + Legend or Defense</i>, with a +2 Complication which you must meet for the spell to work at all.
+  Roll <i>Occult + Legend or Intellect</i> versus your foe's <i>Occult + Legend or Defense</i>, with a +2 Complication which you must meet for the spell to work at all.
 
-If you win the roll, your excess successes form a  paralysis pool.
+  If you win the roll, your excess successes form a  paralysis pool.
 
-Your foe is paralysed as long as there are successes left in the paralysis pool. Each round at the end of their turn, they may make another roll to subtract successes from the pool.
+  Your foe is paralysed as long as there are successes left in the paralysis pool. Each round at the end of their turn, they may make another roll to subtract successes from the pool.
 
-The imbued Legend returns to you when your foe is no longer paralysed.
+  The imbued Legend returns to you when your foe is no longer paralysed.
 
-This is free against trivial targets, who cannot resist the effect.
-`,
+  This is free against trivial targets, who cannot resist the effect.
+  `,
+    length: 'long',
   },
   {
     title: 'Open',
@@ -86,15 +87,15 @@ You may simultaneously protect a number of passages equal to your Legend.
   },
   {
     title: 'Ghostly Light',
-	purview: 'Death & Moon',
-	action: 'Simple',
-	range: 'Short',
-	duration: 'One scene',
-	subject: '',
-	mechanics: `<b>Imbue 1 Legend</b> to summon a soft gray-green light which reveals invisible ghosts and similarly hidden undead creatures.
+    purview: 'Death & Moon',
+    action: 'Simple',
+    range: 'Short',
+    duration: 'One scene',
+    subject: '',
+    mechanics: `<b>Imbue 1 Legend</b> to summon a soft gray-green light which reveals invisible ghosts and similarly hidden undead creatures.
 
-The imbued Legend returns when you extinguish the light.`,
-	clash: '',
+  The imbued Legend returns when you extinguish the light.`,
+    clash: '',
   },
   {
     title: 'Alter Gravity',
@@ -143,43 +144,46 @@ If taken out, the seagull returns to the underworld, and must remain there for a
   },
   {
     title: 'Moon Walk',
-	purview: 'Journeys & Moon',
-	action: 'Simple',
-	range: 'Close',
-	duration: 'One scene',
-	subject: 'Self and Legend companions',
-	mechanics: `<b>Imbue 1 Legend</b> and spend a few minutes spellcasting to reduce the gravity on your person and that of any companions to that of the moon, allowing you to walk or run three times faster than normal.
+    purview: 'Journeys & Moon',
+    action: 'Simple',
+    range: 'Close',
+    duration: 'One scene',
+    subject: 'Self and Legend companions',
+    mechanics: `<b>Imbue 1 Legend</b> and spend a few minutes spellcasting to reduce the gravity on your person and that of any companions to that of the moon, allowing you to walk or run three times faster than normal.
 
-The distance you can move in a turn is tripled, and you can cover long-distances in a third of the usual time when walking, jogging, or sprinting.
+  The distance you can move in a turn is tripled, and you can cover long-distances in a third of the usual time when walking, jogging, or sprinting.
 
-You may <b>Spend 1 Legend</b> instead to cast this spell in an instant, in which case this spell also confers a +2 Enhancement bonus to your Athletics rolls in combat scenes.`,
+  You may <b>Spend 1 Legend</b> instead to cast this spell in an instant, in which case this spell also confers a +2 Enhancement bonus to your Athletics rolls in combat scenes.`,
+    length: 'long',
   },
   {
     title: 'Exorcise',
-	purview: 'Death',
-	action: 'Complex',
-	range: 'Short',
-	duration: 'One scene',
-	subject: 'One spirit or haunting',
-	mechanics: `<b>Imbue 1 Legend</b> and roll <i>Occult + Legend or Intellect</i> to banish an undead spirit to the afterlife.
+    purview: 'Death',
+    action: 'Complex',
+    range: 'Short',
+    duration: 'One scene',
+    subject: 'One spirit or haunting',
+    length: 'long',
+    mechanics: `<b>Imbue 1 Legend</b> and roll <i>Occult + Legend or Intellect</i> to banish an undead spirit to the afterlife.
 
-The Difficulty of this roll is variable depending on the nature of the spirit, how it is tied to the world, and other situational factors. Willing spirits may be exorcised for free, barring extenuating circumstances.
+  The Difficulty of this roll is variable depending on the nature of the spirit, how it is tied to the world, and other situational factors. Willing spirits may be exorcised for free, barring extenuating circumstances.
 
-This is a complex action—you may roll multiple times over multiple turns and add together the results—but if you stop working the spell at any point you must start over (and may further anger the spirit).`,
+  This is a complex action—you may roll multiple times over multiple turns and add together the results—but if you stop working the spell at any point you must start over (and may further anger the spirit).`,
   },
   {
     title: 'Moonlit Clearing',
-	purview: 'Moon',
-	action: 'Complex',
-	range: 'Close',
-	duration: 'Indefinite',
-	mechanics: `<b>Spend 1 Legend</b> to amplify the lunar energies associated with witchcraft in a particular place where the sky is visible—such as a forest clearing, an old playground, or a rooftop. This takes a several minute ritual.
+    purview: 'Moon',
+    action: 'Complex',
+    range: 'Close',
+    duration: 'Indefinite',
+    mechanics: `<b>Spend 1 Legend</b> to amplify the lunar energies associated with witchcraft in a particular place where the sky is visible—such as a forest clearing, an old playground, or a rooftop. This takes a several minute ritual.
 
-From then on, the moon is always visible in this location at night (except during the new moon), and anyone practicing spellcraft there at night receives a +2 Enhancement bonus to their Occult rolls.
+  From then on, the moon is always visible in this location at night (except during the new moon), and anyone practicing spellcraft there at night receives a +2 Enhancement bonus to their Occult rolls.
 
-You may use this spell multiple times for different places, but may not maintain more such hallowed places than you have dots in Legend.
+  You may use this spell multiple times for different places, but may not maintain more such hallowed places than you have dots in Legend.
 
-If you take this as a Boon, you may Imbue 1 Legend instead of Spending.`,
+  If you take this as a Boon, you may Imbue 1 Legend instead of Spending.`,
+    length: 'long',
   },
   {
     title: 'Rust and Ruin',

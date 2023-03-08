@@ -84,18 +84,18 @@ html, body {
 }
 .details, textarea {
   font-family: Noto Serif, serif;
-  font-size: 9px;
+  font-size: 10px;
   text-align: justify;
   white-space: normal;
   margin: var(--sep);
 }
 
 .details.long, textarea.long, .flavor.long {
-  font-size: 8px;
+  font-size: 9px;
 }
 
 .details.verylong, textarea.verylong, .flavor.verylong {
-  font-size: 7.5px;
+  font-size: 8px;
 }
 
 .details > ul {
@@ -181,4 +181,9 @@ input {
   white-space: normal;
   margin-top: var(--sep);
   font-size: 10px;
+}
+
+.indent {
+  display: inline-block;
+  margin-left: 2em;
 }
