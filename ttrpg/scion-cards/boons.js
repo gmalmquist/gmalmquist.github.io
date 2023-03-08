@@ -54,54 +54,51 @@ This Boon is free to use on trivial targets.`,
     subject: 'Self',
     mechanics: `You choose an animal and emulate one of its iconic traits. Pick one of the following benefits:
 
-  <b>Mobility</b>: You can swim like a dolphin, burrow like a termite, or emulate flight with graceful leaps. You can ignore any dangerous or difficult terrain, barriers, or hazards that form of movement could reasonably bypass.
+    <b>Mobility</b>: You can swim like a dolphin, burrow like a termite, or emulate flight with graceful leaps. You can ignore any dangerous or difficult terrain, barriers, or hazards that form of movement could reasonably bypass.
 
-  <b>Senses</b>: Choose a specific circumstance in which the animal’s senses give an advantage — an eagle’s eyes can see clearly from far away, a bat can echolocate in total darkness, while a dog can track by scent for miles. You have Enhancement 3 on sense-based rolls where that advantage applies.
+    <b>Senses</b>: Choose a specific circumstance in which the animal’s senses give an advantage — an eagle’s eyes can see clearly from far away, a bat can echolocate in total darkness, while a dog can track by scent for miles. You have Enhancement 3 on sense-based rolls where that advantage applies.
 
-  <b>Other</b>: Pick a miscellaneous trait, like an octopus’s camouflage, an anglerfish’s bioluminescence, etc. You either have Enhancement 2 on actions that trait benefits, or ignore up to 3 points of Complication it negates, whichever best represents the chosen trait.`,
-    length: 'long',
+    <b>Other</b>: Pick a miscellaneous trait, like an octopus’s camouflage, an anglerfish’s bioluminescence, etc. You either have Enhancement 2 on actions that trait benefits, or ignore up to 3 points of Complication it negates, whichever best represents the chosen trait.`,
   },
   {
     title: 'LEADER OF THE PACK',
-	purview: 'BEASTS',
-	cost: 'Imbue 1 Legend',
-	action: 'Simple',
-	range: '',
-	duration: 'Indefinite',
-	subject: 'Self',
-	mechanics: `You can speak to and understand all animals.
+    purview: 'BEASTS',
+    cost: 'Imbue 1 Legend',
+    action: 'Simple',
+    range: '',
+    duration: 'Indefinite',
+    subject: 'Self',
+    mechanics: `You can speak to and understand all animals.
 
-Animals that don’t have a Legend rating treat their Attitude towards you as one point higher when determining whether you can persuade them to take on a task. This does not stack with other magical Attitude bonuses.
+  Animals that don’t have a Legend rating treat their Attitude towards you as one point higher when determining whether you can persuade them to take on a task. This does not stack with other magical Attitude bonuses.
 
-Once you reclaim the Legend from this Boon, your animal helpers will still try to complete your requests, but may become distractible or less reliable, at the Storyguide’s discretion.`,
-	clash: '',
+  Once you reclaim the Legend from this Boon, your animal helpers will still try to complete your requests, but may become distractible or less reliable, at the Storyguide’s discretion.`,
   },
   {
     title: 'TOOTH AND CLAW',
-	purview: 'BEASTS',
-	cost: 'Imbue 1 Legend',
-	action: 'Reflexive',
-	range: '',
-	duration: 'One scene',
-	subject: 'Self',
-	mechanics: `Choose an animal whose natural ferocity you wish to evoke. Your brawling attacks gain the Lethal tag and up to three points of other weapon tags appropriate to the chosen animal, such as Grappling and Piercing for an alligator’s bite or Pushing and Piercing for a rhino’s charge.`,
-	clash: '',
+    purview: 'BEASTS',
+    cost: 'Imbue 1 Legend',
+    action: 'Reflexive',
+    range: '',
+    duration: 'One scene',
+    subject: 'Self',
+    mechanics: `Choose an animal whose natural ferocity you wish to evoke. Your brawling attacks gain the Lethal tag and up to three points of other weapon tags appropriate to the chosen animal, such as Grappling and Piercing for an alligator’s bite or Pushing and Piercing for a rhino’s charge.`,
   },
   {
     title: 'DRAW BACK THE MASK',
-	purview: 'BEAUTY',
-	cost: 'Spend 1 Legend',
-	action: 'Simple',
-	range: 'Short',
-	duration: 'Condition',
-	subject: 'One character or multiple trivial characters',
-	mechanics: `You can bestow blessings that reveal a person’s true beauty, or curses that mar them with ugliness.
+    purview: 'BEAUTY',
+    cost: 'Spend 1 Legend',
+    action: 'Simple',
+    range: 'Short',
+    duration: 'Condition',
+    subject: 'One character or multiple trivial characters',
+    mechanics: `You can bestow blessings that reveal a person’s true beauty, or curses that mar them with ugliness.
 
-Your blessing or curse takes the form of a Condition imposed on one character, or on all trivial targets within range. Using this Boon on trivial targets is free.
+  Your blessing or curse takes the form of a Condition imposed on one character, or on all trivial targets within range. Using this Boon on trivial targets is free.
 
-A blessed character may use their beauty once per scene to add Enhancement 2 on any roll made with a Social Attribute. This Condition resolves once its benefit has been applied a total of your (Legend + 1) times.
+  A blessed character may use their beauty once per scene to add Enhancement 2 on any roll made with a Social Attribute. This Condition resolves once its benefit has been applied a total of your (Legend + 1) times.
 
-A cursed character suffers a +2 Complication on all Social rolls where their distorted appearance is a disadvantage. This Condition can be resolved by making a sincere and heartfelt apology to someone the target has wronged in a significant way, or with curse-breaking magic.`,
+  A cursed character suffers a +2 Complication on all Social rolls where their distorted appearance is a disadvantage. This Condition can be resolved by making a sincere and heartfelt apology to someone the target has wronged in a significant way, or with curse-breaking magic.`,
   },
   {
     title: 'LASTING IMPRESSION',
@@ -118,7 +115,6 @@ A cursed character suffers a +2 Complication on all Social rolls where their dis
   It can be resolved by enjoying a moment of physical intimacy (e.g. sex, a passionate kiss, a really good hug) with you, or when you reject the target’s advances.
 
   Reclaiming the Legend imbued in this Boon also resolves the Condition.`,
-    length: 'long',
   },
   {
     title: 'VISAGE GREAT AND TERRIBLE',
@@ -272,7 +268,6 @@ You can put multiple trivial targets to sleep as long as they are in this Boon�
   As a default, the Condition increases the difficulty of all actions that character takes by +2, except actions that have the potential to harm them or otherwise traumatically expiate their guilt.
 
   The Condition resolves when the affected character confesses their responsibility to someone who trusts them or when you reclaim the Legend imbued in this Boon.`,
-    length: 'long',
   },
   {
     title: 'EPHEMERA',
@@ -551,7 +546,6 @@ At your option, trivial targets may die on the spot from agonizingly rapid cance
 All members of a blessed family have Enhancement 2 to resist poison or disease. They never suffer from infertility or complications relating to pregnancy. Any children conceived or born during this Boon’s duration are hale and hearty, guaranteed to survive through adolescence unless harmed by unnatural causes. Such children often have a sensitivity or affinity for the supernatural and are likely to grow up to become Prophets or Saints, or even Scions.
 
 A blighted family suffers from total infertility. They are unable to conceive children, and any ongoing pregnancies end in miscarriage. Weaker members of the family — usually children or the elderly — that are trivial targets will most likely die of natural causes within a day, capable of being prevented only through intensive medical care throughout the duration of this Boon.`,
-    length: 'long',
     isContinued: true,
   },
   {
@@ -664,16 +658,15 @@ As long as it is notionally possible that you could complete the project with (L
     subject: 'One character',
     mechanics: `You divine a character’s luck in the near future.
 
-  Out of character, you decide whether they will enjoy good or suffer bad luck as a Condition. 
+    Out of character, you decide whether they will enjoy good or suffer bad luck as a Condition. 
 
-  Once per scene, before that character makes a roll, you can declare that their luck intervenes — good luck lowers the target number by 1, while bad luck increases it by 1.
+    Once per scene, before that character makes a roll, you can declare that their luck intervenes — good luck lowers the target number by 1, while bad luck increases it by 1.
 
-  You can invoke their luck even if your character is not in the scene.
+    You can invoke their luck even if your character is not in the scene.
 
-  A character’s good luck runs out once this benefit has been applied a total of your (Legend + 1) times.
+    A character’s good luck runs out once this benefit has been applied a total of your (Legend + 1) times.
 
-  Bad luck runs out at the end of a scene where a failure on the penalized roll led to significant consequences, or if the victim accepts a botch offered by the Storyguide on any action.`,
-    length: 'long',
+    Bad luck runs out at the end of a scene where a failure on the penalized roll led to significant consequences, or if the victim accepts a botch offered by the Storyguide on any action.`,
   },
   {
     title: 'FATEFUL CONNECTION',
@@ -888,6 +881,7 @@ If the character is attempting to move across difficult terrain that already exi
   You may change their apparent age, making them seem younger or older as you choose. This does not physically age the target’s body, although they may face age-based Complications on Social actions.
 
   If you use this Boon on yourself, you gain a bonus on rolls with a specific Skill depending on your apparent age:
+
 <span class="indent"><b>Youth:</b> As a young child, you seem full of innocence, adding Enhancement 2 on Empathy rolls.</span>
 <span class="indent"><b>Adult:</b> As a mother or father, you provide comfort, adding Enhancement 2 on Medicine rolls.</span>
 <span class="indent"><b>Elder:</b> You know the secrets of your people, adding Enhancement 2 on Occult rolls.</span>`,
@@ -962,7 +956,6 @@ Other characters gain Enhancement 3 on rolls to detect the inflamed emotion.
 This Condition can be resolved by taking a significant action with the potential for consequences that is motivated by the emotion — starting a bar fight, asking someone out, or skipping work would count.
 
 It also ends if you reclaim the Legend imbued in this Boon.`,
-    length: 'long',
   },
   {
     title: 'TUGGING AT HEARTSTRINGS',
@@ -1106,39 +1099,37 @@ The target of this Boon can sense the beacon from anywhere within the same realm
     subject: 'Self and other characters',
     mechanics: `As you focus on a specific location, motes of starlight wink into existence around you. You must maintain your focus as a Complex action as they build over the course of a few minutes, and can’t use this Boon at all while in combat or similarly fast-paced action.
 
-  Once the action is complete, you disappear in a burst of starlight and instantly reappear anywhere in the World, regardless of distance.
+    Once the action is complete, you disappear in a burst of starlight and instantly reappear anywhere in the World, regardless of distance.
 
-  You can bring up to (Legend) additional willing characters with you when you teleport. Other Scions and mortals Fatebound to you don’t count towards this limit.
+    You can bring up to (Legend) additional willing characters with you when you teleport. Other Scions and mortals Fatebound to you don’t count towards this limit.
 
-  This Boon can’t be used to pass directly from one realm of existence into another. In Terra Incognitae, Overworlds, or Underworlds, the distance you can teleport with a single use is limited to the equivalent to five days and nights of travel within that realm.`,
-    length: 'long',
+    This Boon can’t be used to pass directly from one realm of existence into another. In Terra Incognitae, Overworlds, or Underworlds, the distance you can teleport with a single use is limited to the equivalent to five days and nights of travel within that realm.`,
   },
   {
     title: 'BLINDING GLORY',
-	purview: 'SUN',
-	cost: 'Spend 1 Legend',
-	action: 'Simple',
-	range: 'Medium',
-	duration: 'Condition',
-	subject: '',
-	mechanics: `You unleash a flash of brilliant light, inflicting a blinding Condition on all enemies in range.
+    purview: 'SUN', cost: 'Spend 1 Legend',
+    action: 'Simple',
+    range: 'Medium',
+    duration: 'Condition',
+    subject: '',
+    mechanics: `You unleash a flash of brilliant light, inflicting a blinding Condition on all enemies in range.
 
-When you spend Legend with this Purview’s innate power, you may also use this Boon reflexively and for free.
+  When you spend Legend with this Purview’s innate power, you may also use this Boon reflexively and for free.
 
-In addition, if all targets are trivial, this Boon’s cost is waived.`,
+  In addition, if all targets are trivial, this Boon’s cost is waived.`,
   },
   {
     title: 'HOPE REBORN',
-	purview: 'SUN',
-	cost: 'Imbue 1 Legend',
-	action: 'Simple',
-	range: '',
-	duration: 'One day',
-	subject: 'Self',
-	mechanics: `You embody the glory of the sun and the promise of the dawn.
+    purview: 'SUN',
+    cost: 'Imbue 1 Legend',
+    action: 'Simple',
+    range: '',
+    duration: 'One day',
+    subject: 'Self',
+    mechanics: `You embody the glory of the sun and the promise of the dawn.
 
-Mortals will instinctively see you as the answer to any hopes they may have, and you have Enhancement 3 when you try to identify these hopes or use them as leverage in influence.`,
-	clash: '',
+  Mortals will instinctively see you as the answer to any hopes they may have, and you have Enhancement 3 when you try to identify these hopes or use them as leverage in influence.`,
+    clash: '',
   },
   {
     title: 'PENETRATING GLARE',
@@ -1197,12 +1188,10 @@ This does not stack with other magical Attitude bonuses.`,
     <li>Where should I look to find a tactical advantage? (e.g. a shotgun beneath the bar, corridors too narrow for a full security squad to move through, a war God’s blessed altar)
     <li>What should I be on the lookout for?
     </ul>
-    
     Following the Storyguide’s answer grants Enhancement 3 on applicable rolls.
     
     This never directly benefits attack or defense — if the Storyguide told you about a machine gun hidden in the scene, you would get an Enhancement to find it and get it, but not to shoot with it.
     `,
-    length: 'long',
   },
   {
     title: 'REBORN IN THE DEPTHS',
@@ -1353,7 +1342,7 @@ Enhancement 3 on applicable rolls.`,
 These effects cut both ways — a blessing might make it more difficult for a warrior to undertake a plan if it would lead to his defeat, while a curse might give a foe an Enhancement on actions that lead to their downfall.
 
   This Condition resolves once the outcome you have predicted comes to pass, the Storyguide deems that it is no longer capable of being fulfilled, or you reclaim the Legend imbued in this Boon. It can also be lifted by magic capable of altering destiny, such as marvels of this Purview or the Fortune Purview.`,
-    length: 'very',
+    length: 'long',
   },
   {
     title: 'CAST THE RUNES',
@@ -1383,7 +1372,6 @@ Each use of this Boon only provides this benefit once.`,
     
     You may choose to gain a specific power or make an open-ended request for a Devá’s favor. If you make a specific request, you must contend with a limitation imposed its use by the Devá — a gift of invulnerability might apply against Gods, Titans, and their progeny, but not against mortals, while a loaned weapon might cease to work if you treat a child with less than full respect. If you make an open-ended request, the Storyguide chooses the power you receive, but it carries no restrictions.`,
     continues: true,
-    length: 'long',
   },
   {
     title: 'DEVOTION’S REWARD',
@@ -1446,7 +1434,6 @@ The Storyguide should try to give this answer in the form of a spontaneous, in-c
     Alternatively, you can invite possession by one of your ancestor spirits — called égún by the Òrìshà and ghede by the Loa — to gain the benefits of having them as a Guide. In exchange, the spirit can experience the World vicariously through you, although they won’t actually interfere with your control over your body.
 
     You can only end this Boon once the spirit is ready to leave you. They never overstay their welcome out of malice, but some will press for just one more meal or one last smoke. The usual method for dealing with these spirits is to go off somewhere calm and quiet with a priest (or one of your bandmates, in a pinch), who can politely ask them to depart.`,
-    length: 'long',
   },
   {
     title: 'MOUNTING THE HORSE',
@@ -1615,7 +1602,7 @@ The Storyguide should try to give this answer in the form of a spontaneous, in-c
     In order to receive the answer, you must speak it aloud.  The Storyguide gives you an answer in the form of a speech or poem that you can perform. This information grants Enhancement 3 to any actions that benefit from it. Discovering that a good-looking stranger in a bar is descended from the Theoi would give an Enhancement on a roll to work out which of the Gods he is descended from, but not on a roll to impress him with a pick-up line.
     
     Against trivial targets, you may use this Boon for free.`,
-    length: 'very',
+    length: 'long',
   },
   {
     title: '',
@@ -1660,7 +1647,7 @@ BOONS.sort((a, b) => {
 	return k;
 });
 
-createPages(BOONS, 6, boon => {
+createPages(BOONS, 4, boon => {
   const e = document.createElement('div');
   e.setAttribute('class', `
     card boon

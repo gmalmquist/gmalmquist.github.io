@@ -20,7 +20,6 @@ const FATE_ROLES = [
 			'The Apprentice dies, or is otherwise taken out of play permanently. The Scion fulfills a Deed, and suffers a Failure Deed for an appropriate Calling.',
 			'The Apprentice decides he’s learned all he can from the Scion; convert this Fatebinding to a Rival of the same Strength.',
 		],
-		long: true,
 	},
 	{
 		title: 'BALM',
@@ -93,7 +92,6 @@ const FATE_ROLES = [
 			'The Paramour dies, or is otherwise taken out of play permanently. The Scion fulfills a Deed, and suffers a Failure Deed for an appropriate Calling.',
 			'Happy endings are boring, and Fate decides to throw some tragedy into the mix; convert this Fatebinding to a Canary or Traitor of the same Strength, or the Paramour gains the Imperiled Condition, with the Peril being serious relationship drama that threatens to end the relationship altogether.',
 		],
-		long: true,
 	},
 	{
 		title: 'RIVAL',
@@ -106,7 +104,6 @@ const FATE_ROLES = [
 			'The Rival dies, or is otherwise taken out of play permanently. The Scion fulfills a Deed, and suffers a Failure Deed for an appropriate Calling.',
 			'That smoldering rivalry turns into sexual tension. This Fatebinding becomes a Traitor (Apparent: Paramour, Actual: Rival) with the same Strength.',
 		],
-		long: true,
 	},
 	{
 		title: 'TRAITOR',

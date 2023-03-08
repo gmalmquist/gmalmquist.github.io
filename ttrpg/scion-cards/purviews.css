@@ -1,6 +1,19 @@
-.purview {
-  width: 3.5in;
-  height: 3.5in;
+.card.purview {
+  width: calc(5in - var(--border) * 2);
+  height: calc(3in - var(--border) * 2);
+  transform: translate(-1in, 1in) rotate(-90deg);
+  border-width: 0;
+}
+
+.purview-wrap {
+  position: relative;
+
+  display: inline-block;
+
+  width: 3in;
+  height: 5in;
+
+  border: thick solid white;
 }
 
 .purview .title {
@@ -9,6 +22,43 @@
 }
 
 .purview .details {
+  font-size: 11px;
+}
+
+.purview .details.long {
+  font-size: 9px;
+}
+
+.purview .flavor {
+  font-size: 11px;
+}
+
+.purview .flavor.long {
+  font-size: 10px;
+}
+
+.card.purview {
+  display: grid;
+  grid-template-areas: 'a b';
+  grid-column-gap: 0.125in;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+
+  margin-bottom: 0.125in;
+}
+
+.card.purview:nth-child(0) {
+  grid-area: a;
+}
+.card.purview:nth-child(1) {
+  grid-area: b;
+}
+
+.purview .details {
+}
+
+.purview .field {
+  background-color: #ffffffcc;
 }
 
 .artistry { 

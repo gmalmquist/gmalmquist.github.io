@@ -122,6 +122,13 @@ textarea {
   align-items: stretch;
 }
 
+.column {
+  display: flex;
+  flex-direction: column;
+  justify-items: stretch;
+  align-items: stretch;
+}
+
 .row > * {
   flex-grow: 1;
 }

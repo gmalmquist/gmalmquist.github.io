@@ -22,11 +22,12 @@ This can also bypass Complications that would apply to rolls made through ordina
   },
   {
     title: 'CHAOS',
-	subtitle: 'PURVIEW',
-	flavor: 'Chaos is the unshaped formlessness which preceded the World, and the entropic dissolution that will follow. Chaos encompasses all forms of disorder, both physical and social. Mishaps, mechanical accidents, and unintended consequences with disastrous results all fall under its Purview, as do the human experiences of confusion, social unrest, revolution, and anarchy.',
-	innate: `You walk untouched through chaotic situations, taking no harm from random or haphazard dangers such as debris in a tornado, a freak traffic accident, or being trampled by shoppers on Black Friday.
+    subtitle: 'PURVIEW',
+    flavor: 'Chaos is the unshaped formlessness which preceded the World, and the entropic dissolution that will follow. Chaos encompasses all forms of disorder, both physical and social. Mishaps, mechanical accidents, and unintended consequences with disastrous results all fall under its Purview, as do the human experiences of confusion, social unrest, revolution, and anarchy.',
+    innate: `You walk untouched through chaotic situations, taking no harm from random or haphazard dangers such as debris in a tornado, a freak traffic accident, or being trampled by shoppers on Black Friday.
 
-This does not protect you from damage that results from an action performed with intent to cause harm, like gunfire in a shootout, or environmental situations. This immunity extends to any non-magical dangerous terrain, unless a character in the scene actively created that peril with intent to harm. You still face any Complications that such situations would normally impose — you’re simply guaranteed to come through unscathed.`,
+  This does not protect you from damage that results from an action performed with intent to cause harm, like gunfire in a shootout, or environmental situations. This immunity extends to any non-magical dangerous terrain, unless a character in the scene actively created that peril with intent to harm. You still face any Complications that such situations would normally impose — you’re simply guaranteed to come through unscathed.`,
+    long: true,
   },
   {
     title: 'DARKNESS',
@@ -220,19 +221,21 @@ When you conceal your identity by any means, trivial characters automatically fa
   },
   {
     title: 'WYRD',
-	subtitle: 'ÆSIR SIGNATURE PURVIEW',
-	flavor: 'The Wyrd Purview encompasses the magic used by the Æsir and their worshippers to foretell and manipulate the fates spun by the Nornir. These include galdr (spells and charms) cast through runes or chanting, spá (prophecy), and the practice of seiðr in emulation of the Nornir',
-	innate: `You have a personal fate that you know you are destined to meet.
+    subtitle: 'ÆSIR SIGNATURE PURVIEW',
+    flavor: 'The Wyrd Purview encompasses the magic used by the Æsir and their worshippers to foretell and manipulate the fates spun by the Nornir. These include galdr (spells and charms) cast through runes or chanting, spá (prophecy), and the practice of seiðr in emulation of the Nornir',
+    innate: `You have a personal fate that you know you are destined to meet.
 
-This might be a death whose circumstances mirror those of your divine parent’s fated doom in Ragnarok, a betrayal by those closest to you, the failure of an ambition, or some similar dramatic downfall.
+  This might be a death whose circumstances mirror those of your divine parent’s fated doom in Ragnarok, a betrayal by those closest to you, the failure of an ambition, or some similar dramatic downfall.
 
-Whenever you encounter narrative difficulties that advance your fate or echo its circumstances, or because you are trying to avoid your fate, add 1 Momentum to the pool.`,
+  Whenever you encounter narrative difficulties that advance your fate or echo its circumstances, or because you are trying to avoid your fate, add 1 Momentum to the pool.`,
+    long: true,
   },
   {
     title: 'YOGA',
-	subtitle: 'DEVA SIGNATURE PURVIEW',
-	flavor: 'The yogás are disciplines that cultivate the liberation of the spirit and realization of the ultimate self through selfless action (kárma yóga), personal devotion to divinities (bhakti yóga) and the pursuit of understanding the divine ( jñana yóga). With this Purview, the Devá and their Scions may acquire divine favor and blessings through the practice of these austerities and selfless service. Conveniently, the scriptures and epics in which the Devá feature are full of tales in which the reward of selfless service just happens to be, say, a bow that shoots nukes.',
-	innate: 'Once per scene, when you act selflessly despite hardships in order to uphold a duty or serve someone else, you may allow another player to spend Momentum on an action without having to draw on one of their Virtues. Every point of Momentum they spend also adds another free die, as though they had the Virtuous Condition.',
+    subtitle: 'DEVA SIGNATURE PURVIEW',
+    flavor: 'The yogás are disciplines that cultivate the liberation of the spirit and realization of the ultimate self through selfless action (kárma yóga), personal devotion to divinities (bhakti yóga) and the pursuit of understanding the divine ( jñana yóga). With this Purview, the Devá and their Scions may acquire divine favor and blessings through the practice of these austerities and selfless service. Conveniently, the scriptures and epics in which the Devá feature are full of tales in which the reward of selfless service just happens to be, say, a bow that shoots nukes.',
+    innate: 'Once per scene, when you act selflessly despite hardships in order to uphold a duty or serve someone else, you may allow another player to spend Momentum on an action without having to draw on one of their Virtues. Every point of Momentum they spend also adds another free die, as though they had the Virtuous Condition.',
+    long: true,
   },
   {
     title: 'YAOYOROZU-NO-KAMIGAMI',
@@ -248,9 +251,10 @@ Whenever you encounter narrative difficulties that advance your fate or echo its
   },
   {
     title: 'DODAEM',
-	subtitle: 'MANITOU SIGNATURE PURVIEW',
-	flavor: 'Scions may use this Purview to commune with the totemic dodaem manitou of all things: people, animals, places, and events. It allows personal communion with one’s own dodaem manitou, which brings meaningful dreams and can act as an intermediary with other manitou. It can also be used to enter into conversation with the World, asking the manitou for their favor in exchange for making offerings or abiding by a taboo. A Scion who has cultivated a strong relationship with a manitou can manifest or borrow its powers in exchange for performing a service.',
-	innate: 'Once each scene, you can ask a manitou for its favor as a simple action. It grants Enhancement 3 on relevant rolls for the scene, such as those to hunt a bear or pass through a forest safely. In exchange, it will either ask you for a favor (e.g. the bear’s manitou needs a new charge after the hunt) or impose a restriction (e.g. the forest manitou forbids you from harming living things). You lose the Enhancement if you don’t honor the bargain, and the offended manitou may favor your foes until you make amends with it.',
+    subtitle: 'MANITOU SIGNATURE PURVIEW',
+    flavor: 'Scions may use this Purview to commune with the totemic dodaem manitou of all things: people, animals, places, and events. It allows personal communion with one’s own dodaem manitou, which brings meaningful dreams and can act as an intermediary with other manitou. It can also be used to enter into conversation with the World, asking the manitou for their favor in exchange for making offerings or abiding by a taboo. A Scion who has cultivated a strong relationship with a manitou can manifest or borrow its powers in exchange for performing a service.',
+    innate: 'Once each scene, you can ask a manitou for its favor as a simple action. It grants Enhancement 3 on relevant rolls for the scene, such as those to hunt a bear or pass through a forest safely. In exchange, it will either ask you for a favor (e.g. the bear’s manitou needs a new charge after the hunt) or impose a restriction (e.g. the forest manitou forbids you from harming living things). You lose the Enhancement if you don’t honor the bargain, and the offended manitou may favor your foes until you make amends with it.',
+    long: true,
   },
   {
     title: 'HEKU',
@@ -266,9 +270,10 @@ Whenever you encounter narrative difficulties that advance your fate or echo its
   },
   {
     title: 'NEXTLAHUALLI',
-	subtitle: 'TEOTL SIGNATURE PURVIEW',
-	flavor: 'The act of sacrifice binds together the Teōtl and their worshippers in reciprocity and mutual gratitude. The Teōtl sustain the World so that humanity can live in it, and in turn their worshippers sustain their Gods through sacrificing flowers, goods, animals, and human lives. Nextlahualli, literally meaning “debt repayment,” describes the cyclical relationship of offerings and obligations at the heart of Teōtl worship. Through this Purview, the Teōtl and their Scions draw sustenance and empowerment from sacrifice and wield that power on behalf of their worshippers.',
-	innate: 'Each time you gain Legend from sacrifice, add 1 Momentum to the pool. Whenever you helping mortals who have sacrificed to you directly or the Teōtl causes narrative difficulties for you, you also add 1 Momentum to it.',
+    subtitle: 'TEOTL SIGNATURE PURVIEW',
+    flavor: 'The act of sacrifice binds together the Teōtl and their worshippers in reciprocity and mutual gratitude. The Teōtl sustain the World so that humanity can live in it, and in turn their worshippers sustain their Gods through sacrificing flowers, goods, animals, and human lives. Nextlahualli, literally meaning “debt repayment,” describes the cyclical relationship of offerings and obligations at the heart of Teōtl worship. Through this Purview, the Teōtl and their Scions draw sustenance and empowerment from sacrifice and wield that power on behalf of their worshippers.',
+    innate: 'Each time you gain Legend from sacrifice, add 1 Momentum to the pool. Whenever you helping mortals who have sacrificed to you directly or the Teōtl causes narrative difficulties for you, you also add 1 Momentum to it.',
+    long: true,
   },
   {
     title: 'GEASA',
@@ -284,24 +289,31 @@ Whenever you encounter narrative difficulties that advance your fate or echo its
   },
 ];
 
-createPages(PURVIEWS, 6, purview => {
+createPages(PURVIEWS, 4, purview => {
   const e = document.createElement('div');
   e.setAttribute('class', `
     card purview
 	${purview.title.toLocaleLowerCase().replace(/[^a-zA-Z0-9]+/, '-')}
   `);
   e.innerHTML = `
-	<div class="title">${purview.title.toLocaleUpperCase()}</div>
-	<div class="subtitle">${purview.subtitle}</div>
-	<div class="flavor compact ${purview.long ? 'long' : ''}">
-	  ${purview.flavor}
+  <div class="column">
+    <div class="title">${purview.title.toLocaleUpperCase()}</div>
+    <div class="subtitle">${purview.subtitle}</div>
+    <div class="flavor small ${purview.long ? 'long' : ''}">
+      ${purview.flavor}
+    </div>
 	</div>
-	<div class="field round-top round-bottom big">
-		<div class="label">INNATE POWER</div>
-		<div class="details ${purview.long ? 'long' : ''}">
-			${purview.innate.trim().replace(/\n+/g, '<p>')}
-		</div>
+  <div class="column">
+    <div class="field round-top round-bottom small">
+      <div class="label">INNATE POWER</div>
+      <div class="details ${purview.long ? 'long' : ''}">
+        ${purview.innate.trim().replace(/\n+/g, '<p>')}
+      </div>
+    </div>
 	</div>
 	`;
-  return e;
+  const wrap = document.createElement('div');
+  wrap.setAttribute('class', 'purview-wrap');
+  wrap.appendChild(e);
+  return wrap;
 });
