@@ -28,6 +28,20 @@
   margin-bottom: 2ex;
 }
 
+.controls {
+  font-size: 0.9em;
+  margin-top: -0.5em;
+  margin-bottom: 1em;
+
+  color: blue;
+
+  text-align: center;
+}
+
+.controls > a + a {
+  margin-left: 1em;
+}
+
 .spacer {
   flex-grow: 1;
   flex-shrink: 1;

@@ -1,32 +1,145 @@
-const spices = {
-  'ADHD': [],
-  'Cluster-A Personality Disorder': ['Paranoid', 'Schizoid', 'Schizotypal'],
-  'Cluster-B Personality Disorder': ['Antisocial', 'Borderline', 'Histronic', 'Narcissistic'],
-  'Cluster-C Personality Disorder': ['Avoidant', 'Dependent', 'Obsessive-Compulsive'],
-  'Bipolar': ['Bipolar I', 'Bipolar II', 'Cyclothymic'],
-  'Body-Dysmorphic Disorder': [],
-  'Conduct Disorder': [],
-  'DID/OSDD': [],
-  'Depersonalization/ Derealization Disorder': [],
-  'Dissociative Amnesia': [],
-  'Eating Disorder': ['Anorexia Nervosa', 'Bulimia Nervosa', 'Pica', '...'],
-  'Gender Dysphoria': [],
-  'Generalized Anxiety Disorder': [],
-  'Sleep-Wake Disorder': ['Insomnia', 'Narcolepsy', 'Nightmare', '...'],
-  'Major Depressive Disorder': [],
-  'Obsessive-Compulsive Disorder': [],
-  'Panic Disorder': [],
-  'Seasonal Affective Disorder': [],
-  'Social Anxiety Disorder': [],
-  'Somatic Symptom': ['Illness Anxiety', '...'],
-  'Substance/ Addictive Disorder': [],
-  'Trauma Disorder': ['PTSD', 'cPTSD', 'Acute Stress', '...',],
-  'Picking Disorder': ['Trichotillomania', 'Skin-Picking', '...'],
-  'Schizophrenia': ['and other psychotic disorders'],
-}
+const diagnoses = {
+  free: 'Autism Spectrum',
+  tiles: {
+    'ADHD': [],
+    'Cluster-A Personality Disorder': ['Paranoid', 'Schizoid', 'Schizotypal'],
+    'Cluster-B Personality Disorder': ['Antisocial', 'Borderline', 'Histronic', 'Narcissistic'],
+    'Cluster-C Personality Disorder': ['Avoidant', 'Dependent', 'Obsessive-Compulsive'],
+    'Bipolar': ['Bipolar I', 'Bipolar II', 'Cyclothymic'],
+    'Body-Dysmorphic Disorder': [],
+    'Conduct Disorder': [],
+    'DID/OSDD': [],
+    'Depersonalization/ Derealization Disorder': [],
+    'Dissociative Amnesia': [],
+    'Eating Disorder': ['Anorexia Nervosa', 'Bulimia Nervosa', 'Pica', '...'],
+    'Gender Dysphoria': [],
+    'Generalized Anxiety Disorder': [],
+    'Sleep-Wake Disorder': ['Insomnia', 'Narcolepsy', 'Nightmare', '...'],
+    'Major Depressive Disorder': [],
+    'Obsessive-Compulsive Disorder': [],
+    'Panic Disorder': [],
+    'Seasonal Affective Disorder': [],
+    'Social Anxiety Disorder': [],
+    'Somatic Symptom Disorder': ['Illness Anxiety', '...'],
+    'Substance/ Addictive Disorder': [],
+    'Trauma Disorder': ['PTSD', 'cPTSD', 'Acute Stress', '...',],
+    'Picking Disorder': ['Trichotillomania', 'Skin-Picking', '...'],
+    'Schizophrenia': ['and other psychotic disorders'],
+  },
+  instructions: `
+    Select all squares you've been diagnosed with (self-diagnoses valid). Past diagnoses & misdiagnoses count if you want them to (you earned them)!
+  `,
+};
 
-const freeSpace = 'Autism Spectrum';
+const symptoms = {
+  free: 'Executive Dysfunction',
+  tiles: {
+    'Agoraphobia': [],
+    'Amnesia': [],
+    'Anger Issues': [],
+    'Anorexia': [],
+    'Anxious Attachment': [],
+    'Auditory Hallucinations': [],
+    'Avoidant Attachment': [],
+    'Binge Eating': [],
+    'Brain Fog': [],
+    'Catastrophizing': [],
+    'Chronic Overwork': [],
+    'Compulsions': [],
+    'Compulsive Lying': [],
+    'Delusions of Grandeur': [],
+    'Depersonalization/ Derealization': [],
+    'Depressive Episodes': [],
+    'Disorganized Thinking': [],
+    'Dissociation': [],
+    'Distractibility': [],
+    'Dysmorphia': [],
+    'Fatigue': [],
+    'Fear of Abandonment': [],
+    'Flashbacks': [],
+    'Food-Related Anxiety': [],
+    'General Anxiety': [],
+    'Heart Palpitations': [],
+    'Hyperfocus': [],
+    'Hypersexuality': [],
+    'Illness Anxiety': [],
+    'Impaired Motor Function': [],
+    'Increased Need for Sleep': [],
+    'Insomnia': [],
+    'Kleptomania': [],
+    'Manic/ Hypomanic Episodes': [],
+    'Mood Swings': [],
+    'Narcolepsy': [],
+    'Night Terrors': [],
+    'Nightmares': [],
+    'Overspending': [],
+    'Overstimulation': [],
+    'Panic Attacks': [],
+    'Paranoia': [],
+    'People Pleasing': [],
+    'Perfectionism': [],
+    'Pressured Speech': [],
+    'Psychomotor Agitation': [],
+    'Psychosis': [],
+    'Racing Thoughts': [],
+    'Reckless Driving': [],
+    'Reduced Need for Sleep': [],
+    'Rejection Sensitivity': [],
+    'Seizures': [],
+    'Self-Harm': [],
+    'Sexual Dysfunction': [],
+    'Sleep Paralysis': [],
+    'Social Anxiety': [],
+    'Specific Phobias': [],
+    'Splitting': ['(in either sense)'],
+    'Stimming': [],
+    'Substance Abuse': [],
+    'Tactile Hallucinations': [],
+    'Time-Blindness': [],
+    'Unalive Ideation': [],
+    'Unstable Identity': [],
+    'Visual Hallucinations': [],
+  },
+  instructions: 'Select all you have experienced.',
+};
+
+const configOptions = {
+  diagnoses,
+  symptoms
+};
+
+const getConfig = () => {
+  const defaultChoice = 'symptoms';
+  const hash = window.location.hash;
+  if (hash.length === 0) return configOptions[defaultChoice];
+  return configOptions[hash.substring(1)] || configOptions[defaultChoice];
+};
+
+const config = getConfig();
+const spices = config.tiles;
+const freeSpace = config.free;
 const letterPattern = /[a-zA-Z]/;
+
+const subtitles = document
+  .getElementsByClassName('subtitle')[0]
+  .innerHTML = config.instructions;
+
+const randomize = (kind) => {
+  window.location.hash = `#${kind}`;
+  window.location.reload();
+};
+
+const controls = document
+  .getElementsByClassName('controls')[0];
+controls.innerHTML = '';
+const randomOptions = Object.keys(configOptions);
+randomOptions.sort();
+randomOptions.forEach(opt => {
+  const a = document.createElement('a');
+  a.setAttribute('href', `javascript:randomize('${opt}')`);
+  a.innerHTML = `random ${opt} board`;
+  controls.appendChild(a);
+});
 
 const renderWords = (text, el) => {
   const element = typeof el === 'undefined' ? document.createElement('div') : el;
