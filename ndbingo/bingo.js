@@ -314,6 +314,9 @@ const checkWins = () => {
 };
 
 const setupTile = (spice, el) => {
+  const alreadyWired = el.innerHTML.trim().length > 0;
+  el.innerHTML = '';
+
   renderWords(spice, el);
 
   const list = spices[spice];
@@ -333,7 +336,7 @@ const setupTile = (spice, el) => {
   if (spice === freeSpace) {
     el.appendChild(createFree());
     el.setAttribute('class', 'tile free');
-  } else {
+  } else if (!alreadyWired) {
     el.addEventListener('click', () => {
       if (el.getAttribute('class').indexOf('selected') >= 0) {
         el.setAttribute('class', 'tile');
@@ -352,18 +355,21 @@ const createFree = () => {
   return e;
 };
 
-const spicePool = Object.keys(spices);
-for (let i = 0; i < tileElements.length && spicePool.length > 0; i++) {
-  if (i === 12) {
-    setupTile(freeSpace, tileElements[i]);
-    continue;
+const setupBoard = () => {
+  const spicePool = Object.keys(spices);
+  for (let i = 0; i < tileElements.length && spicePool.length > 0; i++) {
+    if (i === 12) {
+      setupTile(freeSpace, tileElements[i]);
+      continue;
+    }
+    const spiceIndex = Math.floor(spicePool.length * Math.random());
+    const spice = spicePool[spiceIndex];
+    spicePool.splice(spiceIndex, 1); // remove
+    if (spice === freeSpace) {
+      continue;
+    }
+    setupTile(spice, tileElements[i]);
   }
-  const spiceIndex = Math.floor(spicePool.length * Math.random());
-  const spice = spicePool[spiceIndex];
-  spicePool.splice(spiceIndex, 1); // remove
-  if (spice === freeSpace) {
-    continue;
-  }
-  setupTile(spice, tileElements[i]);
-}
+};
 
+setupBoard();
