@@ -111,7 +111,7 @@ const diagnoses = {
     'Trauma and Stressor Disorders': ['PTSD', 'cPTSD', 'Acute Stress', 'Adjustment', '...'],
   },
   instructions: `
-    Select all squares you've been diagnosed with (self-diagnoses valid). Past diagnoses & misdiagnoses count if you want them to (you earned them)!\nNote that the personality disorders as well as Autism/ADHD were expanded out to ensure there were enough tiles.
+    Select all squares you've been diagnosed with (self-diagnoses valid). Past diagnoses & misdiagnoses count if you want them to (you earned them)! Note that the categories are from the DSM-V, but the personality disorders as well as Autism/ADHD were expanded out to ensure there were enough tiles.
   `,
 };
 
@@ -153,6 +153,7 @@ const symptoms = {
     'Insomnia': [],
     'Kleptomania': [],
     'Manic/ Hypomanic Episodes': [],
+    'Migraines': [],
     'Mood Swings': [],
     'Narcolepsy': [],
     'Night Terrors': [],
@@ -357,8 +358,8 @@ const criminalizeTile = (old) => {
 
   const basicTileStyle = `
     position: absolute;
-    left: 0;
     top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     display: flex;
@@ -369,10 +370,10 @@ const criminalizeTile = (old) => {
     aspect-ratio: 1/1;
     border: thin solid hsl(0, 0%, 75%);
     font-family: sans-serif;
-    font-size: 0.9em;
-    padding: 0.5em;
+    font-size: 10px;
     cursor: ${isFree ? 'default' : 'pointer'};
     user-select: none;
+    overflow: hidden;
   `;
 
   const freeBgColor = 'hsl(30, 100%, 80%)';
@@ -395,6 +396,7 @@ const criminalizeTile = (old) => {
     background: ${selectedBgColor};
     list-style: none;
     pointer-events: none;
+    z-index: 10;
   `);
   selected.innerHTML = inner;
 
@@ -513,7 +515,6 @@ const criminalize = () => {
     e.setAttribute('style', `
       font-size: 0.8em;
       margin-bottom: 2ex;
-      max-width: 60vw;
     `);
   }
 
@@ -523,7 +524,8 @@ const criminalize = () => {
       font-family: sans-serif;
       font-weight: bold;
       font-size: 4em;
-      margin-top: -0.5rem;
+      margin-top: -1rem;
+      margin-bottom: -1rem;
     `);
   }
 
@@ -559,11 +561,10 @@ const criminalize = () => {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       grid-template-rows: repeat(5, 1fr);
-      grid-gap: 1em;
+      grid-gap: 0px;
       overflow: hidden;
       width: 100%;
       justify-content: center;
-      padding-bottom: 10ex;
     `);
   }
 
