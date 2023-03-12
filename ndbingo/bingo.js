@@ -87,31 +87,31 @@ const diagnoses = {
   tiles: {
     'Anxiety Disorders': ['GAD', 'SAD', 'Panic Disorder', 'Phobias', '...'],
     'Bipolar Disorders': ['Bipolar I', 'Bipolar II', 'Cyclothymic'],
-    'Breathing-Related Disorders': ['Sleep Apnea'],
-    'Cluster-A Personality Disorder': ['Paranoid', 'Schizoid', 'Schizotypal'],
-    'Cluster-B Personality Disorder': ['Antisocial', 'Borderline', 'Histronic', 'Narcissistic'],
-    'Cluster-C Personality Disorder': ['Avoidant', 'Dependent', 'Obsessive-Compulsive'],
+    'Breathing-Related Disorders': ['Sleep Apnea', '...'],
+    'Cluster-A Personality Disorders': ['Paranoid', 'Schizoid', 'Schizotypal'],
+    'Cluster-B Personality Disorders': ['Antisocial', 'Borderline', 'Histronic', 'Narcissistic'],
+    'Cluster-C Personality Disorders': ['Avoidant', 'Dependent', 'Obsessive-Compulsive'],
     'Depressive Disorders': ['MDD', 'Premenstrual Dysphoric Disorder', '...'],
-    'Developmental Disorders': ['Language Disorders', 'Motor Disorders', 'etc'],
-    'Disruptive/ Impulse-Control Disorders': ['Oppositional Defiant', 'Antisocial Personality'],
+    'Developmental Disorders': ['Language Disorders', 'Motor Disorders', '...'],
+    'Disruptive/ Impulse-Control Disorders': ['Oppositional Defiant', 'Antisocial Personality', '...'],
     'Dissociative Disorders': ['DID', 'Amnesia', 'Derealization/ Depersonalization', 'OSDD'],
-    'Elimination Disorders': ['Enuresis', 'Encopresis'],
+    'Elimination Disorders': ['Enuresis', 'Encopresis', '...'],
     'Eating Disorders': ['Pica', 'Anorexia', 'Bulimia', '...'],
     'Gender Dysphoria': [],
-    'Neurocognitive Disorders': ['Delirium'],
-    'Neurodivergent': ['Autism Spectrum', 'ADHD', "etc"],
-    'Obsessive-Compulsive Disorders': ['OCD', 'Trichotillomanmia', 'Skin-Picking', 'Hoarding'],
+    'Neurocognitive Disorders': ['Delirium', '...'],
+    'Autism or ADHD': ['Autism Spectrum', 'ADHD'],
+    'Obsessive-Compulsive Disorders': ['OCD', 'Trichotillomanmia', 'Skin-Picking', 'Hoarding', '...'],
     'Paraphilic Disorders': [],
-    'Parasomnias': ['REM Sleep Behavior Disorder', 'Restless Legs Syndrome'],
+    'Parasomnias': ['REM Sleep Behavior Disorder', 'Restless Legs Syndrome', '...'],
     'Schizophrenia Spectrum': ['psychotic disorders'],
     'Sexual Dysfunctions': [],
-    'Sleep-Wake Disorders': ['Insomnia', 'Hypersomnolence', 'Narcolepsy'],
-    'Somatic Symptom Disorders': ['Somatic Symptom Disorder', 'Illness Anxiety Disorder', 'Conversion Disorder', 'Factitious Disorder'],
+    'Sleep-Wake Disorders': ['Insomnia', 'Hypersomnolence', 'Narcolepsy', '...'],
+    'Somatic Symptom Disorders': ['Somatic Symptom Disorder', 'Illness Anxiety Disorder', 'Conversion Disorder', 'Factitious Disorder', '...'],
     'Substance and Addictive Disorders': [],
-    'Trauma and Stressor Disorders': ['PTSD', 'cPTSD', 'Acute Stress', 'Adjustment'],
+    'Trauma and Stressor Disorders': ['PTSD', 'cPTSD', 'Acute Stress', 'Adjustment', '...'],
   },
   instructions: `
-    Select all squares you've been diagnosed with (self-diagnoses valid). Past diagnoses & misdiagnoses count if you want them to (you earned them)!\nNote that the personality disorders as well as Autism and ADHD were expanded out to ensure there were enough tiles.
+    Select all squares you've been diagnosed with (self-diagnoses valid). Past diagnoses & misdiagnoses count if you want them to (you earned them)!\nNote that the personality disorders as well as Autism/ADHD were expanded out to ensure there were enough tiles.
   `,
 };
 
@@ -190,6 +190,34 @@ const symptoms = {
   instructions: 'Select all you have experienced. Note that even while not pulling from a comprehensive list, there are far more than can fit in a single board; you will get a different random subset each time.',
 };
 
+// static ordering for CSS crime version
+const staticCategories = [
+    'Bipolar Disorders',
+    'Breathing-Related Disorders',
+    'Cluster-A Personality Disorders',
+    'Depressive Disorders',
+    'Disruptive/ Impulse-Control Disorders',
+    'Neurocognitive Disorders',
+    'Anxiety Disorders',
+    'Elimination Disorders',
+    'Dissociative Disorders',
+    'Cluster-C Personality Disorders',
+    'Eating Disorders',
+    'Gender Dysphoria',
+    'Parasomnias',
+    'Sexual Dysfunctions',
+    'Developmental Disorders',
+    'Autism or ADHD',
+    'Somatic Symptom Disorders',
+    'Sleep-Wake Disorders',
+    'Schizophrenia Spectrum',
+    'Cluster-B Personality Disorders',
+    'Obsessive-Compulsive Disorders',
+    'Paraphilic Disorders',
+    'Trauma and Stressor Disorders',
+    'Substance and Addictive Disorders',
+];
+
 const configOptions = {
   'DSM-V Categories': diagnoses,
   'Symptoms': symptoms,
@@ -197,6 +225,13 @@ const configOptions = {
 };
 
 const getConfig = () => {
+  if (window.location.hash.indexOf('css-crime') >= 0) {
+    return {
+      ...configOptions['DSM-V Categories'],
+      ordering: staticCategories,
+      isCrime: true,
+    };
+  }
   const defaultChoice = 'Symptoms';
   const hash = window.location.hash.replace(/%20/g, ' ');
   if (hash.length === 0) return configOptions[defaultChoice];
@@ -220,14 +255,26 @@ const randomize = (kind) => {
 const controls = document
   .getElementsByClassName('controls')[0];
 controls.innerHTML = '';
-const randomOptions = Object.keys(configOptions);
-randomOptions.sort();
-randomOptions.forEach(opt => {
-  const a = document.createElement('a');
-  a.setAttribute('href', `javascript:randomize('${opt}')`);
-  a.innerHTML = `Random <i>${opt}</i> Board`;
-  controls.appendChild(a);
-});
+
+if (config.isCrime) {
+  controls.removeAttribute('class');
+  controls.setAttribute('style', `
+    margin-top: -0.5em;
+    margin-bottom: 0.5em;
+  `);
+  controls.innerHTML = `
+    <a href="https://gwenscode.com/ndbingo#DSM-V Categories">Randomized Cards</a>
+  `;
+} else {
+  const randomOptions = Object.keys(configOptions);
+  randomOptions.sort();
+  randomOptions.forEach(opt => {
+    const a = document.createElement('a');
+    a.setAttribute('href', `javascript:randomize('${opt}')`);
+    a.innerHTML = `Random <i>${opt}</i> Board`;
+    controls.appendChild(a);
+  });
+}
 
 const renderWords = (text, el) => {
   const element = typeof el === 'undefined' ? document.createElement('div') : el;
@@ -268,7 +315,109 @@ const renderWords = (text, el) => {
   return element;
 };
 
-const tileElements = document.getElementsByClassName('tile');
+const tileElements = Array.from(document.getElementsByClassName('tile'));
+
+const createTile = () => {
+  const div = document.createElement('div');
+  div.setAttribute('class', 'tile'); 
+  return div;
+};
+
+const grid = document.getElementsByClassName('bingo-grid')[0];
+while (tileElements.length < 25) {
+  const tile = createTile();
+  grid.appendChild(tile);
+  tileElements.push(tile);
+}
+
+const criminalizeTile = (old) => {
+  const tile = document.createElement('div');
+  const inner = old.innerHTML
+    .replace(/class="first-letter"/g, 'style="font-weight: bold;"')
+    .replace(/class="word"/g, `style="
+      word-wrap: anywhere;
+      margin-left: 0.5em;
+    "`)
+    .replace(/class="free-text"/g, `style="
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin: 0.5ex;
+    "`);
+  tile.setAttribute('style', `
+    position: relative;
+    aspect-ratio: 1/1;
+  `);
+
+  const details = document.createElement('details');
+  tile.appendChild(details);
+  details.setAttribute('style', `
+  `);
+
+  const isFree = inner.indexOf('FREE') >= 0;
+
+  const basicTileStyle = `
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    flex-direction: column;
+    aspect-ratio: 1/1;
+    border: thin solid hsl(0, 0%, 75%);
+    font-family: sans-serif;
+    font-size: 0.9em;
+    padding: 0.5em;
+    cursor: ${isFree ? 'default' : 'pointer'};
+    user-select: none;
+  `;
+
+  const freeBgColor = 'hsl(30, 100%, 80%)';
+  const plainBgColor = isFree ? freeBgColor : 'hsl(0, 0%, 98%)'; 
+  const selectedBgColor = isFree ? freeBgColor : 'hsl(200, 100%, 80%)'; 
+
+  const summary = document.createElement('summary');
+  details.appendChild(summary);
+  summary.setAttribute('style', `
+    ${basicTileStyle}
+    background: ${plainBgColor};
+    list-style: none;
+  `);
+  summary.innerHTML = inner;
+
+  const selected = document.createElement('div');
+  details.appendChild(selected);
+  selected.setAttribute('style', `
+    ${basicTileStyle}
+    background: ${selectedBgColor};
+    list-style: none;
+    pointer-events: none;
+  `);
+  selected.innerHTML = inner;
+
+  const specifics = Array.from(selected.getElementsByClassName('specifics'))
+    .map(s => s.innerHTML
+      .replace(/<.*?>/gms, '')
+    )
+    .join(' ');
+  console.log(specifics);
+
+  selected.setAttribute('title', specifics);
+  tile.setAttribute('title', specifics);
+
+  for (const sp of selected.getElementsByClassName('specifics')) {
+    sp.parentNode.removeChild(sp);
+  }
+  for (const sp of tile.getElementsByClassName('specifics')) {
+    sp.parentNode.removeChild(sp);
+  }
+
+  old.parentNode.replaceChild(tile, old);
+  return tile;
+};
 
 const isSelected = (tile) => {
   const k = tile.getAttribute('class');
@@ -355,20 +504,109 @@ const createFree = () => {
   return e;
 };
 
+const criminalize = () => {
+  Array.from(document.getElementsByClassName('tile'))
+    .forEach(criminalizeTile);
+
+  for (const e of document.getElementsByClassName('subtitle')) {
+    e.removeAttribute('class');
+    e.setAttribute('style', `
+      font-size: 0.8em;
+      margin-bottom: 2ex;
+      max-width: 60vw;
+    `);
+  }
+
+  for (const e of document.getElementsByClassName('title')) {
+    e.removeAttribute('class');
+    e.setAttribute('style', `
+      font-family: sans-serif;
+      font-weight: bold;
+      font-size: 4em;
+      margin-top: -0.5rem;
+    `);
+  }
+
+  for (const e of document.getElementsByClassName('bingo-variant')) {
+    e.removeAttribute('class');
+    e.setAttribute('style', `
+      font-family: serif;
+      font-weight: bold;
+      font-size: 2em;
+    `);
+  }
+
+  for (const e of document.getElementsByClassName('bingo-card')) {
+    e.removeAttribute('class');
+    e.setAttribute('style', `
+      display: flex;
+      background: white;
+      flex-direction: column;
+      align-items: center;
+      align-content: stretch;
+      text-align: center;
+      color: #444;
+      max-height: 100vh;
+      overflow: hidden;
+    `);
+  }
+
+  for (const e of document.getElementsByClassName('bingo-grid')) {
+    e.removeAttribute('class');
+    e.setAttribute('style', `
+      flex-grow: 1;
+      flex-shrink: 1;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: repeat(5, 1fr);
+      grid-gap: 1em;
+      overflow: hidden;
+      width: 100%;
+      justify-content: center;
+      padding-bottom: 10ex;
+    `);
+  }
+
+  for (const e of document.getElementsByClassName('spacer')) {
+    e.removeAttribute('class');
+    e.setAttribute('style', `
+      flex-grow: 1;
+      flex-shrink: 1;
+    `);
+  }
+};
+
+const getOrderedTiles = () => {
+  if (config.ordering) {
+    return config.ordering;
+  }
+  const pool = Object.keys(config.tiles);
+  const ordering = [];
+  while (pool.length > 0) {
+    const index = Math.floor(pool.length * Math.random());
+    ordering.push(pool[index]);
+    pool.splice(index, 1);
+  }
+  return ordering;
+};
+
 const setupBoard = () => {
-  const spicePool = Object.keys(spices);
-  for (let i = 0; i < tileElements.length && spicePool.length > 0; i++) {
+  const ordering = getOrderedTiles();
+  for (let i = 0; i < tileElements.length && ordering.length > 0; i++) {
     if (i === 12) {
       setupTile(freeSpace, tileElements[i]);
       continue;
     }
-    const spiceIndex = Math.floor(spicePool.length * Math.random());
-    const spice = spicePool[spiceIndex];
-    spicePool.splice(spiceIndex, 1); // remove
+    const spice = ordering[0];
+    ordering.splice(0, 1);
     if (spice === freeSpace) {
       continue;
     }
     setupTile(spice, tileElements[i]);
+  }
+
+  if (config.isCrime) {
+    criminalize();
   }
 };
 
