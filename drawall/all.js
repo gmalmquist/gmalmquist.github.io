@@ -977,6 +977,9 @@ class SpacePos extends BaseSpaceValue {
     scale(factor) {
         return this.map(p => new Point(p.x * factor, p.y * factor));
     }
+    neg() {
+        return this.map(p => new Point(-p.x, -p.y));
+    }
     static zero(space) {
         return SpacePos.of(Point.ZERO, space);
     }
@@ -2074,6 +2077,7 @@ const Icons = {
     exportImage: iconUrl('export-png.svg'),
     furniture: iconUrl('furniture.svg'),
     flipH: iconUrl('fliph.svg'),
+    flipV: iconUrl('flipv.svg'),
     heartInfo: iconUrl('heart-info.svg'),
     hideAngles: iconUrl('hide-angles.svg'),
     hideGrid: iconUrl('hide-grid.svg'),
@@ -2091,7 +2095,8 @@ const Icons = {
     lockSmall: iconUrl('lock-small.png'),
     moveToWall: iconUrl('move-to-wall.svg'),
     moveToCorner: iconUrl('move-to-corner.svg'),
-    newPage: iconUrl('new-page.svg'),
+    newFile: iconUrl('new-page.svg'),
+    openFile: iconUrl('open-file.svg'),
     panTool: iconUrl('grab.svg'),
     pen: iconUrl('pen.svg'),
     plain: iconUrl('plain.svg'),
@@ -2104,6 +2109,7 @@ const Icons = {
     rotate: iconUrl('rotate.svg'),
     rulerCursor: iconUrl('ruler-cursor.svg'),
     rulerTool: iconUrl('ruler.svg'),
+    saveFile: iconUrl('save-file.svg'),
     showAngles: iconUrl('show-angles.svg'),
     showGrid: iconUrl('show-grid.svg'),
     showJoints: iconUrl('show-joints.svg'),
@@ -2124,6 +2130,8 @@ const Icons = {
     visible: iconUrl('eye-open.svg'),
     window: iconUrl('window.svg'),
     wood: iconUrl('wood.svg'),
+    zoomIn: iconUrl('zoom-in.svg'),
+    zoomOut: iconUrl('zoom-out.svg'),
 };
 const IconImages = (() => {
     const result = {};
@@ -2272,14 +2280,7 @@ class ImageExporter {
                         renderImages('furniture');
                     }
                 }
-                const download = document.createElement('a');
-                download.style.position = 'absolute';
-                download.style.opacity = '0';
-                download.href = compositing.toDataURL('image/png');
-                download.download = 'drawall-floor-plan.png';
-                document.body.prepend(download);
-                download.click();
-                document.body.removeChild(download);
+                App.io.download('drawall-floor-plan.png', compositing.toDataURL('image/png'));
                 document.body.removeChild(compositing);
             };
             dataUrls.forEach((url, i) => {
@@ -2966,6 +2967,17 @@ class AutoForm {
                 setHidden: h => input.setHidden(h),
             };
         }
+        if (field.kind === 'text') {
+            const input = new TextInput();
+            input.onChange(value => this.updateHandle(field, value));
+            return {
+                element: input,
+                setValue: v => input.setValue(v),
+                clear: () => input.clear(),
+                setEnabled: e => input.setEnabled(e),
+                setHidden: h => input.setHidden(h),
+            };
+        }
         if (field.kind === 'number') {
             const input = new NumberInput(typeof field.min !== 'undefined' ? field.min : null, typeof field.max !== 'undefined' ? field.max : null);
             input.onChange(value => this.updateHandle(field, value));
@@ -3442,15 +3454,28 @@ class NumberInput extends MiniFormInput {
 }
 class TextInput extends MiniFormInput {
     constructor() {
-        super(document.createElement('input'));
-        this.element.setAttribute('type', 'text');
-        this.element.style.width = '20em';
+        super(document.createElement('div'));
+        this.addClass('textbox-wrap');
+        this.input = document.createElement('input');
+        this.input.setAttribute('type', 'text');
+        this.label = document.createElement('label');
+        this.element.appendChild(this.label);
+        this.input.addEventListener('blur', () => {
+            this.element.removeChild(this.input);
+            this.element.appendChild(this.label);
+        });
+        this.label.addEventListener('click', () => {
+            this.element.removeChild(this.label);
+            this.element.appendChild(this.input);
+            this.input.focus();
+        });
     }
     getRawValue() {
-        return this.element.value;
+        return this.input.value;
     }
     setRawValue(value) {
-        this.element.value = value;
+        this.input.value = value;
+        this.label.innerHTML = value;
     }
     format(value) {
         return `${value}`;
@@ -3458,6 +3483,11 @@ class TextInput extends MiniFormInput {
     parse(input) {
         const value = input.trim();
         return { value };
+    }
+    bindChangeListener(handle) {
+        setTimeout(() => {
+            this.input.addEventListener('change', () => handle());
+        }, 1);
     }
 }
 class ToggleButton extends IconButton {
@@ -3505,29 +3535,44 @@ class GUI {
         this.topbar = new MiniForm(Array.from(document.getElementsByClassName('topbar'))
             .map(t => t)[0]);
         this.topbar.verticalAlign = 'stretch';
+        this.titlebar = new MiniForm(Array.from(document.getElementsByClassName('titlebar'))
+            .map(t => t)[0]);
+        this.titlebar.verticalAlign = 'stretch';
         this.file = new MiniForm();
         this.selection = new MiniForm();
         this.tool = new MiniForm();
         this.ux = new MiniForm();
         this.project = new MiniForm();
         this.meta = new MiniForm();
+        this.title = new MiniForm();
+        this.titlebar.append(this.title);
+        this.titlebar.appendSpacer();
+        this.titlebar.append(this.project);
+        this.topbar.appendRuler();
+        this.titlebar.append(this.meta);
         this.topbar.append(this.file);
         this.topbar.appendRuler();
         this.topbar.append(this.tool);
         this.topbar.append(this.selection);
         this.topbar.appendSpacer();
         this.topbar.append(this.ux);
-        this.topbar.appendRuler();
-        this.topbar.append(this.project);
-        this.topbar.appendRuler();
-        this.topbar.append(this.meta);
     }
     setup() {
+        this.setupTitle();
         this.setupFile();
         this.setupUx();
         this.setupProject();
         this.setupMeta();
         this.preloadIcons();
+    }
+    setupTitle() {
+        const form = new AutoForm();
+        form.add({
+            kind: 'text',
+            name: 'projectname',
+            value: App.project.projectNameRef,
+        });
+        form.inflate(this.title);
     }
     setupMeta() {
         const form = new AutoForm();
@@ -3597,16 +3642,18 @@ class GUI {
         const form = new AutoForm();
         form.addButton({
             name: 'New',
-            icon: Icons.newPage,
-            onClick: () => {
-                if (App.ecs.entityCount > 0) {
-                    Popup.confirm({
-                        title: 'Create New Project',
-                        body: 'This will clear any unsaved work and open a new project.',
-                        action: () => App.project.newProject(),
-                    });
-                }
-            },
+            icon: Icons.newFile,
+            onClick: () => App.actions.fire('new'),
+        });
+        form.addButton({
+            name: 'Open',
+            icon: Icons.openFile,
+            onClick: () => App.actions.fire('open'),
+        });
+        form.addButton({
+            name: 'Save',
+            icon: Icons.saveFile,
+            onClick: () => App.actions.fire('save'),
         });
         form.addButton({
             name: 'Download Image (Shift+D)',
@@ -3676,6 +3723,25 @@ class GUI {
             enabled: snappingSupported,
         });
         form.addSeparator();
+        form.addButton({
+            name: 'Zoom In',
+            onClick: () => App.actions.fire('zoom-in'),
+            icon: Icons.zoomIn,
+        });
+        form.addButton({
+            name: 'Zoom Out',
+            onClick: () => App.actions.fire('zoom-out'),
+            icon: Icons.zoomOut,
+        });
+        form.addButton({
+            name: 'Recenter View (0)',
+            onClick: () => App.viewport.recenter(),
+            icon: Icons.recenter,
+        });
+        this.ux.clear();
+        form.inflate(this.ux);
+    }
+    addVisibilityOptions(form) {
         const hideVisibilityOptions = Refs.negate(App.settings.showVisibilityOptions);
         form.add({
             name: 'Show/Hide Grid',
@@ -3718,12 +3784,10 @@ class GUI {
             value: App.settings.showVisibilityOptions,
             icons: { on: Icons.visible, off: Icons.invisible },
         });
-        form.addSeparator();
-        form.addButton({
-            name: 'Recenter View (0)',
-            onClick: () => App.viewport.recenter(),
-            icon: Icons.recenter,
-        });
+    }
+    setupProject() {
+        const form = new AutoForm();
+        this.addVisibilityOptions(form);
         form.addSeparator();
         form.add({
             name: 'Kinematics',
@@ -3732,11 +3796,7 @@ class GUI {
             value: App.settings.kinematics,
             icons: { on: Icons.kinematicsOn, off: Icons.kinematicsOff },
         });
-        this.ux.clear();
-        form.inflate(this.ux);
-    }
-    setupProject() {
-        const form = new AutoForm();
+        form.addSeparator();
         const fontSize = form.add({
             name: 'font size',
             label: 'font size',
@@ -4032,6 +4092,14 @@ class Viewport {
     resetChanged() {
         this._changed.set(false);
     }
+    zoomIn() {
+        this.radius = Math.max(10, this.radius / 1.1);
+        this.updateTransforms();
+    }
+    zoomOut() {
+        this.radius = this.radius * 1.1;
+        this.updateTransforms();
+    }
     setup() {
         this.handleResize();
         // sometimes the browser hasn't quite finished rendering things at the
@@ -4146,6 +4214,9 @@ class Canvas2d {
     translate(offset) {
         const off = offset.get('screen');
         this.g.translate(off.x, off.y);
+    }
+    translateTo(position) {
+        this.translate(position.to('screen').toVector());
     }
     rotate(angle) {
         const radians = angle.get('screen');
@@ -4469,15 +4540,6 @@ const GridRenderer = (ecs) => {
         });
     }
 };
-const DebugRenderer = (ecs) => {
-    App.canvas.text({
-        text: `fps: ${Time.fps}`,
-        point: Position(new Point(App.viewport.screen_width - 20, App.viewport.screen_height - 20), 'screen'),
-        align: 'right',
-        baseline: 'bottom',
-        fill: 'black',
-    });
-};
 "use strict";
 class Tool {
     constructor(name) {
@@ -4538,6 +4600,7 @@ class Tools {
     constructor() {
         this.registry = new Map();
         this.toolListeners = new Array();
+        this.stack = new Array();
         this._current = Refs.of(new NoopTool(), (a, b) => a.name === b.name);
         this.chain = new ToolChain()
             .addSingle('pointer tool')
@@ -4553,6 +4616,17 @@ class Tools {
     }
     get currentRef() {
         return this._current;
+    }
+    pushTool() {
+        this.stack.push(this.current.name);
+    }
+    popTool() {
+        const tool = this.stack.pop();
+        if (typeof tool !== 'undefined') {
+            this.set(tool);
+            return tool;
+        }
+        return null;
     }
     register(kind) {
         const tool = new kind();
@@ -4581,6 +4655,8 @@ class Tools {
         this._current.set(tool);
         App.pane.style.cursor = tool.cursor;
         App.gui.tool.clear();
+        App.ui.clearSelection();
+        App.ui.cancelDrag();
         const ui = new AutoForm();
         tool.createUi(ui);
         ui.inflate(App.gui.tool);
@@ -4623,8 +4699,7 @@ class Tools {
         const parts = [tool];
         const keybinds = App.keybindings.values()
             .filter(kb => kb.action === tool)
-            .map(kb => kb.stroke.keys.join('+'))
-            .map(s => s.replace(/ /g, 'Spacebar'))
+            .map(kb => formatKeyStroke(kb.stroke))
             .join(' or ');
         if (keybinds.length > 0) {
             parts.push(`(${keybinds})`);
@@ -4648,12 +4723,21 @@ class UserActions {
         const toggle = (name, ref) => add(name, () => ref.set(!ref.get()));
         toggle('toggle-snap', App.ui.snapping.enableByDefaultRef);
         toggle('toggle-kinematics', App.settings.kinematics);
+        add('toggle-debug', () => {
+            App.debug = !App.debug;
+        });
         add('loop-select', () => App.ui.loopSelect());
         add('select-all', () => App.ui.selectAll());
         add('recenter', () => App.viewport.recenter());
+        add('zoom-in', () => App.viewport.zoomIn());
+        add('zoom-out', () => App.viewport.zoomOut());
         add('undo', () => App.history.undo());
         add('redo', () => App.history.redo());
-        add('flip', () => App.ui.flip());
+        add('flip-h', () => App.ui.flip('horizontal'));
+        add('flip-v', () => App.ui.flip('vertical'));
+        add('new', () => App.project.newProject());
+        add('open', () => App.project.openProject());
+        add('save', () => App.project.saveProject());
         add('export-png', () => App.imageExporter.export());
         // add('foo', () => doFoo());
     }
@@ -4688,7 +4772,12 @@ class UserActions {
 }
 "use strict";
 const formatKeyStroke = (stroke) => {
-    return stroke.keys.sort((a, b) => b.length - a.length).join(' + ');
+    return stroke.keys.sort((a, b) => b.length - a.length)
+        .map(k => k === ' ' ? '⎵' : k)
+        .join(' + ');
+};
+const formatKeyBinding = (keybinding) => {
+    return `${formatKeyStroke(keybinding.stroke)}: ${keybinding.action}`;
 };
 class Keybindings {
     constructor() {
@@ -4707,7 +4796,8 @@ class Keybindings {
         kb.bind('j').to('joint tool');
         kb.bind('n').to('joint tool'); // matches inkscape hotkey
         kb.bind('d').to('furniture tool');
-        kb.bind('f').to('flip');
+        kb.bind('f').to('flip-h');
+        kb.bind('Shift', 'F').to('flip-v');
         kb.bind('Shift', '%').to('toggle-snap');
         kb.bind('k').to('toggle-kinematics');
         kb.bind('Control', 'l').to('loop-select'); // matches blender
@@ -4716,6 +4806,22 @@ class Keybindings {
         kb.bind('Control', 'z').to('undo'); // universal 
         kb.bind('Control', 'Shift', 'Z').to('redo'); // common convention
         kb.bind('Shift', 'D').to('export-png'); // google drive?
+        kb.bind('Shift', '?').to('toggle-debug');
+        // lots of permutations for zooming so that it works
+        // regardless (and so that we prevent the browser's
+        // native zoom from making everything wonky).
+        kb.bind('+').to('zoom-in');
+        kb.bind('=').to('zoom-in');
+        kb.bind('Control', '+').to('zoom-in');
+        kb.bind('Control', 'Shift', '+').to('zoom-in');
+        kb.bind('Control', '=').to('zoom-in');
+        kb.bind('Shift', '+').to('zoom-in');
+        kb.bind('-').to('zoom-out');
+        kb.bind('Control', '-').to('zoom-out');
+        kb.bind('Control', '_').to('zoom-out');
+        kb.bind('Control', 's').to('save'); // universal
+        kb.bind('Control', 'n').to('new'); // universal
+        kb.bind('Control', 'o').to('open'); // universal
         return kb;
     }
     values() {
@@ -5284,6 +5390,9 @@ class Rectangular extends Component {
     }
     set width(d) {
         const w = d.to('model');
+        if (Number.isNaN(w.get('model'))) {
+            return;
+        }
         if (w.get('model') < 0.1) {
             this.widthRef.set(Distance(0.1, 'model'));
             return;
@@ -5295,6 +5404,9 @@ class Rectangular extends Component {
     }
     set height(d) {
         const h = d.to('model');
+        if (Number.isNaN(h.get('model'))) {
+            return;
+        }
         if (h.get('model') < 0.1) {
             this.heightRef.set(Distance(0.1, 'model'));
             return;
@@ -5925,10 +6037,10 @@ class UiState {
     clearHovered() {
         App.ecs.getComponents(Hovered).forEach(h => h.unhover());
     }
-    flip() {
+    flip(axis) {
         var _a;
         for (const handle of this.selection) {
-            (_a = handle.entity.maybe(Furniture)) === null || _a === void 0 ? void 0 : _a.flip();
+            (_a = handle.entity.maybe(Furniture)) === null || _a === void 0 ? void 0 : _a.flip(axis);
         }
     }
     getDragClosure(type = 'minimal', selection) {
@@ -5990,6 +6102,19 @@ class UiState {
             return this.snapping.snapToGlobalRef.get();
         }
         return impossible(snap.category);
+    }
+    initiateDrag() {
+        const event = {
+            kind: 'start',
+            primary: true,
+            start: this.mousePos,
+            position: this.mousePos,
+            delta: Vectors.zero('screen'),
+        };
+        this.mouse.pressed = true;
+        this.mouse.dragging = true;
+        this.mouse.distanceDragged = Distance(0, 'screen');
+        App.tools.current.events.handleDrag(event);
     }
     getDefaultDragHandler(filter) {
         const dispatcher = new UiEventDispatcher(UiState, 'default drag handler');
@@ -6230,14 +6355,31 @@ class UiState {
             if (e.key === 'Delete' || e.key === 'Backspace') {
                 this.deleteSelected();
             }
+            if (e.key === 'Alt') {
+                if (App.tools.current.name !== 'pan tool') {
+                    App.tools.pushTool();
+                    App.tools.set('pan tool');
+                    this.initiateDrag();
+                }
+                e.preventDefault();
+                return;
+            }
             if (App.actions.evaluateKeybindings()) {
                 e.preventDefault();
             }
         });
         this.events.onKey('keyup', e => {
             this.keysPressed.delete(e.key);
+            if (e.key === 'Alt') {
+                if (App.tools.popTool()) {
+                    e.preventDefault();
+                }
+            }
         });
-        window.addEventListener('focus', () => this.keysPressed.clear());
+        window.addEventListener('focus', () => {
+            this.keysPressed.clear();
+            this.cancelDrag();
+        });
         const makeKeyEvent = (kind, e) => ({
             kind,
             key: e.key,
@@ -6289,8 +6431,13 @@ class UiState {
         });
         App.pane.addEventListener('contextmenu', e => e.preventDefault());
         App.pane.addEventListener('mousedown', e => {
+            var _a;
             e.preventDefault();
             this.mouse.buttons = e.buttons;
+            const activeElement = document.activeElement;
+            if (((_a = activeElement === null || activeElement === void 0 ? void 0 : activeElement.tagName) === null || _a === void 0 ? void 0 : _a.toLocaleLowerCase()) === 'input') {
+                activeElement.blur();
+            }
             const event = makeMouseEvent('down', e);
             if (!event.primary) {
                 const tool = App.tools.current;
@@ -8392,7 +8539,16 @@ class Project {
         this.modelUnitRef = Refs.of(Units.distance.get('in'), (a, b) => (a.name === b.name));
         // defines what unit is used to render UI labels.
         this.displayUnitRef = Refs.of(Units.distance.get('ft'), (a, b) => (a.name === b.name));
-        this.gridSpacingRef = Refs.of({ unit: 'feet', value: 1 }, (a, b) => (a.unit === b.unit && a.value === b.value));
+        this.gridSpacingRef = Refs.of(Project.DEFAULT_GRID_SPACING, (a, b) => (a.unit === b.unit && a.value === b.value));
+        this.projectNameRef = Refs.of(Project.DEFAULT_NAME);
+    }
+    get projectName() {
+        const name = this.projectNameRef.get().trim()
+            .replace(/[#%&{}\\<>*?/$!'":@+`|=]+/g, '');
+        return name.toString();
+    }
+    set projectName(name) {
+        this.projectNameRef.set(name);
     }
     get displayUnit() {
         return this.displayUnitRef.get();
@@ -8465,9 +8621,42 @@ class Project {
         return this.displayUnit.format(this.displayUnit.newAmount(roundBy(amount.value, this.displayDecimals)));
     }
     newProject() {
-        App.ecs.deleteEverything();
-        App.viewport.recenter();
-        window.localStorage.removeItem(Project.PROJECT_KEY);
+        const action = () => {
+            App.ecs.deleteEverything();
+            this.gridSpacing = Project.DEFAULT_GRID_SPACING;
+            App.viewport.recenter();
+            this.projectName = Project.DEFAULT_NAME;
+            window.localStorage.removeItem(Project.PROJECT_KEY);
+        };
+        if (App.ecs.getComponents(Wall).length > 0) {
+            Popup.confirm({
+                title: 'Create New Project',
+                body: 'This will clear any unsaved work and open a new project.',
+                action,
+            });
+        }
+        else {
+            action();
+        }
+    }
+    saveProject() {
+        const data = JSON.stringify(this.serialize());
+        const dataUrl = `data:application/json;base64,${btoa(data)}`;
+        const basename = this.projectName;
+        const filename = basename.toLocaleLowerCase().endsWith('.json') ? basename : `${basename}.json`;
+        App.io.download(filename, dataUrl);
+    }
+    openProject() {
+        const load = (json) => {
+            App.pane.style.opacity = '0';
+            this.loadJson(json);
+            setTimeout(() => {
+                App.pane.style.opacity = '1';
+                App.actions.fire('recenter');
+                this.saveLocal();
+            }, 100);
+        };
+        App.io.open(['.json'], url => fetch(url).then(response => response.json()).then(load));
     }
     saveLocal() {
         const data = JSON.stringify(this.serialize());
@@ -8492,6 +8681,8 @@ class Project {
     }
     serialize() {
         return {
+            application: 'drawall',
+            projectName: this.projectName,
             version: Project.STORAGE_VERSION,
             ecs: App.ecs.toJson(),
             gridSpacing: Units.distance.format(this.gridSpacing),
@@ -8500,6 +8691,11 @@ class Project {
         };
     }
     loadJson(json) {
+        if (!json || json.application !== 'drawall') {
+            // TODO: show a dialog to the user?
+            console.error('invalid project file', json);
+            return;
+        }
         this.loadedAt = Time.now;
         App.history.suspendWhile(() => {
             const p = json;
@@ -8517,6 +8713,7 @@ class Project {
                 this.displayUnitRef.set(Units.distance.get(p.displayUnit));
             }
             App.ecs.loadJson(p.ecs);
+            this.projectName = p.projectName || Project.DEFAULT_NAME;
         });
         this.loadedAt = Time.now;
     }
@@ -8524,6 +8721,7 @@ class Project {
         this.modelUnitRef.onChange(_ => this.requestSave('model unit'));
         this.displayUnitRef.onChange(_ => this.requestSave('display unit'));
         this.gridSpacingRef.onChange(_ => this.requestSave('grid spacing'));
+        this.projectNameRef.onChange(_ => this.requestSave('project name'));
     }
     update() {
         const saveReq = this.saveRequestedAt;
@@ -8535,6 +8733,8 @@ class Project {
         }
     }
 }
+Project.DEFAULT_GRID_SPACING = { value: 2, unit: 'feet' };
+Project.DEFAULT_NAME = 'untitled floorplan';
 Project.STORAGE_VERSION = '0.0.1';
 Project.PROJECT_KEY = 'project-data';
 Project.SAVE_FREQUENCY_SECONDS = 0.5;
@@ -8618,13 +8818,44 @@ class Settings {
         this.showLengths = Refs.of(true);
         this.showJoints = Refs.of(false);
         this.showGrid = Refs.of(true);
-        this.showVisibilityOptions = Refs.of(false);
+        this.showVisibilityOptions = Refs.of(true);
         // TODO: why is this field here??? should be w the other
         // snap fields in ux.ts
         this.snapGrid = Refs.of(true);
     }
     get fontSize() {
         return this.fontSizeRef.get();
+    }
+}
+"use strict";
+class IoUtil {
+    download(filename, dataUrl) {
+        var _a;
+        const download = document.createElement('a');
+        download.href = dataUrl.toString();
+        download.download = filename;
+        App.uiJail.appendChild(download);
+        download.click();
+        (_a = download.parentNode) === null || _a === void 0 ? void 0 : _a.removeChild(download);
+        document.body.removeChild(download);
+    }
+    open(extensions, callback) {
+        var _a;
+        const element = document.createElement('input');
+        element.setAttribute('type', 'file');
+        element.setAttribute('accept', extensions.join(', '));
+        element.style.position = 'absolute';
+        element.style.opacity = '0';
+        App.uiJail.appendChild(element);
+        element.addEventListener('change', () => {
+            const files = Array.from(element.files || []);
+            for (const file of files) {
+                callback(URL.createObjectURL(file));
+                break;
+            }
+        });
+        element.click();
+        (_a = element.parentNode) === null || _a === void 0 ? void 0 : _a.removeChild(element);
     }
 }
 "use strict";
@@ -8674,8 +8905,8 @@ class App {
         App.ecs.registerSystem(AngleRenderer);
         App.ecs.registerSystem(WallRenderer);
         App.ecs.registerSystem(WallJointRenderer);
-        App.ecs.registerSystem(RulerRenderer);
         App.ecs.registerSystem(FurnitureRenderer);
+        App.ecs.registerSystem(RulerRenderer);
         App.ecs.registerSystem(MarkupRenderer);
         App.ecs.registerSystem(DebugRenderer);
         App.ecs.registerSystem(ConstraintEnforcer);
@@ -8683,7 +8914,7 @@ class App {
         App.project.loadLocal();
         console.log(`
       hi! if you're here u probably are savvy enough that you'd like some hotkeys:
-      ${App.keybindings.values().map(binding => `\n${binding.stroke.keys.join('+')}: ${binding.action}`).join('')}
+      ${App.keybindings.values().map(binding => `\n${formatKeyBinding(binding)}`).join('')}
     `.trim());
     }
     static update() {
@@ -8707,14 +8938,22 @@ class App {
         }
     }
     static start() {
+        App.pane.style.opacity = '0';
         App.init();
         setInterval(() => this.update(), 15);
+        setTimeout(() => {
+            // give images etc time to load and position, so
+            // things don't look like they're glitching tf out
+            // while the app is first loading.
+            App.pane.style.opacity = '1';
+        }, 100);
     }
 }
 App.ecs = new EntityComponentSystem();
 App.pane = document.getElementsByClassName('canvas-wrap')[0];
 App.referenceImages = document.getElementById('reference-images');
 App.furnitureImages = document.getElementById('furniture-images');
+App.uiJail = document.getElementById('ui-jail');
 App.gui = new GUI();
 App.tools = new Tools();
 App.actions = new UserActions();
@@ -8726,12 +8965,34 @@ App.background = new Canvas2d(document.getElementById('back-canvas'), false);
 App.foreground = new VectorCanvas(document.getElementById('foreground-svg'));
 App.settings = new Settings();
 App.project = new Project();
+App.io = new IoUtil();
 App.history = new ProjectHistory();
 App.imageExporter = new ImageExporter();
 App.rendering = Refs.of(false);
 App.renderReady = Refs.of(false);
 App.debug = false;
 setTimeout(() => App.start(), 10);
+const DebugRenderer = (ecs) => {
+    if (!App.debug)
+        return;
+    App.canvas.text({
+        text: `fps: ${Time.fps}`,
+        point: Position(new Point(App.viewport.screen_width - 20, App.viewport.screen_height - 20), 'screen'),
+        align: 'right',
+        baseline: 'bottom',
+        fill: 'black',
+    });
+    const pressed = App.ui.pressedKeys;
+    if (pressed.length > 0) {
+        App.canvas.text({
+            text: `keys: ${pressed.map(k => k === ' ' ? '⎵' : k).join('+')}`,
+            point: Position(new Point(App.viewport.screen_width - 20, App.viewport.screen_height - 20 - App.settings.fontSize * 1.25), 'screen'),
+            align: 'right',
+            baseline: 'bottom',
+            fill: 'black',
+        });
+    }
+};
 "use strict";
 class FurnitureTool extends Tool {
     constructor() {
@@ -8749,7 +9010,18 @@ class FurnitureTool extends Tool {
     get description() {
         return 'add furniture, doors, and windows';
     }
-    createUi(ui) {
+    createUi(form) {
+        form.addSelect({
+            name: 'Furniture Type',
+            value: Furniture.defaultFurnitureType,
+            items: [
+                { value: 'plain', icon: Icons.plain, },
+                { value: 'wood', icon: Icons.wood, },
+                { value: 'image', icon: Icons.image, },
+                { value: 'door', icon: Icons.door, },
+                { value: 'window', icon: Icons.window, },
+            ],
+        });
     }
     setup() {
         const filter = (h) => h.entity.has(Furniture) || h.control;
@@ -8770,12 +9042,13 @@ class FurnitureTool extends Tool {
                 return;
             }
             // create a lil' piece of furniture
-            const furniture = App.ecs.createEntity().add(Furniture);
+            const furniture = App.ecs.createEntity().add(Furniture, Furniture.defaultFurnitureType.get());
             furniture.rect.center = App.ui.mousePos;
             furniture.rect.width = Distance(34, 'model');
             furniture.rect.height = Distance(34, 'model');
+            furniture.applyFurnitureTypeConstraints();
+            App.tools.set('pointer tool');
             App.ui.setSelection(furniture.entity.only(Handle));
-            App.pane.style.cursor = this.cursor;
         });
         this.events.addDragListener({
             onStart: e => {
@@ -8793,7 +9066,9 @@ class FurnitureTool extends Tool {
             },
             onEnd: (e, events) => {
                 events === null || events === void 0 ? void 0 : events.handleDrag(e);
-                App.pane.style.cursor = this.cursor;
+                const selection = App.ui.selection;
+                App.tools.set('pointer tool');
+                App.ui.setSelection(...selection);
             }
         });
     }
@@ -8803,7 +9078,7 @@ class FurnitureTool extends Tool {
         const events = new UiEventDispatcher(FurnitureTool, 'draw furnishing');
         events.addDragListener({
             onStart: e => {
-                const furniture = App.ecs.createEntity().add(Furniture);
+                const furniture = App.ecs.createEntity().add(Furniture, Furniture.defaultFurnitureType.get());
                 furniture.rect.center = App.ui.snapPoint(e.start);
                 App.ui.setSelection(furniture.entity.only(Handle));
                 return furniture;
@@ -8826,6 +9101,7 @@ class FurnitureTool extends Tool {
                 furniture.rect.setTop(tl);
             },
             onEnd: (e, furniture) => {
+                furniture.applyFurnitureTypeConstraints();
             },
         });
         events.handleDrag(start);
@@ -8835,8 +9111,28 @@ class FurnitureTool extends Tool {
 App.tools.register(FurnitureTool);
 "use strict";
 var _a;
+const createFurnitureType = (atts) => (Object.assign({ flippable: false, keepOnWall: false, onInit: (_) => { } }, atts));
+//  'image' | 'plain' | 'wood' | 'door' | 'window';
+const FurnitureTypes = {
+    plain: createFurnitureType({}),
+    wood: createFurnitureType({}),
+    door: createFurnitureType({
+        keepOnWall: true,
+        flippable: true,
+    }),
+    window: createFurnitureType({
+        keepOnWall: true,
+    }),
+    image: createFurnitureType({
+        onInit: (f) => {
+            if (!f.entity.has(Imaged)) {
+                f.entity.add(Imaged, 'furniture').showUploadForm();
+            }
+        },
+    }),
+};
 class Furniture extends Component {
-    constructor(entity) {
+    constructor(entity, furnitureType) {
         super(entity);
         this[_a] = true;
         this.attachRef = Refs.of(null, (a, b) => {
@@ -8849,12 +9145,19 @@ class Furniture extends Component {
                 && a.normal.get('model') === b.normal.get('model')
                 && a.point.name === b.point.name;
         });
-        this.materialRef = Refs.of(Furniture.defaultMaterial);
-        this.flippedRef = Refs.of(false);
+        this.flippedHorizontalRef = Refs.of(false);
+        this.flippedVerticalRef = Refs.of(false);
         this.updatingOrientation = false;
         this.rect = entity.getOrCreate(Rectangular);
         this.rect.createHandle({
             priority: 2,
+        });
+        this.furnitureTypeRef = Refs.of(furnitureType);
+        this.attachAllowedRef = Refs.mapRo(this.furnitureTypeRef, m => {
+            if (FurnitureTypes[m].keepOnWall) {
+                return (name) => name === 'center';
+            }
+            return (_) => true;
         });
         const labelLine = Refs.memoReduce((center, axis, width) => new MemoEdge(center.splus(width.scale(0.1), axis.neg()), center.splus(width.scale(0.1), axis)), this.rect.centerRef, this.rect.horizontalAxisRef, this.rect.widthRef);
         this.labelHandle = entity.ecs.createEntity().add(Handle, {
@@ -8866,7 +9169,7 @@ class Furniture extends Component {
             getPos: () => this.rect.center,
             distance: p => labelLine.get().distanceFrom(p),
             priority: 4,
-            visible: () => this.material !== 'door' && this.material !== 'window',
+            visible: () => this.furnitureType !== 'door' && this.furnitureType !== 'window',
         });
         this.labelHandle.events.onMouse('click', () => {
             Popup.input({
@@ -8879,7 +9182,7 @@ class Furniture extends Component {
             const form = new AutoForm();
             form.addSelect({
                 name: 'Furniture Type',
-                value: this.materialRef,
+                value: this.furnitureTypeRef,
                 items: [
                     { value: 'plain', icon: Icons.plain, },
                     { value: 'wood', icon: Icons.wood, },
@@ -8889,9 +9192,16 @@ class Furniture extends Component {
                 ],
             });
             form.addButton({
-                name: 'Flip (f)',
+                name: 'Flip Horizontally (f)',
                 icon: Icons.flipH,
-                onClick: () => this.flip(),
+                enabled: Refs.mapRo(this.furnitureTypeRef, f => FurnitureTypes[f].flippable),
+                onClick: () => this.flip('horizontal'),
+            });
+            form.addButton({
+                name: 'Flip Vertically (Shift + F)',
+                icon: Icons.flipV,
+                enabled: Refs.mapRo(this.furnitureTypeRef, f => FurnitureTypes[f].flippable),
+                onClick: () => this.flip('vertical'),
             });
             form.addButton({
                 name: 'Align to Wall',
@@ -8920,23 +9230,21 @@ class Furniture extends Component {
             return form;
         });
         const edgeListeners = new Map();
-        this.materialRef.onChange(m => {
+        this.furnitureTypeRef.onChange(m => {
             const hadImage = entity.has(Imaged);
-            if (m === 'image') {
-                const img = entity.getOrCreate(Imaged, 'furniture');
-                img.showUploadForm();
-            }
-            else {
+            if (m !== 'image') {
                 entity.removeAll(Imaged);
             }
+            FurnitureTypes[m].onInit(this);
             if (hadImage !== entity.has(Imaged)) {
                 App.ui.updateForms();
             }
-            Furniture.defaultMaterial = m === 'image' ? 'wood' : m;
-            this.applyMaterialConstraints();
-            App.project.requestSave('changed furniture material');
+            Furniture.defaultFurnitureType.set(m);
+            this.applyFurnitureTypeConstraints();
+            App.project.requestSave('changed furniture type');
         });
-        this.flippedRef.onChange(_ => App.project.requestSave('flipped furniture'));
+        this.flippedHorizontalRef.onChange(_ => App.project.requestSave('flipped furniture'));
+        this.flippedVerticalRef.onChange(_ => App.project.requestSave('flipped furniture'));
         this.attachRef.onChange(a => {
             if (a === null)
                 return;
@@ -8957,13 +9265,14 @@ class Furniture extends Component {
             },
             onUpdate: (_e, _c) => {
                 this.attach = this.findAttach();
-                if (this.material === 'door' || this.material === 'window') {
+                const atts = FurnitureTypes[this.furnitureType];
+                if (atts.keepOnWall) {
                     this.centerOnWall(true);
                 }
             },
             onEnd: (_e, _c) => {
                 this.attach = this.findAttach();
-                this.applyMaterialConstraints();
+                this.applyFurnitureTypeConstraints();
             },
         });
         this.rect.rotationRef.onChange(() => {
@@ -8973,11 +9282,15 @@ class Furniture extends Component {
         this.rect.centerRef.onChange(() => this.updateAttachPosition());
         this.rect.widthRef.onChange(() => this.updateAttachPosition());
         this.rect.heightRef.onChange(() => this.updateAttachPosition());
-        this.applyMaterialConstraints();
+        this.applyFurnitureTypeConstraints();
+        if (this.furnitureType === 'image' && !entity.has(Imaged)) {
+            entity.add(Imaged, 'furniture', this.rect).showUploadForm();
+        }
     }
-    applyMaterialConstraints() {
-        const material = this.material;
-        if (material === 'door' || material === 'window') {
+    applyFurnitureTypeConstraints() {
+        const furnitureType = this.furnitureType;
+        const atts = FurnitureTypes[furnitureType];
+        if (atts.keepOnWall) {
             this.rect.allowResizeV.set(false);
             this.rect.allowRotate.set(false);
             this.rect.height = Distance(App.project.modelUnit.from({ value: 2, unit: 'inch' }).value, 'model');
@@ -9056,8 +9369,16 @@ class Furniture extends Component {
             return;
         this.rect.rotation = attach.wall.edge.tangent.neg().angle();
     }
-    flip() {
-        this.flippedRef.set(!this.flippedRef.get());
+    flip(axis) {
+        if (axis === 'horizontal') {
+            this.flippedHorizontalRef.set(!this.flippedHorizontalRef.get());
+            return;
+        }
+        if (axis === 'vertical') {
+            this.flippedVerticalRef.set(!this.flippedVerticalRef.get());
+            return;
+        }
+        return impossible(axis);
     }
     updateOrientation() {
         const attach = this.attach;
@@ -9070,15 +9391,18 @@ class Furniture extends Component {
         this.updatingOrientation = false;
     }
     getDragPoints() {
-        return this.entity.only(Handle).getDragClosure('complete').points;
+        return this.entity.only(Handle)
+            .getDragClosure('complete').points
+            .filter(p => this.attachAllowed(p.name));
     }
     findAttach() {
         const epsDistance = Distance(0.1, 'model');
-        const closure = this.entity.only(Handle).getDragClosure('complete');
-        const positions = closure.points.map(p => p.get());
-        const pointOrdering = closure.points.map((_, i) => i);
+        const points = this.getDragPoints();
+        const positions = points.map(p => p.get());
+        const pointOrdering = points.map((_, i) => i);
         const furnitureAngle = this.rect.rotation;
         reverseInPlace(pointOrdering); // ensure midpoints come first
+        const keepOnWall = FurnitureTypes[this.furnitureType].keepOnWall;
         const best = argmin(App.ecs.getComponents(Wall), wall => {
             const edge = wall.entity.only(PhysEdge).edge;
             const wallToCenter = Vectors.between(edge.midpoint, this.rect.center);
@@ -9088,7 +9412,7 @@ class Furniture extends Component {
                 if (s < 0 || s > 1)
                     return 'invalid';
                 const d = Vectors.between(edge.src, p).dot(edge.normal);
-                if (d.gt(epsDistance)) {
+                if (!keepOnWall && d.gt(epsDistance)) {
                     return 'invalid'; // on the wrong side of the wall
                 }
                 return { at: s, distance: d };
@@ -9105,7 +9429,7 @@ class Furniture extends Component {
             }
             return {
                 wall,
-                point: closure.points[index],
+                point: points[index],
                 normal: result.distance,
                 at: result.at,
                 rotation: furnitureAngle.minus(edge.tangent.angle()),
@@ -9133,11 +9457,15 @@ class Furniture extends Component {
         attach.at = edge.unlerp(position);
         attach.normal = edge.normal.dot(Vectors.between(edge.src, position));
     }
-    get material() {
-        return this.materialRef.get();
+    attachAllowed(name) {
+        const filter = this.attachAllowedRef.get();
+        return filter(name);
     }
-    set material(m) {
-        this.materialRef.set(m);
+    get furnitureType() {
+        return this.furnitureTypeRef.get();
+    }
+    set furnitureType(m) {
+        this.furnitureTypeRef.set(m);
     }
     get attach() {
         var _b, _d;
@@ -9162,7 +9490,9 @@ class Furniture extends Component {
                 point: attach.point.name,
                 rotation: MoreJson.angle.to(attach.rotation),
             },
-            material: this.material,
+            furnitureType: this.furnitureType,
+            flippedHorizontal: this.flippedHorizontalRef.get(),
+            flippedVertical: this.flippedVerticalRef.get(),
         };
         return {
             factory: this.constructor.name,
@@ -9171,17 +9501,27 @@ class Furniture extends Component {
     }
 }
 _a = SOLO;
-Furniture.defaultMaterial = 'wood';
+Furniture.defaultFurnitureType = Refs.of('wood');
 ComponentFactories.register(Furniture, (entity, propsJson) => {
     var _b;
     const props = propsJson;
     if (!entity.has(Rectangular)) {
         return 'not ready';
     }
+    if (props.furnitureType === 'image' && !entity.has(Imaged)) {
+        return 'not ready';
+    }
     if (props.attach && !((_b = App.ecs.getEntity(props.attach.wall)) === null || _b === void 0 ? void 0 : _b.has(Wall))) {
         return 'not ready';
     }
-    const furniture = entity.getOrCreate(Furniture);
+    const furniture = entity.getOrCreate(Furniture, props.furnitureType || 'plain');
+    if (props.furnitureType) {
+        // possibly not redundant with above, if we're in the "get"
+        // part of "getOrCreate".
+        furniture.furnitureType = props.furnitureType;
+    }
+    furniture.flippedHorizontalRef.set(!!propsJson.flippedHorizontal);
+    furniture.flippedVerticalRef.set(!!propsJson.flippedVertical);
     if (props.attach) {
         const attach = props.attach;
         furniture.attach = !attach ? null : {
@@ -9193,30 +9533,27 @@ ComponentFactories.register(Furniture, (entity, propsJson) => {
             rotation: MoreJson.angle.from(attach.rotation),
         };
     }
-    if (props.material) {
-        furniture.material = props.material;
-    }
     return furniture;
 });
 const FurnitureRenderer = (ecs) => {
-    const renderMaterial = (furniture) => {
+    const renderFurnitureType = (furniture) => {
         const rect = furniture.rect;
-        const material = furniture.material;
+        const furnitureType = furniture.furnitureType;
         const drawNarrow = (pixels) => {
-            const thickness = Distance(pixels, 'screen');
             const rect = furniture.rect;
+            const origin = Positions.zero('screen');
+            const vertical = rect.verticalAxis.to('screen').unit().scale(pixels);
+            const horizontal = rect.rightRad.to('screen');
             App.canvas.beginPath();
-            App.canvas.moveTo(rect.left.splus(thickness, rect.verticalAxis));
-            App.canvas.lineTo(rect.left.splus(thickness, rect.verticalAxis.neg()));
-            App.canvas.lineTo(rect.right.splus(thickness, rect.verticalAxis.neg()));
-            App.canvas.lineTo(rect.right.splus(thickness, rect.verticalAxis));
+            App.canvas.moveTo(origin.plus(horizontal).plus(vertical));
+            App.canvas.lineTo(origin.plus(horizontal).plus(vertical.neg()));
+            App.canvas.lineTo(origin.minus(horizontal).plus(vertical.neg()));
+            App.canvas.lineTo(origin.minus(horizontal).plus(vertical));
             App.canvas.closePath();
-            App.canvas.fill();
-            App.canvas.stroke();
         };
         App.canvas.lineWidth = 1;
         App.canvas.setLineDash([]);
-        if (material === 'plain') {
+        if (furnitureType === 'plain') {
             App.canvas.lineWidth = 2;
             App.canvas.fillStyle = 'lightgray';
             App.canvas.strokeStyle = 'darkgray';
@@ -9224,7 +9561,7 @@ const FurnitureRenderer = (ecs) => {
             App.canvas.fill();
             App.canvas.stroke();
         }
-        else if (material === 'wood') {
+        else if (furnitureType === 'wood') {
             App.canvas.lineWidth = 2;
             App.canvas.fillStyle = 'hsl(30, 60%, 60%)';
             App.canvas.strokeStyle = 'hsl(30, 60%, 30%)';
@@ -9239,34 +9576,55 @@ const FurnitureRenderer = (ecs) => {
             App.canvas.strokeLine(rect.left.splus(inset1, rect.horizontalAxis).plus(mg(rect.upRad)), rect.right.splus(inset2.neg(), rect.horizontalAxis).plus(mg(rect.upRad)));
             App.canvas.strokeLine(rect.left.splus(inset2, rect.horizontalAxis).plus(mg(rect.downRad)), rect.right.splus(inset1.neg(), rect.horizontalAxis).plus(mg(rect.downRad)));
         }
-        else if (material === 'door') {
+        else if (furnitureType === 'door') {
+            App.canvas.pushTransform();
+            App.canvas.translateTo(rect.center);
+            App.canvas.rotate(Angle(furniture.flippedVerticalRef.get() ? Radians(Math.PI) : Radians(0), 'screen'));
             App.canvas.lineWidth = 1;
             App.canvas.strokeStyle = 'black';
-            App.canvas.fillStyle = 'white';
             drawNarrow(5);
+            App.canvas.stroke();
+            // draw white rect to 'break' the attached wall
+            App.canvas.pushTransform();
+            App.canvas.translate(rect.verticalAxis.to('screen').unit().scale(8));
+            drawNarrow(16);
+            App.canvas.fillStyle = 'white';
+            App.canvas.fill();
+            App.canvas.popTransform();
+            App.canvas.fillStyle = '#dedede';
+            drawNarrow(5);
+            App.canvas.fill();
+            if (furniture.entity.only(Handle).isActive) {
+                drawNarrow(5);
+                App.canvas.stroke();
+            }
             // doors... open o:
             App.canvas.lineWidth = 2;
             App.canvas.setLineDash([4, 4]);
             App.canvas.strokeStyle = 'gray';
             App.canvas.beginPath();
-            if (furniture.flippedRef.get()) {
+            const origin = Positions.zero('screen');
+            if (furniture.flippedHorizontalRef.get() !== furniture.flippedVerticalRef.get()) {
                 const startAngle = rect.horizontalAxis.to('screen').neg().angle().normalize();
-                App.canvas.arc(rect.right, rect.width, startAngle, startAngle.plus(Angle(Radians(Math.PI / 2), 'screen')).normalize(), false);
+                const startPos = origin.plus(rect.rightRad);
+                App.canvas.arc(startPos, rect.width, startAngle, startAngle.plus(Angle(Radians(Math.PI / 2), 'screen')).normalize(), false);
                 App.canvas.stroke();
                 App.canvas.setLineDash([]);
                 App.canvas.lineWidth = 1;
-                App.canvas.strokeLine(rect.right, rect.right.splus(rect.width, rect.upRad.unit()));
+                App.canvas.strokeLine(startPos, startPos.splus(rect.width, rect.upRad.to('screen').unit()));
             }
             else {
                 const startAngle = rect.horizontalAxis.to('screen').angle();
-                App.canvas.arc(rect.left, rect.width, startAngle, startAngle.minus(Angle(Radians(Math.PI / 2), 'screen')).normalize(), true);
+                const startPos = origin.plus(rect.leftRad);
+                App.canvas.arc(startPos, rect.width, startAngle, startAngle.minus(Angle(Radians(Math.PI / 2), 'screen')).normalize(), true);
                 App.canvas.stroke();
                 App.canvas.setLineDash([]);
                 App.canvas.lineWidth = 1;
-                App.canvas.strokeLine(rect.left, rect.left.splus(rect.width, rect.upRad.unit()));
+                App.canvas.strokeLine(startPos, startPos.splus(rect.width, rect.upRad.to('screen').unit()));
             }
+            App.canvas.popTransform();
         }
-        else if (material === 'window') {
+        else if (furnitureType === 'window') {
             App.canvas.lineWidth = 1;
             App.canvas.strokeStyle = 'black';
             // sill
@@ -9284,7 +9642,12 @@ const FurnitureRenderer = (ecs) => {
             App.canvas.stroke();
             // frame
             App.canvas.fillStyle = 'lightgray';
+            App.canvas.pushTransform();
+            App.canvas.translateTo(rect.center);
             drawNarrow(3);
+            App.canvas.fill();
+            App.canvas.stroke();
+            App.canvas.popTransform();
         }
         App.canvas.lineWidth = 1;
         App.canvas.setLineDash([]);
@@ -9317,7 +9680,7 @@ const FurnitureRenderer = (ecs) => {
             axis: rect.rightRad,
             keepUpright: true,
         });
-        if (furniture.material !== 'window' && furniture.material !== 'door') {
+        if (furniture.furnitureType !== 'window' && furniture.furnitureType !== 'door') {
             App.canvas.text({
                 text: App.project.formatDistance(rect.height),
                 fill: BLUE,
@@ -9360,7 +9723,7 @@ const FurnitureRenderer = (ecs) => {
     for (const furniture of ecs.getComponents(Furniture)) {
         const handle = furniture.entity.only(Handle);
         if (!furniture.entity.has(Imaged)) {
-            renderMaterial(furniture);
+            renderFurnitureType(furniture);
         }
         renderLabel(furniture);
         if (!handle.isActive)
@@ -9468,8 +9831,8 @@ class Imaged extends Component {
             }
             this.updateElement();
         };
-        this.image.src = url;
-        this.element.src = url;
+        this.image.src = url.toString();
+        this.element.src = url.toString();
         if (!this.rectHasSize()) {
             this.rectToImageDimensions();
         }
@@ -9505,31 +9868,14 @@ class Imaged extends Component {
         this.element.style.display = width > 0 && height > 0 ? 'block' : 'none';
     }
     showUploadForm() {
-        const extensions = [
+        App.io.open([
             '.gif',
             '.jpeg',
             '.jpg',
             '.png',
             '.svg',
             '.webm',
-        ];
-        const element = document.createElement('input');
-        element.setAttribute('type', 'file');
-        element.setAttribute('accept', extensions.join(', '));
-        element.style.position = 'absolute';
-        element.style.opacity = '0';
-        document.body.appendChild(element);
-        element.addEventListener('change', () => {
-            var _a;
-            const files = Array.from(element.files || []);
-            for (const file of files) {
-                this.setSrc(URL.createObjectURL(file));
-                break;
-            }
-            this.cleanup();
-            (_a = element.parentNode) === null || _a === void 0 ? void 0 : _a.removeChild(element);
-        });
-        element.click();
+        ], url => this.setSrc(url));
     }
     cleanup() {
         if (this.layer === 'reference' && !this.image.src) {
@@ -9792,7 +10138,7 @@ class PanTool extends Tool {
         return 'grab';
     }
     get description() {
-        return 'you can also right or middle click-and-drag with any tool selected.';
+        return 'middle-click + drag, right-click + drag, or hold Alt';
     }
     setup() {
         this.events.addDragListener({

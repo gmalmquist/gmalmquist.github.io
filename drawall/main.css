@@ -7,9 +7,10 @@ body {
   display: grid;
 
   grid-template-columns: min-content 1fr;
-  grid-template-rows: min-content 1fr;
+  grid-template-rows: min-content min-content 1fr;
 
   grid-template-areas:
+    "title title"
     "top top"
     "tool main"
   ;
@@ -23,11 +24,17 @@ body {
   height: 100vh; 
 }
 
+.titlebar {
+  grid-area: title;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  background-color: #f6f5f4;
+  border-bottom: thin solid lightgray;
+}
+
 .topbar {
   grid-area: top;
   border-bottom: thin solid lightgray;
-  padding-left: 1em;
-  padding-right: 1em;
   padding-top: 2px;
   padding-bottom: 2px;
   background-color: #f6f5f4;
@@ -62,6 +69,16 @@ body {
 .toolbar {
   display: flex;
   flex-direction: column;
+}
+
+#ui-jail {
+  position: absolute;
+  overflow: hidden;
+  display: none;
+  left: -100px;
+  top: -100px;
+  width: 0;
+  height: 0;
 }
 
 a {
