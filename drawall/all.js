@@ -2083,6 +2083,7 @@ const Icons = {
     hideDoorArcs: iconUrl('hide-door-arcs.svg'),
     hideDoors: iconUrl('hide-doors.svg'),
     hideFurniture: iconUrl('hide-furniture.svg'),
+    hideFurnitureLabels: iconUrl('hide-furniture-labels.svg'),
     hideGrid: iconUrl('hide-grid.svg'),
     hideGuides: iconUrl('hide-guides.svg'),
     hideImages: iconUrl('hide-images.svg'),
@@ -2119,6 +2120,7 @@ const Icons = {
     showDoorArcs: iconUrl('show-door-arcs.svg'),
     showDoors: iconUrl('show-doors.svg'),
     showFurniture: iconUrl('show-furniture.svg'),
+    showFurnitureLabels: iconUrl('show-furniture-labels.svg'),
     showGrid: iconUrl('show-grid.svg'),
     showGuides: iconUrl('show-guides.svg'),
     showImages: iconUrl('show-images.svg'),
@@ -3774,6 +3776,14 @@ class GUI {
             kind: 'toggle',
             value: App.settings.showFurniture,
             icons: { on: Icons.showFurniture, off: Icons.hideFurniture },
+            hidden: hideVisibilityOptions,
+        });
+        form.add({
+            name: 'Show/Hide Furniture Labels',
+            kind: 'toggle',
+            value: App.settings.showFurnitureLabels,
+            icons: { on: Icons.showFurnitureLabels, off: Icons.hideFurnitureLabels },
+            enabled: App.settings.showFurniture,
             hidden: hideVisibilityOptions,
         });
         form.add({
@@ -6682,13 +6692,8 @@ class PhysEdge extends Component {
         if (this.containedBy(sdf))
             return true;
         const edge = this.edge;
-        // lazy sampling is good enough for now
-        const samples = 100;
-        for (let i = 0; i < samples; i++) {
-            if (sdf.contains(edge.lerp(1.0 * i / samples)))
-                return true;
-        }
-        return false;
+        const hit = sdf.raycast(new SpaceRay(edge.src, edge.vector));
+        return hit !== null && hit.time >= 0 && hit.time <= 1;
     }
     containedBy(sdf) {
         const edge = this.edge;
@@ -8866,6 +8871,7 @@ class Settings {
         this.showDoorArcs = Refs.of(true);
         this.showDoors = Refs.of(true);
         this.showFurniture = Refs.of(true);
+        this.showFurnitureLabels = Refs.of(true);
         this.showGrid = Refs.of(true);
         this.showGuides = Refs.of(true);
         this.showJoints = Refs.of(false);
@@ -8873,8 +8879,6 @@ class Settings {
         this.showReferenceImages = Refs.of(true);
         this.showRoomLabels = Refs.of(true);
         this.showVisibilityOptions = Refs.of(true);
-        // TODO: why is this field here??? should be w the other
-        // snap fields in ux.ts
         this.snapGrid = Refs.of(true);
     }
     get fontSize() {
@@ -8887,8 +8891,50 @@ class Settings {
         Refs.reduceRo(([a, b]) => a || b, this.showReferenceImages, Refs.mapRo(App.tools.currentRef, r => r.name === 'images tool')).onChange(show => {
             App.referenceImages.style.opacity = show ? '1' : '0';
         });
+        this.loadRefs();
+        for (const ref of this.settingsByName().values()) {
+            ref.onChange(_ => this.saveRefs());
+        }
+    }
+    saveRefs() {
+        var _a;
+        const map = this.settingsByName();
+        const obj = {};
+        for (const name of map.keys()) {
+            obj[name] = (_a = map.get(name)) === null || _a === void 0 ? void 0 : _a.get();
+        }
+        window.localStorage.setItem(Settings.STORE_KEY, JSON.stringify(obj));
+    }
+    loadRefs() {
+        var _a;
+        const data = window.localStorage.getItem(Settings.STORE_KEY);
+        if (!data) {
+            return;
+        }
+        const obj = JSON.parse(data);
+        const map = this.settingsByName();
+        for (const key of map.keys()) {
+            const value = obj[key];
+            if (typeof value !== 'undefined') {
+                (_a = map.get(key)) === null || _a === void 0 ? void 0 : _a.set(value);
+            }
+        }
+    }
+    settingsByName() {
+        const me = this;
+        const map = new Map();
+        for (const key of Object.keys(me)) {
+            const ref = me[key];
+            if (typeof ref === 'object'
+                && typeof ref.get === 'function'
+                && typeof ref.set === 'function') {
+                map.set(key, ref);
+            }
+        }
+        return map;
     }
 }
+Settings.STORE_KEY = "settings";
 "use strict";
 class IoUtil {
     download(filename, dataUrl) {
@@ -9247,7 +9293,8 @@ class Furniture extends Component {
                 if (App.tools.current.name === 'furniture tool') {
                     return true;
                 }
-                return App.settings.showFurniture.get();
+                return App.settings.showFurniture.get()
+                    && App.settings.showFurnitureLabels.get();
             },
         });
         this.labelHandle.events.onMouse('click', () => {
