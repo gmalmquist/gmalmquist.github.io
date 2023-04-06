@@ -8837,7 +8837,6 @@ class IoUtil {
         App.uiJail.appendChild(download);
         download.click();
         (_a = download.parentNode) === null || _a === void 0 ? void 0 : _a.removeChild(download);
-        document.body.removeChild(download);
     }
     open(extensions, callback) {
         var _a;
