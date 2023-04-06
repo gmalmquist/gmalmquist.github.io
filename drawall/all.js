@@ -5496,7 +5496,7 @@ class Rectangular extends Component {
             });
             form.add({
                 name: 'rect.width',
-                label: 'width',
+                label: 'length',
                 kind: 'distance',
                 value: this.widthRef,
                 enabled: this.allowResizeH,
@@ -5504,7 +5504,7 @@ class Rectangular extends Component {
             });
             form.add({
                 name: 'rect.height',
-                label: 'height',
+                label: 'width',
                 kind: 'distance',
                 value: this.heightRef,
                 enabled: this.allowResizeV,
@@ -9761,7 +9761,10 @@ class Imaged extends Component {
         this.rect.widthRef.onChange(_ => this.updateElement());
         this.rect.heightRef.onChange(_ => this.updateElement());
         this.rect.rotationRef.onChange(_ => this.updateElement());
-        this.opacity.onChange(o => this.element.style.opacity = `${o}`);
+        this.opacity.onChange(o => {
+            this.element.style.opacity = `${o}`;
+            App.project.requestSave('image opacity changed');
+        });
         this.form = entity.add(Form, () => {
             const form = new AutoForm();
             form.addButton({
@@ -9939,7 +9942,8 @@ Imaged.ZINDEX_ARRAY = Array();
 ComponentFactories.register(Imaged, (entity, url, opacity, layer) => {
     const imaged = entity.getOrCreate(Imaged, layer);
     imaged.setSrc(url);
-    imaged.opacity.set(opacity || Imaged.DEFAULT_OPACITY);
+    imaged.opacity.set(typeof opacity !== 'undefined'
+        ? opacity : Imaged.DEFAULT_OPACITY);
     return imaged;
 });
 "use strict";
