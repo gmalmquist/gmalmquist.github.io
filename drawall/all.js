@@ -2294,7 +2294,7 @@ class ImageExporter {
                         renderImages('furniture');
                     }
                 }
-                App.io.download('drawall-floor-plan.png', compositing.toDataURL('image/png'));
+                App.io.download(`${App.project.projectName}.png`, compositing.toDataURL('image/png'));
                 document.body.removeChild(compositing);
             };
             dataUrls.forEach((url, i) => {
