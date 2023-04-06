@@ -2080,10 +2080,15 @@ const Icons = {
     flipV: iconUrl('flipv.svg'),
     heartInfo: iconUrl('heart-info.svg'),
     hideAngles: iconUrl('hide-angles.svg'),
+    hideDoorArcs: iconUrl('hide-door-arcs.svg'),
+    hideDoors: iconUrl('hide-doors.svg'),
+    hideFurniture: iconUrl('hide-furniture.svg'),
     hideGrid: iconUrl('hide-grid.svg'),
     hideGuides: iconUrl('hide-guides.svg'),
+    hideImages: iconUrl('hide-images.svg'),
     hideJoints: iconUrl('hide-joints.svg'),
     hideLengths: iconUrl('hide-lengths.svg'),
+    hideRoomLabels: iconUrl('hide-room-labels.svg'),
     invisible: iconUrl('eye-closed.svg'),
     image: iconUrl('image.svg'),
     imageUpload: iconUrl('image-upload.svg'),
@@ -2111,10 +2116,15 @@ const Icons = {
     rulerTool: iconUrl('ruler.svg'),
     saveFile: iconUrl('save-file.svg'),
     showAngles: iconUrl('show-angles.svg'),
+    showDoorArcs: iconUrl('show-door-arcs.svg'),
+    showDoors: iconUrl('show-doors.svg'),
+    showFurniture: iconUrl('show-furniture.svg'),
     showGrid: iconUrl('show-grid.svg'),
-    showJoints: iconUrl('show-joints.svg'),
     showGuides: iconUrl('show-guides.svg'),
+    showImages: iconUrl('show-images.svg'),
+    showJoints: iconUrl('show-joints.svg'),
     showLengths: iconUrl('show-lengths.svg'),
+    showRoomLabels: iconUrl('show-room-labels.svg'),
     snapGeomOff: iconUrl('snap-geom-off.svg'),
     snapGeomOn: iconUrl('snap-geom-on.svg'),
     snapGlobalOff: iconUrl('snap-global-off.svg'),
@@ -2272,11 +2282,13 @@ class ImageExporter {
                         g.globalAlpha = 1;
                     });
                 };
-                renderImages('reference');
+                if (App.settings.showReferenceImages.get()) {
+                    renderImages('reference');
+                }
                 for (let i = 0; i < images.length; i++) {
                     const canvasImage = images[i];
                     g.drawImage(canvasImage, 0, 0, canvasImage.width, canvasImage.height);
-                    if (i === 0) {
+                    if (i === 0 && App.settings.showFurniture.get()) {
                         renderImages('furniture');
                     }
                 }
@@ -3748,6 +3760,42 @@ class GUI {
             kind: 'toggle',
             value: App.settings.showGrid,
             icons: { on: Icons.showGrid, off: Icons.hideGrid },
+            hidden: hideVisibilityOptions,
+        });
+        form.add({
+            name: 'Show/Hide Reference Images',
+            kind: 'toggle',
+            value: App.settings.showReferenceImages,
+            icons: { on: Icons.showImages, off: Icons.hideImages },
+            hidden: hideVisibilityOptions,
+        });
+        form.add({
+            name: 'Show/Hide Furniture',
+            kind: 'toggle',
+            value: App.settings.showFurniture,
+            icons: { on: Icons.showFurniture, off: Icons.hideFurniture },
+            hidden: hideVisibilityOptions,
+        });
+        form.add({
+            name: 'Show/Hide Doors',
+            kind: 'toggle',
+            value: App.settings.showDoors,
+            icons: { on: Icons.showDoors, off: Icons.hideDoors },
+            hidden: hideVisibilityOptions,
+        });
+        form.add({
+            name: 'Show/Hide Door Arcs',
+            kind: 'toggle',
+            value: App.settings.showDoorArcs,
+            icons: { on: Icons.showDoorArcs, off: Icons.hideDoorArcs },
+            enabled: App.settings.showDoors,
+            hidden: hideVisibilityOptions,
+        });
+        form.add({
+            name: 'Show/Hide Room Labels',
+            kind: 'toggle',
+            value: App.settings.showRoomLabels,
+            icons: { on: Icons.showRoomLabels, off: Icons.hideRoomLabels },
             hidden: hideVisibilityOptions,
         });
         form.add({
@@ -5747,9 +5795,10 @@ ComponentFactories.register(Rectangular, (entity, props) => {
     rect.height = MoreJson.distance.from(props.height);
     rect.rotation = MoreJson.angle.from(props.rotation);
     rect.keepAspect = props.keepAspect;
-    if (props.createdHandle) {
-        rect.createHandle(props.handleProps || {});
-    }
+    // let other components set this up
+    //if (props.createdHandle) {
+    //  rect.createHandle(props.handleProps || {});
+    //}
     return rect;
 });
 const RectangularRenderer = (ecs) => {
@@ -7971,7 +8020,7 @@ const WallJointRenderer = (ecs) => {
 };
 const RoomRenderer = (ecs) => {
     ecs.getComponents(Room).forEach(room => {
-        if (!room.isInverted) {
+        if (!room.isInverted && App.settings.showRoomLabels.get()) {
             const labelPos = room.labelPos;
             App.canvas.text({
                 text: room.isInverted ? 'interior wall' : room.name,
@@ -8813,11 +8862,16 @@ class Settings {
     constructor() {
         this.fontSizeRef = Refs.of(16);
         this.kinematics = Refs.of(true);
-        this.showGuides = Refs.of(true);
         this.showAngles = Refs.of(true);
-        this.showLengths = Refs.of(true);
-        this.showJoints = Refs.of(false);
+        this.showDoorArcs = Refs.of(true);
+        this.showDoors = Refs.of(true);
+        this.showFurniture = Refs.of(true);
         this.showGrid = Refs.of(true);
+        this.showGuides = Refs.of(true);
+        this.showJoints = Refs.of(false);
+        this.showLengths = Refs.of(true);
+        this.showReferenceImages = Refs.of(true);
+        this.showRoomLabels = Refs.of(true);
         this.showVisibilityOptions = Refs.of(true);
         // TODO: why is this field here??? should be w the other
         // snap fields in ux.ts
@@ -8825,6 +8879,14 @@ class Settings {
     }
     get fontSize() {
         return this.fontSizeRef.get();
+    }
+    setup() {
+        Refs.reduceRo(([a, b]) => a || b, this.showFurniture, Refs.mapRo(App.tools.currentRef, r => r.name === 'furniture tool')).onChange(show => {
+            App.furnitureImages.style.opacity = show ? '1' : '0';
+        });
+        Refs.reduceRo(([a, b]) => a || b, this.showReferenceImages, Refs.mapRo(App.tools.currentRef, r => r.name === 'images tool')).onChange(show => {
+            App.referenceImages.style.opacity = show ? '1' : '0';
+        });
     }
 }
 "use strict";
@@ -8884,6 +8946,7 @@ class App {
     }
     static init() {
         App.project.setup();
+        App.settings.setup();
         App.viewport.setup();
         App.background.setup();
         App.canvas.setup();
@@ -9150,6 +9213,15 @@ class Furniture extends Component {
         this.rect = entity.getOrCreate(Rectangular);
         this.rect.createHandle({
             priority: 2,
+            visible: () => {
+                if (App.tools.current.name === 'furniture tool') {
+                    return true;
+                }
+                if (this.furnitureType === 'door' || this.furnitureType === 'window') {
+                    return App.settings.showDoors.get();
+                }
+                return App.settings.showFurniture.get();
+            },
         });
         this.furnitureTypeRef = Refs.of(furnitureType);
         this.attachAllowedRef = Refs.mapRo(this.furnitureTypeRef, m => {
@@ -9168,7 +9240,15 @@ class Furniture extends Component {
             getPos: () => this.rect.center,
             distance: p => labelLine.get().distanceFrom(p),
             priority: 4,
-            visible: () => this.furnitureType !== 'door' && this.furnitureType !== 'window',
+            visible: () => {
+                if (this.furnitureType === 'door' || this.furnitureType === 'window') {
+                    return false;
+                }
+                if (App.tools.current.name === 'furniture tool') {
+                    return true;
+                }
+                return App.settings.showFurniture.get();
+            },
         });
         this.labelHandle.events.onMouse('click', () => {
             Popup.input({
@@ -9535,6 +9615,12 @@ ComponentFactories.register(Furniture, (entity, propsJson) => {
     return furniture;
 });
 const FurnitureRenderer = (ecs) => {
+    const showFurniture = App.tools.current.name === 'furniture tool'
+        || App.settings.showFurniture.get();
+    const showDoors = App.tools.current.name === 'furniture tool'
+        || App.settings.showDoors.get();
+    const showDoorArcs = App.tools.current.name === 'furniture tool'
+        || App.settings.showDoorArcs.get();
     const renderFurnitureType = (furniture) => {
         const rect = furniture.rect;
         const furnitureType = furniture.furnitureType;
@@ -9552,7 +9638,7 @@ const FurnitureRenderer = (ecs) => {
         };
         App.canvas.lineWidth = 1;
         App.canvas.setLineDash([]);
-        if (furnitureType === 'plain') {
+        if (furnitureType === 'plain' && showFurniture) {
             App.canvas.lineWidth = 2;
             App.canvas.fillStyle = 'lightgray';
             App.canvas.strokeStyle = 'darkgray';
@@ -9560,7 +9646,7 @@ const FurnitureRenderer = (ecs) => {
             App.canvas.fill();
             App.canvas.stroke();
         }
-        else if (furnitureType === 'wood') {
+        else if (furnitureType === 'wood' && showFurniture) {
             App.canvas.lineWidth = 2;
             App.canvas.fillStyle = 'hsl(30, 60%, 60%)';
             App.canvas.strokeStyle = 'hsl(30, 60%, 30%)';
@@ -9575,7 +9661,7 @@ const FurnitureRenderer = (ecs) => {
             App.canvas.strokeLine(rect.left.splus(inset1, rect.horizontalAxis).plus(mg(rect.upRad)), rect.right.splus(inset2.neg(), rect.horizontalAxis).plus(mg(rect.upRad)));
             App.canvas.strokeLine(rect.left.splus(inset2, rect.horizontalAxis).plus(mg(rect.downRad)), rect.right.splus(inset1.neg(), rect.horizontalAxis).plus(mg(rect.downRad)));
         }
-        else if (furnitureType === 'door') {
+        else if (furnitureType === 'door' && showDoors) {
             App.canvas.pushTransform();
             App.canvas.translateTo(rect.center);
             App.canvas.rotate(Angle(furniture.flippedVerticalRef.get() ? Radians(Math.PI) : Radians(0), 'screen'));
@@ -9597,33 +9683,35 @@ const FurnitureRenderer = (ecs) => {
                 drawNarrow(5);
                 App.canvas.stroke();
             }
-            // doors... open o:
-            App.canvas.lineWidth = 2;
-            App.canvas.setLineDash([4, 4]);
-            App.canvas.strokeStyle = 'gray';
-            App.canvas.beginPath();
-            const origin = Positions.zero('screen');
-            if (furniture.flippedHorizontalRef.get() !== furniture.flippedVerticalRef.get()) {
-                const startAngle = rect.horizontalAxis.to('screen').neg().angle().normalize();
-                const startPos = origin.plus(rect.rightRad);
-                App.canvas.arc(startPos, rect.width, startAngle, startAngle.plus(Angle(Radians(Math.PI / 2), 'screen')).normalize(), false);
-                App.canvas.stroke();
-                App.canvas.setLineDash([]);
-                App.canvas.lineWidth = 1;
-                App.canvas.strokeLine(startPos, startPos.splus(rect.width, rect.upRad.to('screen').unit()));
-            }
-            else {
-                const startAngle = rect.horizontalAxis.to('screen').angle();
-                const startPos = origin.plus(rect.leftRad);
-                App.canvas.arc(startPos, rect.width, startAngle, startAngle.minus(Angle(Radians(Math.PI / 2), 'screen')).normalize(), true);
-                App.canvas.stroke();
-                App.canvas.setLineDash([]);
-                App.canvas.lineWidth = 1;
-                App.canvas.strokeLine(startPos, startPos.splus(rect.width, rect.upRad.to('screen').unit()));
+            if (showDoorArcs) {
+                // doors... open o:
+                App.canvas.lineWidth = 2;
+                App.canvas.setLineDash([4, 4]);
+                App.canvas.strokeStyle = 'gray';
+                App.canvas.beginPath();
+                const origin = Positions.zero('screen');
+                if (furniture.flippedHorizontalRef.get() !== furniture.flippedVerticalRef.get()) {
+                    const startAngle = rect.horizontalAxis.to('screen').neg().angle().normalize();
+                    const startPos = origin.plus(rect.rightRad);
+                    App.canvas.arc(startPos, rect.width, startAngle, startAngle.plus(Angle(Radians(Math.PI / 2), 'screen')).normalize(), false);
+                    App.canvas.stroke();
+                    App.canvas.setLineDash([]);
+                    App.canvas.lineWidth = 1;
+                    App.canvas.strokeLine(startPos, startPos.splus(rect.width, rect.upRad.to('screen').unit()));
+                }
+                else {
+                    const startAngle = rect.horizontalAxis.to('screen').angle();
+                    const startPos = origin.plus(rect.leftRad);
+                    App.canvas.arc(startPos, rect.width, startAngle, startAngle.minus(Angle(Radians(Math.PI / 2), 'screen')).normalize(), true);
+                    App.canvas.stroke();
+                    App.canvas.setLineDash([]);
+                    App.canvas.lineWidth = 1;
+                    App.canvas.strokeLine(startPos, startPos.splus(rect.width, rect.upRad.to('screen').unit()));
+                }
             }
             App.canvas.popTransform();
         }
-        else if (furnitureType === 'window') {
+        else if (furnitureType === 'window' && showDoors) {
             App.canvas.lineWidth = 1;
             App.canvas.strokeStyle = 'black';
             // sill
@@ -9749,6 +9837,11 @@ class Imaged extends Component {
         this.rect = typeof rect !== 'undefined'
             ? rect : entity.getOrCreate(Rectangular);
         this.rect.keepAspect = true;
+        if (layer === 'reference') {
+            this.rect.createHandle({
+                tools: ['images tool'],
+            });
+        }
         this.opacity = Refs.of(layer === 'reference' ? Imaged.DEFAULT_OPACITY : 1);
         this.element = new Image();
         this.element.style.position = 'absolute';
@@ -10017,9 +10110,6 @@ class ImagesTool extends Tool {
         const entity = App.ecs.createEntity();
         const rect = entity.add(Rectangular);
         rect.center = position;
-        rect.createHandle({
-            tools: ['images tool'],
-        });
         const img = entity.add(Imaged, 'reference');
         img.showUploadForm();
     }
