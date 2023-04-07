@@ -2071,6 +2071,7 @@ const Icons = {
     axisUnlocked: iconUrl('axis-unlocked.svg'),
     axisX: iconUrl('axis-x.svg'),
     axisY: iconUrl('axis-y.svg'),
+    blue: iconUrl('blue.svg'),
     centerOnWall: iconUrl('center-on-wall.svg'),
     door: iconUrl('door.svg'),
     editRedo: iconUrl('redo.svg'),
@@ -2079,6 +2080,7 @@ const Icons = {
     furniture: iconUrl('furniture.svg'),
     flipH: iconUrl('fliph.svg'),
     flipV: iconUrl('flipv.svg'),
+    green: iconUrl('green.svg'),
     heartInfo: iconUrl('heart-info.svg'),
     hideAngles: iconUrl('hide-angles.svg'),
     hideDoorArcs: iconUrl('hide-door-arcs.svg'),
@@ -2106,10 +2108,12 @@ const Icons = {
     openFile: iconUrl('open-file.svg'),
     panTool: iconUrl('grab.svg'),
     pen: iconUrl('pen.svg'),
+    pink: iconUrl('pink.svg'),
     plain: iconUrl('plain.svg'),
     pointerTool: iconUrl('cursor.svg'),
     posLocked: iconUrl('pos-locked.svg'),
     posUnlocked: iconUrl('pos-unlocked.svg'),
+    purple: iconUrl('purple.svg'),
     recenter: iconUrl('recenter.svg'),
     resetAspectRatio: iconUrl('reset-aspect-ratio.svg'),
     roomTool: iconUrl('draw-room.svg'),
@@ -9228,6 +9232,10 @@ const createFurnitureType = (atts) => (Object.assign({ flippable: false, keepOnW
 const FurnitureTypes = {
     plain: createFurnitureType({}),
     wood: createFurnitureType({}),
+    blue: createFurnitureType({}),
+    pink: createFurnitureType({}),
+    purple: createFurnitureType({}),
+    green: createFurnitureType({}),
     door: createFurnitureType({
         keepOnWall: true,
         flippable: true,
@@ -9316,6 +9324,10 @@ class Furniture extends Component {
                 items: [
                     { value: 'plain', icon: Icons.plain, },
                     { value: 'wood', icon: Icons.wood, },
+                    { value: 'blue', icon: Icons.blue, },
+                    { value: 'pink', icon: Icons.pink, },
+                    { value: 'purple', icon: Icons.purple, },
+                    { value: 'green', icon: Icons.green, },
                     { value: 'image', icon: Icons.image, },
                     { value: 'door', icon: Icons.door, },
                     { value: 'window', icon: Icons.window, },
@@ -9687,12 +9699,19 @@ const FurnitureRenderer = (ecs) => {
             App.canvas.lineTo(origin.minus(horizontal).plus(vertical));
             App.canvas.closePath();
         };
+        const flatColors = new Map();
+        flatColors.set('plain', ['lightgray', 'darkgray']);
+        flatColors.set('blue', [BLUE, '#046d95']);
+        flatColors.set('pink', [PINK, '#891028']);
+        flatColors.set('purple', ['#cca9f5', '#481089']);
+        flatColors.set('green', ['#a9f5b1', '#10891c']);
         App.canvas.lineWidth = 1;
         App.canvas.setLineDash([]);
-        if (furnitureType === 'plain' && showFurniture) {
+        if (flatColors.has(furnitureType) && showFurniture) {
             App.canvas.lineWidth = 2;
-            App.canvas.fillStyle = 'lightgray';
-            App.canvas.strokeStyle = 'darkgray';
+            const [fill, stroke] = flatColors.get(furnitureType);
+            App.canvas.fillStyle = fill;
+            App.canvas.strokeStyle = stroke;
             App.canvas.polygon(rect.polygon);
             App.canvas.fill();
             App.canvas.stroke();
