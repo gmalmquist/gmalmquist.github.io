@@ -1,7 +1,164 @@
-h1 {
-  font-family: sans-serif;
+:root {
+  --bg-color: #eee;
+  --p0: #F1BAFF;
+  --p1: #B197DE;
+  --p2: #B3B6F5;
+  --p3: #97B7DE;
+  --p4: #ADF4FF;
+  --code-bg: #cef0fd;
+  --code-fg: #5bcefa;
+  --writing-bg: #fce8eb;
+  --writing-fg: #f5a9b8;
+  --other-bg: #e7cefd;
+  --other-fg: #b05bfa;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
 }
 
 body {
+  #background-color: hsl(0, 0%, 4.2%);
+  #background-color: #FCF5E5;
+  background-image: linear-gradient(to bottom, black, 95%, var(--writing-fg));
+  background-attachment: fixed;
+}
+
+h1 {
+  font-family: Tex Gyre Heros, Georgia, sans-serif;
+  font-weight: bold;
+  color: var(--writing-fg);
+  text-align: center;
+  font-size: 4em;
+  opacity: 0.8;
+  margin: 0;
+  padding: 0;
+}
+
+h2 {
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+h2 > a {
+  text-decoration: none;
+}
+
+h2 > a:hover {
+  text-decoration: underline;
+}
+
+h3 {
+  margin: 0;
+  padding: 0;
+}
+
+.page {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.column.code {
+}
+.column.writing {
+}
+.column.other {
+}
+
+.code .project {
+  background-color: var(--code-bg);
+  border-color: var(--code-fg);
+}
+.code h2, .code h3 {
+  color: var(--code-fg);
+}
+.code .thumbnail {
+  border-bottom-color: var(--code-fg);
+}
+.code h2 > a {
+  color: var(--code-fg);
+}
+
+.writing .project {
+  background-color: var(--writing-bg);
+  border-color: var(--writing-fg);
+}
+.writing h2, .writing h3 {
+  color: var(--writing-fg);
+}
+.writing .thumbnail {
+  border-bottom-color: var(--writing-fg);
+}
+.writing h2 > a {
+  color: var(--writing-fg);
+}
+
+.other .project {
+  background-color: var(--other-bg);
+  border-color: var(--other-fg);
+}
+.other h2, .other h3 {
+  color: var(--other-fg);
+}
+.other .thumbnail {
+  border-bottom-color: var(--other-fg);
+}
+.other h2 > a {
+  color: var(--other-fg);
+}
+
+.project {
+  display: flex;
+
+  flex-direction: column;
+  overflow: hidden;
+
+  border-radius: 1ex;
+  border-width: thin;
+  border-style: solid;
+
+  text-decoration: none;
+  color: #444;
+
+  aspect-ratio: 1 / 1;
+
+  width: 75%;
   margin: 1em;
 }
+
+.thumbnail {
+  flex-grow: 1;
+  aspect-ratio: 1 / 1;
+  background-color: lightgray;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top center;
+  border-bottom-width: thin;
+  border-bottom-style: solid;
+}
+
+.project > .description {
+  margin: 1em;
+}
+
+.project > h2 {
+  margin: 0;
+  padding: 0;
+}
+
+.project p {
+  margin: 0;
+  padding: 0;
+}
+
