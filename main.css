@@ -162,3 +162,12 @@ h3 {
   padding: 0;
 }
 
+
+@media only screen and (max-width: 1200px) {
+  .page {
+    grid-template-columns: 1fr;
+  }
+  .project {
+    width: 90%;
+  }
+}
