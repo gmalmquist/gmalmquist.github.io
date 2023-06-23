@@ -49,12 +49,17 @@ h1 {
   text-align: center;
 }
 
+h1 > a {
+  color: var(--other-fg);
+}
+
 .flower {
   background-image: url('./img/trans-pansy-512px.png');
   background-size: contain;
   background-position: center center;
   background-repeat: no-repeat;
   height: 256;
+  margin: 1em;
 }
 
 h2 {
@@ -79,7 +84,7 @@ h3 {
 
 .page {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-template-rows: 1fr;
   margin-left: 1em;
   margin-right: 1em;
@@ -173,7 +178,7 @@ h3 {
 
   aspect-ratio: 1 / 1;
 
-  width: 75%;
+  width: 90%;
   margin: 1em;
 
   text-align: justify;
