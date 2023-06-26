@@ -75,14 +75,21 @@ h1 > a {
   height: 128px;
 }
 
-.flower {
-  background-image: url('./img/trans-pansy-512px.png');
-  background-size: contain;
-  background-position: center center;
-  background-repeat: no-repeat;
-  height: 256px;
+.footer {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  text-align: center;
+
   margin: 1em;
 }
+
+.email {
+  opacity: 0.25;
+}
+
+
 
 h2 {
   margin: 0;
