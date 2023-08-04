@@ -119,6 +119,38 @@ const mkInputs = (updateName, updateStat) => {
   });
 };
 
+const setupFields = () => {
+  for (const el of document.getElementsByClassName('field')) {
+    const multiline = el.getAttribute('class').indexOf('multiline') >= 0;
+    const inputTag = multiline ? 'textarea' : 'input';
+    const input = document.createElement(inputTag);
+
+    const state = { editing: false };
+
+    const edit = () => {
+      if (state.editing) return;
+      state.editing = true;
+      const content = el.innerHTML;
+      el.innerHTML = '';
+      input.value = content.trim().replaceAll('<br>', '\n\n');
+      el.append(input);
+      setInterval(() => { input.focus(); }, 50);
+    };
+
+    const save = () => {
+      if (!state.editing) return;
+      setTimeout(() => { state.editing = false; }, 50);
+      const content = input.value;
+      el.innerHTML = content.trim().replaceAll('\n\n', '<br>');
+    };
+
+    el.ontouchstart = edit;
+    el.onmousedown = edit;
+    input.onblur = save;
+    input.onsubmit = save;
+  }
+};
+
 const setup = () => {
   const svg = document.getElementById('chart');
   const [w, h] = [svg.clientWidth, svg.clientHeight];
@@ -163,6 +195,8 @@ const setup = () => {
   };
 
   mkInputs(updateName, updateStat);
+
+  setupFields();
 };
 
 setTimeout(setup, 1);
