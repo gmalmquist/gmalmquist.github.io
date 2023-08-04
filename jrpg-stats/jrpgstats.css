@@ -2,6 +2,15 @@ body {
   text-align: center;
 }
 
+.screen {
+  background-color: #fefeff;
+  background-image: url('./jrpg-girl.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  margin-left: 4em;
+  margin-right: 4em;
+}
+
 #stats {
   display: flex;
   flex-direction: row;

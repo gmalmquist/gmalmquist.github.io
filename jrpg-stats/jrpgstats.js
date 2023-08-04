@@ -41,15 +41,15 @@ const mkStatagon = (radius, stats) => {
 const mkLabel = (radius, index, label) => {
   const angle = index/5 * TAU - TAU / 4;
   const alignment = [
-    { anchor: 'middle', baseline: 'bottom' },
-    { anchor: 'start', baseline: 'middle' },
-    { anchor: 'middle', baseline: 'top' },
-    { anchor: 'middle', baseline: 'top' },
-    { anchor: 'end', baseline: 'middle' },
+    { anchor: 'middle', baseline: 'middle' },
+    { anchor: 'middle', baseline: 'middle' },
+    { anchor: 'middle', baseline: 'text-after-edge' },
+    { anchor: 'middle', baseline: 'text-after-edge' },
+    { anchor: 'middle', baseline: 'middle' },
   ][index];
   const text = document.createElementNS(SVG, 'text');
   text.setAttributeNS(null, 'text-anchor', alignment.anchor);
-  text.setAttributeNS(null, 'alignment-baseline', alignment.baseline);
+  text.setAttributeNS(null, 'dominant-baseline', alignment.baseline);
   text.setAttributeNS(null, 'x', (radius * Math.cos(angle)).toString());
   text.setAttributeNS(null, 'y', (radius * Math.sin(angle)).toString());
   text.setAttributeNS(null, 'fill', 'rgb(0, 128, 255)');
@@ -144,7 +144,8 @@ const setup = () => {
     label.setAttributeNS(null, 'fill', 'black');
     translate.append(label);
 
-    const number = mkLabel(radius + 15, i, stats[i].toString());
+    const number = mkLabel(radius + 40, i, stats[i].toString());
+    number.setAttributeNS(null, 'y', Math.floor(number.getAttributeNS(null, 'y')) + 25);
     translate.append(number);
 
     return { label, stat: number };
