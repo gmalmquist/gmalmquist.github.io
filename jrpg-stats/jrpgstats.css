@@ -2,13 +2,112 @@ body {
   text-align: center;
 }
 
+.wrapper {
+  position: relative;
+  background: linear-gradient(to bottom, #88aaff, #114488);
+}
+
 .screen {
-  background-color: #fefeff;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.detail-display {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  margin: 1em;
+
+  color: #114488;
+  text-align: left;
+
+  flex-grow: 1;
+
+  max-width: 30em;
+}
+
+.char-name {
+  font-size: 1.25em;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.label {
+  position: relative;
+  display: inline-flex;
+  flex-direction: row;
+
+  font-family: monospace;
+  font-weight: bold;
+  font-size: 1.1em;
+
+  padding: 0.25ex 0.5ex;
+
+  z-index: 10;
+}
+
+.label > * {
+  margin-left: 1ex;
+}
+
+.field {
+  cursor: pointer;
+}
+
+.field:hover {
+  text-decoration: underline;
+  text-decoration-style: dotted;
+}
+
+.bio {
+  margin-left: -1ex;
+  margin-top: -1.25ex;
+  padding: 1ex;
+  border-radius: 1ex;
+
+  background: linear-gradient(to bottom, #88aaff, #ffffff00);
+
+  font-size: 0.9em;
+  text-align: justify;
+
+  flex-grow: 1;
+}
+
+.overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.jrpg-girl {
   background-image: url('./jrpg-girl.png');
   background-repeat: no-repeat;
   background-size: contain;
+  background-position: bottom 10px left 20px;
+}
+
+.stats-display {
   margin-left: 4em;
   margin-right: 4em;
+
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+
+  flex-grow: 1;
+}
+
+.translucent {
+  display: flex;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
 }
 
 #stats {
@@ -38,4 +137,20 @@ body {
   cursor: pointer;
   text-decoration-style: dotted;
   margin: 0.5em;
+}
+
+@media only screen and (max-width: 1024px) {
+  .screen {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .jrpg-girl {
+    background-position: bottom 10px right 20px;
+    background-size: 400px auto;
+  }
+
+  .translucent {
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));
+  }
 }
