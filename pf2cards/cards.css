@@ -4,6 +4,8 @@
   --page-width: 8.5in;
   --page-height: 11in;
 
+  --card-columns: 2;
+
   /* index-card sized */
   --card-width: 3in;
   --card-height: 5in;
@@ -22,6 +24,7 @@
   --page-margin: 1cm;
   --body-text: 7.5pt;
   --head-text: 9pt;
+  --corner-radius: 0;
 }
 
 html {
@@ -80,7 +83,7 @@ a {
 
   display: grid;
   grid-gap: 0;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(var(--card-columns), 1fr);
 }
 
 .card {
@@ -89,36 +92,70 @@ a {
   width: calc(var(--card-width) - 6pt);
   height: calc(var(--card-height) - 6pt);
   border: 1pt solid #ddd;
+  border-radius: var(--corner-radius);
+  -webkit-border-radius: var(--corner-radius);
+  -moz-border-radius: var(--corner-radius);
   padding: 2pt;
 }
 
-.card:nth-child(even) {
-  margin-right: var(--page-margin);
+.card2:nth-child(even) {
+  margin-right: var(--twos-h0);
+}
+.card2:nth-child(odd) {
+  margin-left: var(--twos-h0);
+  margin-right: var(--twos-h1);
+}
+.card2:nth-child(4n) {
+  page-break-after: var(--twos-break);
+}
+.card2:nth-child(4n + 1) {
+  margin-top: var(--twos-v0);
+  margin-bottom: var(--twos-v1);
+}
+.card2:nth-child(4n + 2) {
+  margin-top: var(--twos-v0);
+  margin-bottom: var(--twos-v1);
+}
+.card2:nth-child(4n + 3) {
+  margin-bottom: var(--twos-v0);
+}
+.card2:nth-child(4n) {
+  margin-bottom: var(--twos-v0);
 }
 
-.card:nth-child(odd) {
-  margin-left: var(--page-margin);
-  margin-right: calc(var(--page-width) - var(--card-width) * 2 - var(--page-margin) * 2);
+.card3:nth-child(3n + 1) {
+  margin-left: var(--threes-h0);
+  margin-right: var(--threes-h1);
 }
-
-.card:nth-child(4n) {
-  page-break-after: always;
+.card3:nth-child(3n + 2) {
+  margin-right: var(--threes-h1);
 }
-
-.card:nth-child(4n + 1) {
-  margin-top: var(--page-margin);
-  margin-bottom: calc(var(--page-height) - var(--card-height) * 2 - var(--page-margin) * 2 - 1pt);
+.card3:nth-child(3n + 3) {
+  margin-right: var(--threes-h0);
 }
-.card:nth-child(4n + 2) {
-  margin-top: var(--page-margin);
-  margin-bottom: calc(var(--page-height) - var(--card-height) * 2 - var(--page-margin) * 2 - 1pt);
+.card3:nth-child(6n) {
+  page-break-after: var(--threes-break);
 }
-
-.card:nth-child(4n + 3) {
-  margin-bottom: var(--page-margin);
+.card3:nth-child(6n + 1) {
+  margin-top: var(--threes-v0);
+  margin-bottom: var(--threes-v1);
 }
-.card:nth-child(4n) {
-  margin-bottom: var(--page-margin);
+.card3:nth-child(6n + 2) {
+  margin-top: var(--threes-v0);
+  margin-bottom: var(--threes-v1);
+}
+.card3:nth-child(6n + 3) {
+  margin-top: var(--threes-v0);
+  margin-bottom: var(--threes-v1);
+}
+.card3:nth-child(6n + 4) {
+  margin-bottom: var(--threes-v0);
+}
+.card3:nth-child(6n + 5) {
+  margin-bottom: var(--threes-v0);
+}
+.card3:nth-child(6n + 6) {
+  margin-bottom: var(--threes-v0);
 }
 
 .card-head {
@@ -129,6 +166,13 @@ a {
   display: flex;
   font-size: var(--head-text);
   margin-bottom: 0.5em;
+
+  border-top-left-radius: var(--corner-radius);
+  -webkit-border-top-left-radius: var(--corner-radius);
+  -moz-border-top-left-radius: var(--corner-radius);
+  border-top-right-radius: var(--corner-radius);
+  -webkit-border-top-right-radius: var(--corner-radius);
+  -moz-border-top-right-radius: var(--corner-radius);
 }
 
 .card-rank {
@@ -164,5 +208,4 @@ a {
 .prop > span {
   margin-right: 2pt;
 }
-
 
