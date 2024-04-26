@@ -1,0 +1,85 @@
+:root {
+  --head-bg: #5D0000;
+  --head-fg: #cbc18f;
+  --font-family: Ebrima, Arial, sans-serif; 
+}
+
+html {
+  margin: 0;
+  padding: 0;
+} 
+
+body {
+  font-family: var(--font-family);
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  margin: 0;
+  padding: 0;
+  margin-bottom: 0.25em;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  flex-grow: 1;
+}
+
+.page {
+  width: calc(100vw - 2cm);
+  height: calc(100vh - 2cm);
+  margin-top: 1cm;
+  margin-left: auto;
+  margin-right: auto;
+
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.spellnames {
+  margin-top: 1em;
+  margin-bottom: 1em;
+  font-family: var(--font-family);
+  flex-grow: 1;
+}
+
+.controls {
+  display: flex;
+}
+
+.generate {
+  flex-grow: 1;
+}
+
+.controls > * {
+  background: var(--head-bg);
+  color: var(--head-fg);
+  font-weight: bold;
+  border: 3pt solid var(--head-fg);
+  border-radius: 8pt;
+  padding: 8pt;
+
+  cursor: pointer;
+
+  margin-top: 0.5ex;
+  margin-bottom: 0.5ex;
+
+  font-family: var(--font-family);
+  font-size: 1.2em;
+}
+
+.controls > *:hover {
+  text-decoration: underline;
+}
+
+.controls > * + * {
+  margin-left: 0.5em;
+}
+

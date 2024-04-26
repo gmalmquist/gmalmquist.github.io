@@ -1,0 +1,154 @@
+:root {
+  --head-bg: #5D0000;
+  --head-fg: #cbc18f;
+  --page-width: 8.5in;
+  --page-height: 11in;
+  --card-width: 3in;
+  --card-height: 5in;
+  --page-margin: 1cm;
+  --body-text: 7.5pt;
+  --head-text: 9pt;
+}
+
+html {
+  margin: 0;
+  padding: 0;
+} 
+
+body {
+  font-family: Ebrima, Arial, sans-serif;
+  font-size: var(--body-text);
+  margin: 0;
+}
+
+emph {
+  font-style: italic;
+}
+
+hr {
+ display: block;
+ padding: 0;
+ margin-left: 0;
+ margin-right: 0;
+ margin-top: 0.25em;
+ margin-bottom: 0.25em;
+ border: 0;
+ border-top: 0.5pt solid black;
+ height: 0.5pt;
+ background: black;
+ width: 100%;
+}
+
+p {
+  margin: 0;
+  padding: 0;
+}
+
+p + p {
+  margin-top: 0.5em;
+}
+
+ul {
+  margin-left: 8pt;
+  padding-left: 0;
+  margin-top: 2pt;
+  margin-bottom: 2pt;
+}
+
+a {
+  color: black;
+  text-decoration: none;
+  font-style: italic;
+}
+
+.cards {
+  width: var(--page-width);
+
+  display: grid;
+  grid-gap: 0;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.card {
+  display: block;
+  overflow: hidden;
+  width: calc(var(--card-width) - 6pt);
+  height: calc(var(--card-height) - 6pt);
+  border: 1pt solid #ddd;
+  padding: 2pt;
+}
+
+.card:nth-child(even) {
+  margin-right: var(--page-margin);
+}
+
+.card:nth-child(odd) {
+  margin-left: var(--page-margin);
+  margin-right: calc(var(--page-width) - var(--card-width) * 2 - var(--page-margin) * 2);
+}
+
+.card:nth-child(4n) {
+  page-break-after: always;
+}
+
+.card:nth-child(4n + 1) {
+  margin-top: var(--page-margin);
+  margin-bottom: calc(var(--page-height) - var(--card-height) * 2 - var(--page-margin) * 2 - 1pt);
+}
+.card:nth-child(4n + 2) {
+  margin-top: var(--page-margin);
+  margin-bottom: calc(var(--page-height) - var(--card-height) * 2 - var(--page-margin) * 2 - 1pt);
+}
+
+.card:nth-child(4n + 3) {
+  margin-bottom: var(--page-margin);
+}
+.card:nth-child(4n) {
+  margin-bottom: var(--page-margin);
+}
+
+.card-head {
+  background: var(--head-bg);
+  color: var(--head-fg);
+  font-weight: bold;
+  padding: 0.25em 0.5em;
+  display: flex;
+  font-size: var(--head-text);
+  margin-bottom: 0.5em;
+}
+
+.card-rank {
+  text-align: right;
+  flex-grow: 1;
+}
+
+.traits {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 2pt;
+}
+
+.trait {
+  padding: 0.25em;
+  border: 2pt solid var(--head-fg);
+  background: var(--head-bg);
+  color: white;
+  font-weight: bold;
+}
+
+.prop > label {
+  font-weight: bold;
+  margin-right: 2pt;
+}
+
+.prop > * + label::before {
+  content: "; ";
+  font-weight: normal;
+  margin-left: -2pt;
+}
+
+.prop > span {
+  margin-right: 2pt;
+}
+
+
