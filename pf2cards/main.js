@@ -137,12 +137,12 @@ function generateCards() {
       if (shrinkText()) {
         shrink();
       }
-    }, 5);
+    }, 50);
     setTimeout(() => {
       for (const card of document.getElementsByClassName('card')) {
         card.classList.add(`card${cardSizeValue.columns}`);
       }
-    }, 5);
+    }, 50);
     shrink();
   });
 }
