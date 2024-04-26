@@ -21,9 +21,16 @@
 }
 
 .fate-role {
+<<<<<<< HEAD
   width: 3in;
   height: 5in;
   background: lightgray;
+=======
+  width: calc(4in - var(--border) * 2);
+  height: calc(5in - var(--border) * 2);
+  background: lightgray;
+  border: thick solid white;
+>>>>>>> 403c1594d4ad70b305977ca5a01127ff728e2bc8
 }
 .fate-role .title {
   font-size: 14px;
@@ -72,4 +79,8 @@
 .worshipper-unrequitted {
   background: #ff7800;
   color: black;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 403c1594d4ad70b305977ca5a01127ff728e2bc8

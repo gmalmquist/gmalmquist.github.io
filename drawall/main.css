@@ -1,0 +1,107 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: grid;
+
+  grid-template-columns: min-content 1fr;
+  grid-template-rows: min-content min-content 1fr;
+
+  grid-template-areas:
+    "title title"
+    "top top"
+    "tool main"
+  ;
+
+  align-items: stretch;
+  align-content: stretch;
+  justify-items: stretch;
+  justify-content: stretch;
+
+  width: 100vw;
+  height: 100vh; 
+}
+
+.titlebar {
+  grid-area: title;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  background-color: #f6f5f4;
+  border-bottom: thin solid lightgray;
+}
+
+.topbar {
+  grid-area: top;
+  border-bottom: thin solid lightgray;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  background-color: #f6f5f4;
+}
+
+.toolbar {
+  grid-area: tool;
+  border-right: thin solid lightgray;
+  background-color: #f6f5f4;
+}
+
+.canvas-wrap {
+  grid-area: main;
+  position: relative;
+  flex-grow: 1;
+}
+
+.canvas-wrap > * {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.canvas-wrap > div {
+  overflow: clip;
+  user-select: none;
+  pointer-events: none;
+}
+
+.toolbar {
+  display: flex;
+  flex-direction: column;
+}
+
+#ui-jail {
+  position: absolute;
+  overflow: hidden;
+  display: none;
+  left: -100px;
+  top: -100px;
+  width: 0;
+  height: 0;
+}
+
+a {
+  color: hsl(196.6, 94.1%, 30%);
+  text-shadow: 0 0 3px #5BCEFA;
+}
+
+a:visited {
+  color: hsl(196.6, 94.1%, 20%);
+  text-shadow: 0 0 3px #5BCEFA;
+}
+
+em {
+  font-style: italic;
+}
+
+h4 {
+  margin-bottom: 0.5ex;
+  padding-bottom: 0;
+}
+
+h4 + p {
+  margin-top: 0;
+  padding-top: 0;
+}
+

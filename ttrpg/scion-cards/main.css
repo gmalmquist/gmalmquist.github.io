@@ -17,6 +17,10 @@ html, body {
   display: flex;
   flex-wrap: wrap;
   page-break-after: always;
+<<<<<<< HEAD
+=======
+  page-break-inside: avoid;
+>>>>>>> 403c1594d4ad70b305977ca5a01127ff728e2bc8
   max-width: 8.5in;
 }
 
@@ -83,18 +87,30 @@ html, body {
 }
 .details, textarea {
   font-family: Noto Serif, serif;
+<<<<<<< HEAD
   font-size: 9px;
+=======
+  font-size: 10px;
+>>>>>>> 403c1594d4ad70b305977ca5a01127ff728e2bc8
   text-align: justify;
   white-space: normal;
   margin: var(--sep);
 }
 
 .details.long, textarea.long, .flavor.long {
+<<<<<<< HEAD
   font-size: 8px;
 }
 
 .details.verylong, textarea.verylong, .flavor.verylong {
   font-size: 7.5px;
+=======
+  font-size: 9px;
+}
+
+.details.verylong, textarea.verylong, .flavor.verylong {
+  font-size: 8px;
+>>>>>>> 403c1594d4ad70b305977ca5a01127ff728e2bc8
 }
 
 .details > ul {
@@ -121,6 +137,16 @@ textarea {
   align-items: stretch;
 }
 
+<<<<<<< HEAD
+=======
+.column {
+  display: flex;
+  flex-direction: column;
+  justify-items: stretch;
+  align-items: stretch;
+}
+
+>>>>>>> 403c1594d4ad70b305977ca5a01127ff728e2bc8
 .row > * {
   flex-grow: 1;
 }
@@ -180,4 +206,13 @@ input {
   white-space: normal;
   margin-top: var(--sep);
   font-size: 10px;
+<<<<<<< HEAD
 }
+=======
+}
+
+.indent {
+  display: inline-block;
+  margin-left: 2em;
+}
+>>>>>>> 403c1594d4ad70b305977ca5a01127ff728e2bc8

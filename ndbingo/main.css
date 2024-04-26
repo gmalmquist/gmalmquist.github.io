@@ -1,0 +1,142 @@
+.bingo-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: stretch;
+
+  text-align: center;
+  color: #444;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.bingo-variant {
+  font-family: serif;
+  font-weight: bold;
+  font-size: 2em;
+}
+
+.title {
+  font-family: sans-serif;
+  font-weight: bold;
+  font-size: 4em;
+  margin-top: -0.5rem;
+}
+
+.subtitle {
+  font-size: 0.8em;
+  margin-bottom: 2ex;
+  max-width: 60vw;
+}
+
+.controls {
+  font-size: 0.9em;
+  margin-top: -0.5em;
+  margin-bottom: 1em;
+
+  color: blue;
+
+  text-align: center;
+}
+
+.controls > a + a {
+  margin-left: 1em;
+}
+
+.spacer {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.bingo-grid {
+  flex-grow: 1;
+  flex-shrink: 1;
+  display: grid;
+  grid-template-columns: repeat(5, calc(min((100vw - 6em) / 5, (100vh - 20em) / 5)));
+  grid-template-rows: repeat(5, calc(min((100vw - 6em) / 5, (100vh - 20em) / 5)));
+  grid-gap: 1em;
+  overflow: hidden;
+
+  justify-content: center;
+}
+
+.tile {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  flex-direction: column;
+
+  aspect-ratio: 1/1;
+
+  border: thin solid hsl(0, 0%, 75%);
+  background: hsl(0, 0%, 98%);
+
+  font-family: sans-serif;
+  font-size: 1.1em;
+  padding: 0.5em;
+
+  overflow: hidden;
+
+  cursor: pointer;
+
+  user-select: none;
+
+  transition-property: background;
+  transition-duration: 0.5s;
+}
+
+.tile:hover {
+  background: hsl(0, 0%, 90%);
+}
+
+.tile.selected {
+  background: hsl(200, 100%, 80%);
+}
+
+.tile.selected:hover {
+  background: hsl(200, 100%, 90%);
+}
+
+.tile.win {
+  background: hsl(300, 100%, 80%);
+}
+
+.tile.win:hover {
+  background: hsl(300, 100%, 90%);
+}
+
+.tile.free {
+  background: hsl(30, 100%, 80%);
+  cursor: default;
+}
+
+.word {
+  word-wrap: anywhere;
+}
+
+.first-letter {
+  font-weight: bold;
+}
+
+.free-text {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin: 0.5ex;
+}
+
+.specifics {
+  flex-shrink: 1;
+  overflow: hidden;
+
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  justify-content: center;
+}
+
+.specifics > .word {
+  margin-left: 0.5ex;
+}
+

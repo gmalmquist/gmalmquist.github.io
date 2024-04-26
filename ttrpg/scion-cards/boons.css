@@ -1,6 +1,12 @@
 .boon {
+<<<<<<< HEAD
   width: 2.5in;
   height: 3.5in;
+=======
+  width: calc(3in - var(--border) * 2);
+  height: calc(5in - var(--border) * 2);
+  border: thick solid white;
+>>>>>>> 403c1594d4ad70b305977ca5a01127ff728e2bc8
 }
 
 .boon .footer {

@@ -1,6 +1,25 @@
+<<<<<<< HEAD
  .purview {
   width: 2.5in;
   height: 3.5in;
+=======
+.card.purview {
+  width: calc(5in - var(--border) * 2);
+  height: calc(3in - var(--border) * 2);
+  transform: translate(-1in, 1in) rotate(-90deg);
+  border-width: 0;
+}
+
+.purview-wrap {
+  position: relative;
+
+  display: inline-block;
+
+  width: 3in;
+  height: 5in;
+
+  border: thick solid white;
+>>>>>>> 403c1594d4ad70b305977ca5a01127ff728e2bc8
 }
 
 .purview .title {
@@ -8,6 +27,49 @@
 .purview .subtitle {
 }
 
+<<<<<<< HEAD
+=======
+.purview .details {
+  font-size: 11px;
+}
+
+.purview .details.long {
+  font-size: 9px;
+}
+
+.purview .flavor {
+  font-size: 11px;
+}
+
+.purview .flavor.long {
+  font-size: 10px;
+}
+
+.card.purview {
+  display: grid;
+  grid-template-areas: 'a b';
+  grid-column-gap: 0.125in;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+
+  margin-bottom: 0.125in;
+}
+
+.card.purview:nth-child(0) {
+  grid-area: a;
+}
+.card.purview:nth-child(1) {
+  grid-area: b;
+}
+
+.purview .details {
+}
+
+.purview .field {
+  background-color: #ffffffcc;
+}
+
+>>>>>>> 403c1594d4ad70b305977ca5a01127ff728e2bc8
 .artistry { 
   background: #9141ac;
   color: white;
@@ -136,10 +198,21 @@
 }
 .yoga {
   background: linear-gradient(
+<<<<<<< HEAD
     to right, 
 	hsl(90, 100%, 40%),
 	hsl(0, 0%, 20%) 50%,
 	hsl(40, 70%, 40%)
+=======
+    to bottom, 
+    hsl(90, 100%, 40%) 2%,
+    hsl(90, 100%, 30%) 7%,
+    hsl(0, 0%, 20%) 75%,
+    #ae8625 80%,
+    #f7ef8a,
+    #edc967
+
+>>>>>>> 403c1594d4ad70b305977ca5a01127ff728e2bc8
   );
   color: white;
 }
@@ -147,13 +220,31 @@
 .yaoyorozu-no-kamigami {
   background: linear-gradient(
     to right, 
+<<<<<<< HEAD
 	hsl(0, 100%, 60%),
 	hsl(0, 0%, 20%) 50%,
 	hsl(45, 100%, 60%)
+=======
+    hsl(0, 100%, 30%) 1%,
+    hsl(0, 100%, 50%) 5%,
+    hsl(0, 100%, 30%),
+    hsl(0, 0%, 20%) 50%,
+    #ae8625 80%,
+    #f7ef8a 98%,
+    #d2ac47,
+    #edc967
+>>>>>>> 403c1594d4ad70b305977ca5a01127ff728e2bc8
   );
   color: white;
 }
 
+<<<<<<< HEAD
+=======
+.yaoyorozu-no-kamigami .flavor {
+  text-shadow: 0 0 10px black, 0 0 1px black;
+}
+
+>>>>>>> 403c1594d4ad70b305977ca5a01127ff728e2bc8
 .cheval-gun {
   background: linear-gradient(
     to right, 
@@ -166,11 +257,21 @@
 
 .dodaem {
   background: linear-gradient(
+<<<<<<< HEAD
     to right, 
 	hsl(120, 100%, 40%),
 	hsl(120, 100%, 20%) 20%,
 	hsl(120, 100%, 20%) 80%,
 	hsl(0, 30%, 60%)
+=======
+    to bottom, 
+    hsl(120, 100%, 40%),
+    hsl(120, 100%, 15%),
+    hsl(120, 100%, 20%) 20%,
+    hsl(120, 100%, 20%) 80%,
+    hsl(30, 100%, 20%),
+    hsl(30, 100%, 40%)
+>>>>>>> 403c1594d4ad70b305977ca5a01127ff728e2bc8
   );
   color: white;
 }
@@ -178,50 +279,114 @@
 .heku {
   background: linear-gradient(
     to right, 
+<<<<<<< HEAD
 	hsl(40, 50%, 60%),
 	hsl(200, 100%, 40%) 20%,
 	hsl(200, 100%, 40%) 80%,
 	hsl(30, 100%, 60%)
   );
   color: white;
+=======
+    #ae8625,
+    #f7ef8a,
+    #d2ac47,
+    #edc967,
+    hsl(180, 100%, 50%) 15%,
+    hsl(200, 100%, 40%) 40%,
+    hsl(200, 100%, 40%) 60%,
+    hsl(180, 100%, 50%) 85%,
+    #edc967,
+    #d2ac47,
+    #f7ef8a,
+    #ae8625
+  );
+  color: black
+}
+
+.heku .flavor {
+  text-shadow: 0 0 10px hsl(180, 100%, 100%);
+  color: black
+>>>>>>> 403c1594d4ad70b305977ca5a01127ff728e2bc8
 }
 
 .tianming {
   background: linear-gradient(
+<<<<<<< HEAD
     to right, 
 	hsl(35, 100%, 60%),
 	hsl(0, 0%, 10%) 20%,
 	hsl(0, 100%, 60%),
 	hsl(0, 0%, 10%) 80%,
 	hsl(260, 100%, 60%)
+=======
+    to top, 
+    hsl(35, 100%, 60%),
+    hsl(0, 0%, 10%) 20%,
+    hsl(0, 100%, 60%),
+    hsl(0, 0%, 10%) 80%,
+    hsl(260, 100%, 60%)
+>>>>>>> 403c1594d4ad70b305977ca5a01127ff728e2bc8
   );
   color: white;
 }
 
 .nextlahualli {
   background: linear-gradient(
+<<<<<<< HEAD
     to right, 
 	hsl(200, 100%, 50%),
 	hsl(150, 100%, 25%) 20%,
 	hsl(0, 0%, 10%),
 	hsl(0, 100%, 40%) 80%,
 	hsl(25, 80%, 40%)
+=======
+    to bottom, 
+    hsl(200, 100%, 50%),
+    hsl(180, 100%, 50%) 2%,
+    hsl(150, 100%, 30%) 5%,
+    hsl(150, 100%, 25%) 20%,
+    hsl(0, 0%, 10%),
+    hsl(0, 100%, 40%) 80%,
+    hsl(25, 80%, 40%),
+    #ae8625,
+    #f7ef8a 98%,
+    #d2ac47
+>>>>>>> 403c1594d4ad70b305977ca5a01127ff728e2bc8
   );
   color: white;
 }
 
 .geasa {
   background: linear-gradient(
+<<<<<<< HEAD
     to right, 
 	hsl(120, 100%, 40%),
 	hsl(0, 0%, 40%) 45%,
 	hsl(0, 0%, 80%),
 	hsl(0, 0%, 40%) 55%,
 	hsl(40, 100%, 60%)
+=======
+    to top,
+    hsl(120, 100%, 40%) 2%,
+    hsl(90, 100%, 20%) 10%,
+    hsl(0, 0%, 40%) 45%,
+    hsl(0, 0%, 80%),
+    hsl(0, 0%, 40%) 55%,
+    #ae8625 70%,
+    #f7ef8a 98%,
+    #d2ac47
+>>>>>>> 403c1594d4ad70b305977ca5a01127ff728e2bc8
   );
   color: white;
 }
 
+<<<<<<< HEAD
+=======
+.geasa .title, .geasa .subtitle, .geasa .flavor {
+  text-shadow: 0 0 10px gray;
+}
+
+>>>>>>> 403c1594d4ad70b305977ca5a01127ff728e2bc8
 /* combined purviews */
 .death-moon {
   background: linear-gradient(to right, #afc0ad, #cad2c9 31%, #e5e5e5 50%, #dae5f2);

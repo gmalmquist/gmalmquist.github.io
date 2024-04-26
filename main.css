@@ -1,7 +1,258 @@
-h1 {
-  font-family: sans-serif;
+:root {
+
+  --code-bg: #B7B7C7;
+  --code-fg: #71717A;
+  --writing-bg: #fce8eb;
+  --writing-fg: #f5a9b8;
+  --other-bg: #9B9BFB;
+  --other-fg: #4C4C7A;
+  --body-bg: linear-gradient(to bottom, black, 95%, var(--writing-fg));
+
+  --bg-color: #E6E6FA;
+  --body-fg: #9B9BFB;
+
+  --body-bg: linear-gradient(to bottom, var(--bg-color), 80%, #9B9BFB);
+  --writing-bg: var(--bg-color);
+  --writing-fg: #9B9BFB;
+
+  --bga-alpha: 90%;
+  --code-bga: color-mix(in srgb, var(--code-bg) var(--bga-alpha), rgba(0,0,0,0));
+  --writing-bga: color-mix(in srgb, var(--writing-bg) var(--bga-alpha), rgba(0,0,0,0));
+  --other-bga: color-mix(in srgb, var(--other-bg) var(--bga-alpha), rgba(0,0,0,0));
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
 }
 
 body {
+  #background-color: hsl(0, 0%, 4.2%);
+  #background-color: #FCF5E5;
+  background-image: var(--body-bg);
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+h1 {
+  font-family: Tex Gyre Heros, Georgia, sans-serif;
+  font-weight: bold;
+  color: var(--body-fg);
+  text-align: center;
+  opacity: 0.8;
+  margin: 0;
+  padding: 0;
+  font-size: 3em;
+  text-align: center;
+}
+
+h1 > a {
+  color: var(--other-fg);
+}
+
+.rose {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  overflow: hidden;
+
+  height: 256px;
+  max-height: 256px;
   margin: 1em;
+}
+
+.rose-center {
+  height: 256;
+}
+
+.rose-end {
+  height: 128px;
+}
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  text-align: center;
+
+  margin: 1em;
+}
+
+.email {
+  opacity: 0.25;
+}
+
+
+
+h2 {
+  margin: 0;
+  padding: 0;
+  font-size: 2.5em;
+}
+
+h2 > a {
+  text-decoration: none;
+}
+
+h2 > a:hover {
+  text-decoration: underline;
+}
+
+h3 {
+  margin: 0;
+  padding: 0;
+  font-size: 1.5em;
+}
+
+.page {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 1fr;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+}
+
+.column.code {
+}
+.column.writing {
+}
+.column.other {
+}
+
+.code .project {
+  background-color: var(--code-bg);
+  border-color: var(--code-fg);
+}
+.code h2, .code h3 {
+  color: var(--code-fg);
+}
+.code .thumbnail {
+  border-bottom-color: var(--code-fg);
+}
+.code h2 > a {
+  color: var(--code-fg);
+}
+.code .description {
+  background-image: linear-gradient(to bottom, var(--code-bga), var(--code-bg));
+}
+
+.writing .project {
+  background-color: var(--writing-bg);
+  border-color: var(--writing-fg);
+}
+.writing h2, .writing h3 {
+  color: var(--writing-fg);
+}
+.writing .thumbnail {
+  border-bottom-color: var(--writing-fg);
+}
+.writing h2 > a {
+  color: var(--writing-fg);
+}
+.writing .description {
+  background-image: linear-gradient(to bottom, var(--writing-bga), var(--writing-bg));
+}
+
+.other .project {
+  background-color: var(--other-bg);
+  border-color: var(--other-fg);
+}
+.other h2, .other h3 {
+  color: var(--other-fg);
+}
+.other .thumbnail {
+  border-bottom-color: var(--other-fg);
+}
+.other h2 > a {
+  color: var(--other-fg);
+}
+.other .description {
+  background-image: linear-gradient(to bottom, var(--other-bga), var(--other-bg));
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+.project {
+  display: flex;
+
+  align-items: stretch;
+  justify-content: flex-end;
+
+  flex-direction: column;
+  overflow: hidden;
+
+  border-radius: 1ex;
+  border-width: thin;
+  border-style: solid;
+
+  text-decoration: none;
+  color: #444;
+
+  aspect-ratio: 1 / 1;
+
+  width: 90%;
+  margin: 1em;
+
+  text-align: justify;
+
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top center;
+}
+
+.thumbnail {
+  flex-grow: 1;
+  aspect-ratio: 1 / 1;
+  background-color: lightgray;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top center;
+  border-bottom-width: thin;
+  border-bottom-style: solid;
+}
+
+.project > .description {
+  display: flex;
+  flex-direction: column;
+  padding: 1em;
+}
+
+.project > h2 {
+  margin: 0;
+  padding: 0;
+}
+
+.project p {
+  margin: 0;
+  padding: 0;
+}
+
+
+@media only screen and (max-width: 1200px) {
+  .page {
+    grid-template-columns: 1fr;
+  }
+  .project {
+    width: 100%;
+  }
+  body {
+    font-size: 3rem;
+  }
 }

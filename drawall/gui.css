@@ -1,0 +1,194 @@
+.mini-form {
+  display: flex;
+
+  transition-property: opacity;
+  transition-duration: 0.5s;
+
+  overflow: hidden;
+}
+
+.mini-form > * + * {
+  margin-left: 4px;
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+.h-ruler {
+  margin-bottom: 2px;
+  margin-top: 2px;
+  border-left: thin solid lightgray;
+  margin-right: 3px;
+}
+
+.h-ruler + .mini-form {
+  margin-left: 0;
+}
+
+.mini-form-input {
+  width: 4em;
+  height: 1em;
+  text-align: center;
+}
+
+.mini-form-input.textbox-wrap {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  width: initial;
+  height: initial;
+  padding-left: 0.5em;
+}
+
+.textbox-wrap > input {
+}
+
+.textbox-wrap > label {
+  display: inline-block;
+  cursor: text;
+  font-size: 1.0em;
+  font-family: sans-serif;
+  padding: 0.25ex 0.25em;
+  border: thin solid rgba(0, 0, 0, 0);
+}
+
+.textbox-wrap > label:hover {
+  border: thin solid gray;
+}
+
+.over-label {
+  margin-bottom: 2px;
+  font-size: 0.5em;
+  font-weight: bold;
+  font-family: sans-serif;
+  text-align: center;
+  user-select: none;
+}
+
+.disabled , .icon-button.disabled {
+  pointer-events: none;
+  user-select: none;
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.hidden , .icon-button.hidden {
+  width: 0;
+  height: 0;
+  opacity: 0;
+
+  padding: 0;
+  margin: 0;
+  border-width: 0;
+}
+
+.icon-button {
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  margin: 2px;
+  aspect-ratio: 1 / 1;
+
+  padding: 1px;
+  border: 1px solid lightgray;
+  border-radius: 3px;
+
+ 
+  background-size: contain;
+
+  font-size: 1.5em;
+  font-weight: bold;
+
+  width: 32px;
+  height: 32px;
+
+  font-family: monospace;
+  text-decoration: none;
+  color: black;
+
+  cursor: pointer;
+
+  user-select: none;
+}
+
+.icon-button {
+  border-color: rgba(0, 0, 0, 0); 
+  background-color: #f6f5f4;
+  border-color: #f6f5f4;
+  transition-property: background-color;
+  transition-duration: 0.2s;
+}
+
+.icon-button:hover {
+  border-color: #d6d1cd;
+  background-color: #fafafa;
+}
+
+.icon-button:active {
+  background-color: gray;
+}
+
+.icon-button.selected {
+  border-color: #c8c0b8;
+  background-color: #d6d1cd;
+}
+
+.icon-button.selected:hover {
+  border-color: #c8c0b8;
+  background-color: #e8e0d8;
+}
+
+.icon-button.selected:active {
+  background-color: hsl(348, 79%, 81%);
+  border-bottom-color: hsl(348, 79%, 95%);
+  border-left-color: hsl(348, 79%, 70%);
+  border-right-color: hsl(348, 79%, 95%);
+  border-top-color: hsl(348, 79%, 70%);
+}
+
+/*
+.icon-button.tool-button {
+  border-radius: 6px;
+  border-top: 2px solid hsl(0, 0%, 90%);
+  border-left: 2px solid hsl(0, 0%, 90%);
+  border-right: 2px solid hsl(0, 0%, 50%);
+  border-bottom: 2px solid hsl(0, 0%, 50%);
+  border-radius: 6px;
+
+  background-color: hsl(0, 0%, 80%);
+}
+
+.icon-button.tool-button:hover {
+  background-color: hsl(0, 0%, 85%);
+}
+
+.icon-button.tool-button:active {
+  background-color: hsl(0, 0%, 70%);
+  border-top-color: hsl(0, 0%, 50%);
+  border-left-color: hsl(0, 0%, 50%);
+  border-right-color: hsl(0, 0%, 90%);
+  border-bottom-color: hsl(0, 0%, 90%);
+}
+
+.icon-button.tool-button.selected {
+  background-color: hsl(197, 94%, 67%);
+  border-bottom-color: hsl(197, 94%, 50%);
+  border-left-color: hsl(197, 94%, 80%);
+  border-right-color: hsl(197, 94%, 50%);
+  border-top-color: hsl(197, 94%, 80%);
+}
+
+.icon-button.tool-button.selected:active {
+  background-color: hsl(348, 79%, 81%);
+  border-bottom-color: hsl(348, 79%, 95%);
+  border-left-color: hsl(348, 79%, 70%);
+  border-right-color: hsl(348, 79%, 95%);
+  border-top-color: hsl(348, 79%, 70%);
+}
+*/
