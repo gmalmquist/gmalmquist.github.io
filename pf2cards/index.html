@@ -13,6 +13,32 @@
   <p>Enter list of Pathfinder Second Edition Remastered spell names in the below text box, separated by newlines.
 
   <form>
+  <div class="card-size">
+    <label>Card Size:</label>
+    <select name="card-size">
+      <option
+        value="large"
+        data-width="3in"
+        data-height="5in"
+        data-body-text="7.5pt"
+        data-head-text="9pt"
+      >Large / Index Card (3" x 5")</option>
+      <option
+        value="medium"
+        data-width="68mm"
+        data-height="114mm"
+        data-body-text="7.25pt"
+        data-head-text="8pt"
+      >Medium (68mm x 114mm)</option>
+      <option
+        value="small"
+        data-width="2.5in"
+        data-height="3.5in"
+        data-body-text="7pt"
+        data-head-text="7.5pt"
+      >Small / MtG (2.5" x 3.5")</option>
+    </select>
+  </div>
   <textarea class="spellnames"></textarea>
 
   <div class="controls">

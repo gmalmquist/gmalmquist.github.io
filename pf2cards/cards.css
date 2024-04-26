@@ -3,8 +3,22 @@
   --head-fg: #cbc18f;
   --page-width: 8.5in;
   --page-height: 11in;
+
+  /* index-card sized */
   --card-width: 3in;
   --card-height: 5in;
+
+  /* three to a page */
+  --card-width: calc((8.5in - 2cm - 3pt*6)/3);
+  --card-height: calc((11in - 2cm - 3pt*4)/2);
+
+  /*
+   * arbitrary size I first printed them at
+   * that I kinda like.
+   */
+  --card-width: 68mm;
+  --card-height: 114mm;
+
   --page-margin: 1cm;
   --body-text: 7.5pt;
   --head-text: 9pt;
