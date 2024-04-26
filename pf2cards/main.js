@@ -1,6 +1,6 @@
 function generateCards() {
   const postUrl = window.location.hostname === 'gwenscode.com'
-    ? 'http://146.190.55.168:8120/'
+    ? 'https://146.190.55.168/pf2cards/'
     : '/'
   ;
   const names = Array.from(new Set(Array.from(document.getElementsByClassName('spellnames'))
