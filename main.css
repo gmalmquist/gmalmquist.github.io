@@ -53,6 +53,19 @@ h1 > a {
   color: var(--other-fg);
 }
 
+h4 {
+  font-family: Tex Gyre Heros, Georgia, sans-serif;
+  font-weight: bold;
+  color: var(--other-fg);
+  text-align: center;
+  opacity: 0.8;
+  margin: 0;
+  padding: 0;
+  margin-top: 0.5rem;
+  font-size: 1.25rem;
+  text-align: center;
+}
+
 .rose {
   display: flex;
   flex-direction: row;
@@ -113,7 +126,7 @@ h3 {
 
 .page {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   grid-template-rows: 1fr;
   margin-left: 1em;
   margin-right: 1em;
