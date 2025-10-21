@@ -1,0 +1,95 @@
+@font-face { 
+  font-family: "Atkinson Hyperlegible";
+  src: 
+    local("Atkinson Hyperlegible"),
+    url("/font/AtkinsonHyperlegible-Regular.ttf") format("truetype")
+  ;
+}
+@font-face { 
+  font-family: "Atkinson Hyperlegible";
+  src: 
+    local("Atkinson Hyperlegible"),
+    url("/font/AtkinsonHyperlegible-Bold.ttf") format("truetype")
+  ;
+  font-weight: bold;
+}
+@font-face { 
+  font-family: "Atkinson Hyperlegible";
+  src: 
+    local("Atkinson Hyperlegible"),
+    url("/font/AtkinsonHyperlegible-BoldItalic.ttf") format("truetype")
+  ;
+  font-weight: bold;
+  font-style: italic;
+}
+@font-face { 
+  font-family: "Atkinson Hyperlegible";
+  src: 
+    local("Atkinson Hyperlegible"),
+    url("/font/AtkinsonHyperlegible-Italic.ttf") format("truetype")
+  ;
+  font-style: italic;
+}
+
+body {
+  font-family: "Atkinson Hyperlegible", sans-serif;
+}
+
+.page {
+  max-width: 40rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ctx {
+  color: #8822cc;
+}
+
+.ctx.block {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.question {
+  font-family: "Atkinson Hyperlegible";
+}
+
+.question legend {
+  font-weight: bold;
+}
+
+.buttons {
+  display: flex;
+  margin-top: 1rem;
+}
+
+.buttons button {
+  cursor: pointer;
+  font-size: 1.0rem;
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+.score {
+  margin: 1rem;
+}
+
+.score .numb {
+  display: inline-block;
+
+  font-weight: bold;
+  font-size: 2rem;
+  padding: 0.5rem 1rem;
+
+  min-width: 10rem;
+  text-align: center; 
+  
+  background-color: lightgray;
+  border: thin solid gray;
+
+  margin-bottom: 0.5rem;
+}
+
+
