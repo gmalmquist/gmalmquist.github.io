@@ -346,7 +346,7 @@ function raadsr() {
     Or really bothers you in a way that's very distracting, or causes you to dissociate heavily.
   `);
   Q("I don't like to be hugged or held.", `
-    Or are you like a cat and you like it sometimes, by other times it really bothers you.
+    Or are you like a cat and you like it sometimes, but usually not.
   `);
   Q("When I go somewhere, I have to follow a familiar route or I can get very confused and upset.", `
     Scouting out the route on google maps beforehand counts.
